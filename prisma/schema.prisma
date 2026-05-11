@@ -3,8 +3,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model AdminUser {
@@ -18,38 +19,38 @@ model AdminUser {
 
 model Noticia {
   id               String   @id @default(cuid())
-  titulo_es        String   // Título descriptivo para el admin
-  linkedinEmbedUrl String   // OBLIGATORIO — src del iframe de LinkedIn
+  titulo_es        String
+  linkedinEmbedUrl String
   publicada        Boolean  @default(false)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
 
 model Division {
-  id               String          @id @default(cuid())
-  nameEs           String
-  nameEn           String?
-  nameDe           String?
-  descriptionEs    String?
-  descriptionEn    String?
-  descriptionDe    String?
-  unidadesNegocio  UnidadNegocio[]
-  createdAt        DateTime        @default(now())
-  updatedAt        DateTime        @updatedAt
+  id              String          @id @default(cuid())
+  nameEs          String
+  nameEn          String?
+  nameDe          String?
+  descriptionEs   String?
+  descriptionEn   String?
+  descriptionDe   String?
+  unidadesNegocio UnidadNegocio[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model UnidadNegocio {
-  id            String    @id @default(cuid())
-  nameEs        String
-  nameEn        String?
-  nameDe        String?
-  location      String
-  orden         Int       @default(0)
-  activa        Boolean   @default(true)
-  divisionId    String
-  division      Division  @relation(fields: [divisionId], references: [id])
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id         String   @id @default(cuid())
+  nameEs     String
+  nameEn     String?
+  nameDe     String?
+  location   String
+  orden      Int      @default(0)
+  activa     Boolean  @default(true)
+  divisionId String
+  division   Division @relation(fields: [divisionId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model MensajeContacto {
