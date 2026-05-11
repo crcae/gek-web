@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  nombre    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Noticia {
+  id               String   @id @default(cuid())
+  titulo_es        String   // Título descriptivo para el admin
+  linkedinEmbedUrl String   // OBLIGATORIO — src del iframe de LinkedIn
+  publicada        Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Division {
+  id               String          @id @default(cuid())
+  nameEs           String
+  nameEn           String?
+  nameDe           String?
+  descriptionEs    String?
+  descriptionEn    String?
+  descriptionDe    String?
+  unidadesNegocio  UnidadNegocio[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+model UnidadNegocio {
+  id            String    @id @default(cuid())
+  nameEs        String
+  nameEn        String?
+  nameDe        String?
+  location      String
+  orden         Int       @default(0)
+  activa        Boolean   @default(true)
+  divisionId    String
+  division      Division  @relation(fields: [divisionId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model MensajeContacto {
+  id            String   @id @default(cuid())
+  nombre        String
+  email         String
+  razonContacto String
+  mensaje       String
+  leido         Boolean  @default(false)
+  createdAt     DateTime @default(now())
+}
+
+model ContenidoSitio {
+  id        String   @id
+  seccion   String
+  campo     String
+  valor_es  String
+  valor_en  String?
+  valor_de  String?
+  updatedAt DateTime @updatedAt
+}
+
+model ImagenSitio {
+  id        String   @id @default(cuid())
+  seccion   String
+  nombre    String
+  filename  String
+  url       String
+  createdAt DateTime @default(now())
+}

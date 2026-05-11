@@ -1,0 +1,129 @@
+{
+  "Navbar": {
+    "quienesSomos": "Quiénes Somos",
+    "historia": "Historia",
+    "holding": "Holding",
+    "contacto": "Contacto"
+  },
+  "Hero": {
+    "tagline": "Más de 50 años llevando lo mejor del campo al mundo",
+    "subtitle": "Grupo Exportador del Campo: Tradición, Calidad y Excelencia Agrícola",
+    "cta": "Conocer más"
+  },
+  "Features": {
+    "title": "Secciones Principales",
+    "quienesSomos": {
+      "title": "Quiénes Somos",
+      "description": "Conoce el equipo y nuestra visión institucional"
+    },
+    "historia": {
+      "title": "Historia",
+      "description": "Más de 50 años de legado agroindustrial"
+    },
+    "holding": {
+      "title": "Holding",
+      "description": "Nuestra estructura corporativa y unidades de negocio"
+    },
+    "contacto": {
+      "title": "Contacto",
+      "description": "Proveedores, clientes y alianzas estratégicas"
+    }
+  },
+  "News": {
+    "title": "Noticias",
+    "readMore": "Leer más",
+    "comingSoon": "Próximamente"
+  },
+  "Divisions": {
+    "hortalizas": {
+      "title": "Hortalizas (Vizcaíno Fruit's)",
+      "description": "Lechugas iceberg, italiana, orejona, sangría"
+    },
+    "chiles": {
+      "title": "Chiles Picosos (Vizcaíno Premium)",
+      "description": "Jalapeño, serrano, poblano, anaheim, húngaro, cebollas"
+    },
+    "servicios": {
+      "title": "Servicios (Vizcaíno Services)",
+      "description": "Maquilado, refrigeración, almacenamiento, logística"
+    }
+  },
+  "Contact": {
+    "title": "¿Cómo podemos ayudarte?",
+    "nameLabel": "Nombre completo",
+    "namePlaceholder": "Escribe tu nombre",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tu@email.com",
+    "reasonLabel": "Razón de contacto",
+    "reasons": {
+      "proveedor": "Proveedor",
+      "cliente": "Cliente",
+      "alianza": "Alianza estratégica",
+      "otro": "Otro"
+    },
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "Escribe tu mensaje aquí...",
+    "submit": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto pronto."
+  },
+  "Footer": {
+    "address": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, Nuevo León",
+    "phone": "Tel. 8112799607",
+    "domain": "www.grupoexportadordelcampo.com",
+    "copyright": "© 2026 Grupo Exportador del Campo. Todos los derechos reservados."
+  },
+  "About": {
+    "title": "Quiénes Somos",
+    "subtitle": "Conoce el equipo y nuestra visión institucional",
+    "intro": "Grupo Exportador del Campo es un holding agroindustrial en transición de negocio familiar a institución corporativa. Llevamos lo mejor del campo a su mesa.",
+    "misionTitle": "Misión",
+    "mision": "Seguir la tradición de más de 3 generaciones de poner al alcance de los consumidores chiles y hortalizas de calidad, con alto valor agregado garantizando la máxima calidad del mercado.",
+    "visionTitle": "Visión",
+    "vision": "Empresa de producción y comercialización de altos volúmenes en mercados nacionales y extranjeros, con calidad sanitaria certificada y con una trazabilidad que dé confianza al cliente final.",
+    "valoresTitle": "Nuestros Valores",
+    "valores": {
+      "honestidad": { "title": "Honestidad", "desc": "Siempre entregando lo mejor para nuestros clientes" },
+      "compromiso": { "title": "Compromiso", "desc": "Dar lo mejor y cumplir para nuestros clientes" },
+      "humildad": { "title": "Humildad", "desc": "Siempre con respeto y humildad para atender a nuestros clientes" },
+      "profesionalismo": { "title": "Profesionalismo", "desc": "Equipo de trabajo responsable en dar lo mejor" },
+      "lealtad": { "title": "Lealtad", "desc": "Respetando a nuestros clientes y el compromiso de entregar lo mejor" },
+      "transparencia": { "title": "Transparencia", "desc": "Cuentas claras, con un servicio completo de principio a fin" }
+    },
+    "divisionesTitle": "Divisiones Principales",
+    "divisionCampo": { "title": "División Campo", "desc": "Nuestros campos de producción en Loreto, Zacatecas, donde nace la calidad de nuestros productos." },
+    "divisionSedis": { "title": "División Sedis", "desc": "Nuestros centros de distribución en Monterrey, enfocados en logística y alcance nacional e internacional." },
+    "fotoProximamente": "Fotografía próximamente"
+  },
+  "History": {
+    "title": "Nuestra Historia",
+    "subtitle": "Más de 50 años de legado agroindustrial",
+    "origen": "Hace más de 50 años, el Sr. Ramiro Vizcaíno inició la producción en Loreto, Zacatecas. Desde entonces, hemos crecido expandiendo nuestros horizontes a mercados en todo México y Estados Unidos, marcando el camino para las siguientes generaciones.",
+    "timeline": {
+      "fundacion": { "year": "Fundación", "title": "El inicio", "desc": "Sr. Ramiro Vizcaíno inicia producción en Loreto, Zacatecas" },
+      "crecimiento": { "year": "Crecimiento", "title": "Expansión internacional", "desc": "Expansión a mercados de México y Estados Unidos" },
+      "segundaGen": { "year": "Segunda generación", "title": "Consolidación", "desc": "Consolidación del modelo de negocio familiar" },
+      "expansionNorte": { "year": "Expansión Norte", "title": "Nuevas fronteras", "desc": "Llegada a San Nicolás de los Garza, Nuevo León" },
+      "terceraGen": { "year": "Tercera generación", "title": "Institucionalización", "desc": "Transición hacia institución corporativa (hoy)" }
+    },
+    "fundadoresTitle": "Fundadores",
+    "fundadoresDesc": "Su legado es el cimiento de lo que hoy es Grupo Exportador del Campo",
+    "fundador": "Fundador",
+    "fundadora": "Fundadora",
+    "galeriaTitle": "Material fotográfico de Zacatecas"
+  },
+  "Holding": {
+    "title": "Estructura Corporativa",
+    "subtitle": "Nuestra estructura corporativa y unidades de negocio",
+    "intro": "Grupo Exportador del Campo opera bajo una estructura corporativa sólida (similar a la estructura de FEMSA), organizada en unidades de negocio y divisiones estratégicas enfocadas en la excelencia, dirigida a instituciones y aliados comerciales.",
+    "unidadesTitle": "Unidades de Negocio",
+    "divisionesTitle": "Divisiones de Negocio",
+    "organigramaTitle": "Organigrama Corporativo",
+    "organigramaPlaceholder": "Estructura corporativa completa — En actualización"
+  },
+  "ContactPage": {
+    "title": "Contacto",
+    "subtitle": "Estamos aquí para escucharte",
+    "bienvenida": "Ya sea que seas proveedor, cliente o busques una alianza estratégica, estamos aquí para escucharte."
+  }
+}

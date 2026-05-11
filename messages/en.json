@@ -1,0 +1,129 @@
+{
+  "Navbar": {
+    "quienesSomos": "About Us",
+    "historia": "History",
+    "holding": "Holding",
+    "contacto": "Contact"
+  },
+  "Hero": {
+    "tagline": "More than 50 years bringing the best of the field to the world",
+    "subtitle": "Grupo Exportador del Campo: Tradition, Quality and Agricultural Excellence",
+    "cta": "Learn more"
+  },
+  "Features": {
+    "title": "Main Sections",
+    "quienesSomos": {
+      "title": "About Us",
+      "description": "Meet the team and our institutional vision"
+    },
+    "historia": {
+      "title": "History",
+      "description": "Over 50 years of agro-industrial legacy"
+    },
+    "holding": {
+      "title": "Holding",
+      "description": "Our corporate structure and business units"
+    },
+    "contacto": {
+      "title": "Contact",
+      "description": "Suppliers, clients, and strategic alliances"
+    }
+  },
+  "News": {
+    "title": "News",
+    "readMore": "Read more",
+    "comingSoon": "Coming soon"
+  },
+  "Divisions": {
+    "hortalizas": {
+      "title": "Vegetables (Vizcaíno Fruit's)",
+      "description": "Iceberg, Italian, Romaine, and Red lettuce"
+    },
+    "chiles": {
+      "title": "Spicy Peppers (Vizcaíno Premium)",
+      "description": "Jalapeño, serrano, poblano, anaheim, hungarian, onions"
+    },
+    "servicios": {
+      "title": "Services (Vizcaíno Services)",
+      "description": "Processing, refrigeration, storage, logistics"
+    }
+  },
+  "Contact": {
+    "title": "How can we help you?",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Enter your name",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@email.com",
+    "reasonLabel": "Reason for contact",
+    "reasons": {
+      "proveedor": "Supplier",
+      "cliente": "Client",
+      "alianza": "Strategic alliance",
+      "otro": "Other"
+    },
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write your message here...",
+    "submit": "Send message",
+    "sending": "Sending...",
+    "success": "Your message has been sent successfully. We will contact you soon."
+  },
+  "Footer": {
+    "address": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, Nuevo León",
+    "phone": "Tel. +52 8112799607",
+    "domain": "www.grupoexportadordelcampo.com",
+    "copyright": "© 2026 Grupo Exportador del Campo. All rights reserved."
+  },
+  "About": {
+    "title": "About Us",
+    "subtitle": "Meet the team and our institutional vision",
+    "intro": "Grupo Exportador del Campo is an agro-industrial holding transitioning from a family business to a corporate institution. We bring the best of the field to your table.",
+    "misionTitle": "Mission",
+    "mision": "To continue the tradition of over 3 generations by providing consumers with quality peppers and vegetables, with high added value guaranteeing the highest quality in the market.",
+    "visionTitle": "Vision",
+    "vision": "A high-volume production and marketing company in domestic and foreign markets, with certified sanitary quality and traceability that gives confidence to the end customer.",
+    "valoresTitle": "Our Values",
+    "valores": {
+      "honestidad": { "title": "Honesty", "desc": "Always delivering the best to our clients" },
+      "compromiso": { "title": "Commitment", "desc": "Giving our best and fulfilling our clients' needs" },
+      "humildad": { "title": "Humility", "desc": "Always serving our clients with respect and humility" },
+      "profesionalismo": { "title": "Professionalism", "desc": "A responsible team dedicated to giving its best" },
+      "lealtad": { "title": "Loyalty", "desc": "Respecting our clients and our commitment to deliver the best" },
+      "transparencia": { "title": "Transparency", "desc": "Clear accounts, with comprehensive service from start to finish" }
+    },
+    "divisionesTitle": "Main Divisions",
+    "divisionCampo": { "title": "Field Division", "desc": "Our production fields in Loreto, Zacatecas, where the quality of our products is born." },
+    "divisionSedis": { "title": "Sedis Division", "desc": "Our distribution centers in Monterrey, focused on logistics and national and international reach." },
+    "fotoProximamente": "Photo coming soon"
+  },
+  "History": {
+    "title": "Our History",
+    "subtitle": "Over 50 years of agro-industrial legacy",
+    "origen": "More than 50 years ago, Mr. Ramiro Vizcaíno started production in Loreto, Zacatecas. Since then, we have grown by expanding our horizons to markets throughout Mexico and the United States, paving the way for future generations.",
+    "timeline": {
+      "fundacion": { "year": "Foundation", "title": "The beginning", "desc": "Mr. Ramiro Vizcaíno begins production in Loreto, Zacatecas" },
+      "crecimiento": { "year": "Growth", "title": "International expansion", "desc": "Expansion to markets in Mexico and the United States" },
+      "segundaGen": { "year": "Second generation", "title": "Consolidation", "desc": "Consolidation of the family business model" },
+      "expansionNorte": { "year": "Northern Expansion", "title": "New frontiers", "desc": "Arrival in San Nicolás de los Garza, Nuevo León" },
+      "terceraGen": { "year": "Third generation", "title": "Institutionalization", "desc": "Transition to a corporate institution (today)" }
+    },
+    "fundadoresTitle": "Founders",
+    "fundadoresDesc": "Their legacy is the foundation of what Grupo Exportador del Campo is today",
+    "fundador": "Founder",
+    "fundadora": "Founder",
+    "galeriaTitle": "Zacatecas Photography Material"
+  },
+  "Holding": {
+    "title": "Corporate Structure",
+    "subtitle": "Our corporate structure and business units",
+    "intro": "Grupo Exportador del Campo operates under a solid corporate structure (similar to FEMSA's structure), organized into business units and strategic divisions focused on excellence, aimed at institutions and commercial allies.",
+    "unidadesTitle": "Business Units",
+    "divisionesTitle": "Business Divisions",
+    "organigramaTitle": "Corporate Organization Chart",
+    "organigramaPlaceholder": "Full corporate structure — Being updated"
+  },
+  "ContactPage": {
+    "title": "Contact",
+    "subtitle": "We are here to listen to you",
+    "bienvenida": "Whether you are a supplier, client, or looking for a strategic alliance, we are here to listen to you."
+  }
+}

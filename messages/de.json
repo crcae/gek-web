@@ -1,0 +1,129 @@
+{
+  "Navbar": {
+    "quienesSomos": "Über uns",
+    "historia": "Geschichte",
+    "holding": "Holding",
+    "contacto": "Kontakt"
+  },
+  "Hero": {
+    "tagline": "Mehr als 50 Jahre bringen wir das Beste vom Feld in die Welt",
+    "subtitle": "Grupo Exportador del Campo: Tradition, Qualität und landwirtschaftliche Exzellenz",
+    "cta": "Mehr erfahren"
+  },
+  "Features": {
+    "title": "Hauptbereiche",
+    "quienesSomos": {
+      "title": "Über uns",
+      "description": "Lernen Sie das Team und unsere institutionelle Vision kennen"
+    },
+    "historia": {
+      "title": "Geschichte",
+      "description": "Über 50 Jahre agro-industrielles Erbe"
+    },
+    "holding": {
+      "title": "Holding",
+      "description": "Unsere Unternehmensstruktur und Geschäftsbereiche"
+    },
+    "contacto": {
+      "title": "Kontakt",
+      "description": "Lieferanten, Kunden und strategische Allianzen"
+    }
+  },
+  "News": {
+    "title": "Neuigkeiten",
+    "readMore": "Weiterlesen",
+    "comingSoon": "Demnächst"
+  },
+  "Divisions": {
+    "hortalizas": {
+      "title": "Gemüse (Vizcaíno Fruit's)",
+      "description": "Eisbergsalat, Romana, roter und grüner Blattsalat"
+    },
+    "chiles": {
+      "title": "Scharfe Chilis (Vizcaíno Premium)",
+      "description": "Jalapeño, Serrano, Poblano, Anaheim, ungarische Paprika, Zwiebeln"
+    },
+    "servicios": {
+      "title": "Dienstleistungen (Vizcaíno Services)",
+      "description": "Verarbeitung, Kühlung, Lagerung, Logistik"
+    }
+  },
+  "Contact": {
+    "title": "Wie können wir Ihnen helfen?",
+    "nameLabel": "Vollständiger Name",
+    "namePlaceholder": "Geben Sie Ihren Namen ein",
+    "emailLabel": "E-Mail-Adresse",
+    "emailPlaceholder": "sie@email.com",
+    "reasonLabel": "Kontaktgrund",
+    "reasons": {
+      "proveedor": "Lieferant",
+      "cliente": "Kunde",
+      "alianza": "Strategische Allianz",
+      "otro": "Andere"
+    },
+    "messageLabel": "Nachricht",
+    "messagePlaceholder": "Schreiben Sie hier Ihre Nachricht...",
+    "submit": "Nachricht senden",
+    "sending": "Senden...",
+    "success": "Ihre Nachricht wurde erfolgreich gesendet. Wir werden uns in Kürze bei Ihnen melden."
+  },
+  "Footer": {
+    "address": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, Nuevo León",
+    "phone": "Tel. +52 8112799607",
+    "domain": "www.grupoexportadordelcampo.com",
+    "copyright": "© 2026 Grupo Exportador del Campo. Alle Rechte vorbehalten."
+  },
+  "About": {
+    "title": "Über uns",
+    "subtitle": "Lernen Sie das Team und unsere institutionelle Vision kennen",
+    "intro": "Die Grupo Exportador del Campo ist eine agro-industrielle Holding, die sich vom Familienunternehmen zur Unternehmensinstitution wandelt. Wir bringen das Beste vom Feld auf Ihren Tisch.",
+    "misionTitle": "Mission",
+    "mision": "Fortführung der Tradition von über 3 Generationen, indem wir den Verbrauchern Qualitäts-Chilis und -Gemüse mit hohem Mehrwert zur Verfügung stellen und die höchste Qualität auf dem Markt garantieren.",
+    "visionTitle": "Vision",
+    "vision": "Ein Produktions- und Vermarktungsunternehmen mit hohen Volumina auf nationalen und internationalen Märkten, mit zertifizierter hygienischer Qualität und Rückverfolgbarkeit, die dem Endkunden Vertrauen gibt.",
+    "valoresTitle": "Unsere Werte",
+    "valores": {
+      "honestidad": { "title": "Ehrlichkeit", "desc": "Immer das Beste für unsere Kunden liefern" },
+      "compromiso": { "title": "Engagement", "desc": "Unser Bestes geben und die Bedürfnisse unserer Kunden erfüllen" },
+      "humildad": { "title": "Demut", "desc": "Unsere Kunden immer mit Respekt und Demut bedienen" },
+      "profesionalismo": { "title": "Professionalität", "desc": "Ein verantwortungsbewusstes Team, das sein Bestes gibt" },
+      "lealtad": { "title": "Loyalität", "desc": "Respekt für unsere Kunden und unsere Verpflichtung, das Beste zu liefern" },
+      "transparencia": { "title": "Transparenz", "desc": "Klare Konten, mit umfassendem Service von Anfang bis Ende" }
+    },
+    "divisionesTitle": "Hauptbereiche",
+    "divisionCampo": { "title": "Bereich Feld", "desc": "Unsere Produktionsfelder in Loreto, Zacatecas, wo die Qualität unserer Produkte geboren wird." },
+    "divisionSedis": { "title": "Bereich Sedis", "desc": "Unsere Vertriebszentren in Monterrey, konzentriert auf Logistik und nationale sowie internationale Reichweite." },
+    "fotoProximamente": "Foto demnächst"
+  },
+  "History": {
+    "title": "Unsere Geschichte",
+    "subtitle": "Über 50 Jahre agro-industrielles Erbe",
+    "origen": "Vor mehr als 50 Jahren begann Herr Ramiro Vizcaíno mit der Produktion in Loreto, Zacatecas. Seitdem sind wir gewachsen und haben unsere Horizonte auf Märkte in ganz Mexiko und den USA ausgeweitet und so den Weg für die nächsten Generationen geebnet.",
+    "timeline": {
+      "fundacion": { "year": "Gründung", "title": "Der Anfang", "desc": "Herr Ramiro Vizcaíno beginnt die Produktion in Loreto, Zacatecas" },
+      "crecimiento": { "year": "Wachstum", "title": "Internationale Expansion", "desc": "Expansion in Märkte in Mexiko und den USA" },
+      "segundaGen": { "year": "Zweite Generation", "title": "Konsolidierung", "desc": "Konsolidierung des Geschäftsmodells der Familie" },
+      "expansionNorte": { "year": "Norderweiterung", "title": "Neue Grenzen", "desc": "Ankunft in San Nicolás de los Garza, Nuevo León" },
+      "terceraGen": { "year": "Dritte Generation", "title": "Institutionalisierung", "desc": "Übergang zur Unternehmensinstitution (heute)" }
+    },
+    "fundadoresTitle": "Gründer",
+    "fundadoresDesc": "Ihr Erbe ist das Fundament dessen, was die Grupo Exportador del Campo heute ist",
+    "fundador": "Gründer",
+    "fundadora": "Gründerin",
+    "galeriaTitle": "Zacatecas Fotomaterial"
+  },
+  "Holding": {
+    "title": "Unternehmensstruktur",
+    "subtitle": "Unsere Unternehmensstruktur und Geschäftsbereiche",
+    "intro": "Die Grupo Exportador del Campo operiert unter einer soliden Unternehmensstruktur (ähnlich der Struktur von FEMSA), organisiert in Geschäftseinheiten und strategischen Bereichen mit Fokus auf Exzellenz, gerichtet an Institutionen und kommerzielle Verbündete.",
+    "unidadesTitle": "Geschäftseinheiten",
+    "divisionesTitle": "Geschäftsbereiche",
+    "organigramaTitle": "Unternehmens-Organigramm",
+    "organigramaPlaceholder": "Vollständige Unternehmensstruktur — Wird aktualisiert"
+  },
+  "ContactPage": {
+    "title": "Kontakt",
+    "subtitle": "Wir sind hier, um Ihnen zuzuhören",
+    "bienvenida": "Egal ob Sie Lieferant, Kunde sind oder eine strategische Allianz suchen, wir sind hier, um Ihnen zuzuhören."
+  }
+}
