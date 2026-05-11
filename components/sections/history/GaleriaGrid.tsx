@@ -6,7 +6,7 @@ import { ImageIcon, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 export function GaleriaGrid({ images }: { images: string[] }) {
-  const t = useTranslations('History');
+  const t = useTranslations('historia');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const hasImages = images.length > 0;
@@ -28,7 +28,7 @@ export function GaleriaGrid({ images }: { images: string[] }) {
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-brand-navy/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="text-white bg-brand-green/80 p-2 rounded-full font-body text-sm">Ampliar</span>
+                <span className="text-white bg-brand-green/80 p-2 rounded-full font-body text-sm">{t('ampliar' as any)}</span>
               </div>
             </div>
           ))
@@ -37,7 +37,7 @@ export function GaleriaGrid({ images }: { images: string[] }) {
             <div key={item} className="relative aspect-square bg-brand-gray/20 rounded-sm flex flex-col items-center justify-center text-brand-navy/40 border border-brand-gray/50 border-dashed">
               <ImageIcon className="w-8 h-8 mb-2 opacity-50" />
               <span className="text-xs font-body max-w-[80%] text-center opacity-70">
-                {t('galeriaTitle')}
+                {t('galeria_titulo' as any)}
               </span>
             </div>
           ))
@@ -56,7 +56,7 @@ export function GaleriaGrid({ images }: { images: string[] }) {
           <div className="relative w-full max-w-5xl h-[80vh]" onClick={(e) => e.stopPropagation()}>
             <Image 
               src={selectedImage} 
-              alt="Vista ampliada"
+              alt={t('ampliar' as any)}
               fill
               className="object-contain"
             />

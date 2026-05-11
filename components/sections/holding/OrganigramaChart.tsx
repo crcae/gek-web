@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 type OrgNode = {
   id: string;
@@ -12,57 +13,59 @@ type OrgNode = {
   children?: OrgNode[];
 };
 
-const orgData: OrgNode[] = [
-  {
-    id: 'cedis',
-    name: 'CEDIS',
-    type: 'unit',
-    percentage: '100%',
-    location: 'Parque STIVA MTY',
-    children: [
-      { id: 'frescos', name: 'Frescos La Regia', type: 'sub', location: 'Parque STIVA MTY' },
-      { id: 'agricola-cedis', name: 'Agrícola Vive', type: 'sub', location: 'Aguascalientes' },
-    ]
-  },
-  {
-    id: 'ranchos',
-    name: 'Ranchos Producción',
-    type: 'unit',
-    percentage: '100%',
-    location: 'Loreto, Zacatecas',
-    children: [
-      { id: 'valdivias', name: "Valdivia's Secos", type: 'sub', location: 'Mercado de Abastos Estrella MTY' },
-    ]
-  },
-  {
-    id: 'planta',
-    name: 'Planta Preenfriamiento',
-    type: 'unit',
-    percentage: '100%',
-    location: 'Loreto, Zacatecas',
-    children: [
-      { id: 'agricola-planta', name: 'Agrícola Vive', type: 'sub', location: 'Aguascalientes' },
-    ]
-  },
-  {
-    id: 'vive',
-    name: 'Vive Produce LLC',
-    type: 'unit',
-    percentage: '100%',
-    location: 'McAllen, Texas',
-  },
-  {
-    id: 'pdv',
-    name: 'Puntos de Venta',
-    type: 'group',
-    children: [
-      { id: 'bodega-124', name: 'Bodega 124', type: 'unit', percentage: '100%', location: 'Mercado de Abastos Estrella, MTY' },
-      { id: 'bodega-90', name: 'Bodega 90', type: 'unit', percentage: '100%', location: 'Mercado de Abastos GDL' },
-    ]
-  }
-];
-
 export function OrganigramaChart() {
+  const t = useTranslations('holding');
+  
+  const orgData: OrgNode[] = [
+    {
+      id: 'cedis',
+      name: 'CEDIS',
+      type: 'unit',
+      percentage: '100%',
+      location: 'Parque STIVA MTY',
+      children: [
+        { id: 'frescos', name: 'Frescos La Regia', type: 'sub', location: 'Parque STIVA MTY' },
+        { id: 'agricola-cedis', name: 'Agrícola Vive', type: 'sub', location: 'Aguascalientes' },
+      ]
+    },
+    {
+      id: 'ranchos',
+      name: t('ranchos_name'),
+      type: 'unit',
+      percentage: '100%',
+      location: 'Loreto, Zacatecas',
+      children: [
+        { id: 'valdivias', name: "Valdivia's Secos", type: 'sub', location: 'Mercado de Abastos Estrella MTY' },
+      ]
+    },
+    {
+      id: 'planta',
+      name: t('planta_name'),
+      type: 'unit',
+      percentage: '100%',
+      location: 'Loreto, Zacatecas',
+      children: [
+        { id: 'agricola-planta', name: 'Agrícola Vive', type: 'sub', location: 'Aguascalientes' },
+      ]
+    },
+    {
+      id: 'vive',
+      name: 'Vive Produce LLC',
+      type: 'unit',
+      percentage: '100%',
+      location: 'McAllen, Texas',
+    },
+    {
+      id: 'pdv',
+      name: t('pdv_name'),
+      type: 'group',
+      children: [
+        { id: 'bodega-124', name: 'Bodega 124', type: 'unit', percentage: '100%', location: 'Mercado de Abastos Estrella, MTY' },
+        { id: 'bodega-90', name: 'Bodega 90', type: 'unit', percentage: '100%', location: 'Mercado de Abastos GDL' },
+      ]
+    }
+  ];
+
   return (
     <div className="w-full">
       {/* Desktop View */}
@@ -99,7 +102,6 @@ export function OrganigramaChart() {
             </g>
           </svg>
 
-          {/* Root Node */}
           <div className="absolute flex flex-col items-center justify-center bg-white" style={{ left: 450, top: 20, width: 300, height: 80 }}>
             <div className="flex items-center gap-4">
               <div className="flex flex-col text-center">
@@ -115,17 +117,17 @@ export function OrganigramaChart() {
           <SubNode x={30} y={330} name="Frescos La Regia" location="Parque STIVA MTY" />
           <SubNode x={30} y={470} name="Agrícola Vive" location="Aguascalientes" />
 
-          <UnitNode x={270} y={160} name="Ranchos Producción" location="Loreto, Zacatecas" />
-          <SubNode x={270} y={330} name="Valdivia's Secos" location="Mercado de Abastos Estrella MTY" />
+          <UnitNode x={270} y={160} name={orgData[1].name} location="Loreto, Zacatecas" />
+          <SubNode x={270} y={330} name="Valdivia's Secos" location="Abastos Estrella MTY" />
 
-          <UnitNode x={510} y={160} name="Planta Preenfriamiento" location="Loreto, Zacatecas" />
+          <UnitNode x={510} y={160} name={orgData[2].name} location="Loreto, Zacatecas" />
           <SubNode x={510} y={330} name="Agrícola Vive" location="Aguascalientes" />
 
           <UnitNode x={750} y={160} name="Vive Produce LLC" location="McAllen, Texas" />
 
           {/* PDV Group Label */}
           <div className="absolute text-center flex items-center justify-center" style={{ left: 990, top: 160, width: 180, height: 40 }}>
-            <span className="font-display font-bold text-brand-navy text-lg">Puntos de Venta</span>
+            <span className="font-display font-bold text-brand-navy text-lg">{orgData[4].name}</span>
           </div>
           {/* PDV Children */}
           <UnitNode x={990} y={220} name="Bodega 124" location="Mercado de Abastos Estrella, MTY" />

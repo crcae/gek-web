@@ -1,27 +1,33 @@
-import { getContenido } from '@/lib/contenido';
+import { getContenidoCached } from '@/lib/queries/cache';
+import { getTranslations } from 'next-intl/server';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 
 export async function MetricsSection({ locale }: { locale: string }) {
-  const [
-    m1Num, m1Lab, m1Desc,
-    m2Num, m2Lab, m2Desc,
-    m3Num, m3Lab, m3Desc
-  ] = await Promise.all([
-    getContenido('home.metrica1.numero', locale),
-    getContenido('home.metrica1.label', locale),
-    getContenido('home.metrica1.descripcion', locale),
-    getContenido('home.metrica2.numero', locale),
-    getContenido('home.metrica2.label', locale),
-    getContenido('home.metrica2.descripcion', locale),
-    getContenido('home.metrica3.numero', locale),
-    getContenido('home.metrica3.label', locale),
-    getContenido('home.metrica3.descripcion', locale),
+  const ids = [
+    'home.metrica1.numero', 'home.metrica1.label', 'home.metrica1.descripcion',
+    'home.metrica2.numero', 'home.metrica2.label', 'home.metrica2.descripcion',
+    'home.metrica3.numero', 'home.metrica3.label', 'home.metrica3.descripcion'
+  ];
+
+  const [contenido, t] = await Promise.all([
+    getContenidoCached(ids, locale),
+    getTranslations('metricas'),
   ]);
 
+  const m1Num = contenido['home.metrica1.numero'];
+  const m1Lab = contenido['home.metrica1.label'];
+  const m1Desc = contenido['home.metrica1.descripcion'];
+  const m2Num = contenido['home.metrica2.numero'];
+  const m2Lab = contenido['home.metrica2.label'];
+  const m2Desc = contenido['home.metrica2.descripcion'];
+  const m3Num = contenido['home.metrica3.numero'];
+  const m3Lab = contenido['home.metrica3.label'];
+  const m3Desc = contenido['home.metrica3.descripcion'];
+
   const metrics = [
-    { num: m1Num ?? '+50', label: m1Lab ?? 'Años de experiencia', desc: m1Desc ?? 'Produciendo y exportando desde Zacatecas' },
-    { num: m2Num ?? '25,000', label: m2Lab ?? 'Toneladas exportadas', desc: m2Desc ?? 'En mercados de México y Estados Unidos' },
-    { num: m3Num ?? '+120', label: m3Lab ?? 'Colaboradores', desc: m3Desc ?? 'En nuestras unidades de negocio' },
+    { num: m1Num ?? '+50', label: m1Lab ?? t('anos_label'), desc: m1Desc ?? t('anos_desc') },
+    { num: m2Num ?? '25,000', label: m2Lab ?? t('toneladas_label'), desc: m2Desc ?? t('toneladas_desc') },
+    { num: m3Num ?? '+120', label: m3Lab ?? t('colaboradores_label'), desc: m3Desc ?? t('colaboradores_desc') },
   ];
 
   return (

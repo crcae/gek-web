@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ImageIcon, ShieldCheck } from 'lucide-react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 export function SupplyChainCarousel({ 
   images, 
@@ -15,6 +16,7 @@ export function SupplyChainCarousel({
   subtitle: string;
   hasPrimus: boolean;
 }) {
+  const t = useTranslations('quienes');
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -119,7 +121,7 @@ export function SupplyChainCarousel({
             ) : (
               <div className="bg-white border-2 border-brand-green rounded-sm px-3 py-2 flex items-center gap-2 shadow-sm">
                 <ShieldCheck className="w-5 h-5 text-brand-green" />
-                <span className="font-display font-bold text-brand-navy text-xs md:text-sm">Certificación Primus</span>
+                <span className="font-display font-bold text-brand-navy text-xs md:text-sm">{t('primus_badge' as any)}</span>
               </div>
             )}
           </div>

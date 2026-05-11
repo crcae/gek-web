@@ -20,7 +20,8 @@ const inputClass = (hasError: boolean) =>
   }`;
 
 export function ContactFormSection() {
-  const t = useTranslations('Contact');
+  const t = useTranslations('contacto');
+  const tHome = useTranslations('home');
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -59,7 +60,7 @@ export function ContactFormSection() {
         <div className="text-center mb-10">
           <AnimatedSection animation="fade-up">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-              {t('title')}
+              {tHome('contacto_rapido_titulo')}
             </h2>
           </AnimatedSection>
           <AnimatedLine className="h-[2px] bg-brand-green mx-auto" />
@@ -67,13 +68,13 @@ export function ContactFormSection() {
 
         {isSuccess ? (
           <div className="bg-brand-green/10 border border-brand-green text-brand-navy p-6 rounded-md text-center font-body">
-            <h3 className="font-bold text-lg mb-2 text-brand-green">¡Gracias!</h3>
-            <p>{t('success')}</p>
+            <h3 className="font-bold text-lg mb-2 text-brand-green">OK</h3>
+            <p>{t('exito')}</p>
             <button
               onClick={() => setIsSuccess(false)}
               className="mt-6 text-brand-green underline hover:text-brand-navy transition-colors text-sm min-h-[44px] px-4"
             >
-              Enviar otro mensaje
+              OK
             </button>
           </div>
         ) : (
@@ -82,12 +83,12 @@ export function ContactFormSection() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col space-y-2">
                   <label htmlFor="nombre" className="text-brand-navy font-medium text-sm">
-                    {t('nameLabel')} *
+                    {t('nombre')} *
                   </label>
                   <input
                     id="nombre"
                     type="text"
-                    placeholder={t('namePlaceholder')}
+                    placeholder={t('nombre')}
                     className={inputClass(!!errors.nombre)}
                     {...register('nombre', { required: true })}
                   />
@@ -95,12 +96,12 @@ export function ContactFormSection() {
 
                 <div className="flex flex-col space-y-2">
                   <label htmlFor="email" className="text-brand-navy font-medium text-sm">
-                    {t('emailLabel')} *
+                    {t('email')} *
                   </label>
                   <input
                     id="email"
                     type="email"
-                    placeholder={t('emailPlaceholder')}
+                    placeholder={t('email')}
                     className={inputClass(!!errors.email)}
                     {...register('email', {
                       required: true,
@@ -112,36 +113,36 @@ export function ContactFormSection() {
 
               <div className="flex flex-col space-y-2">
                 <label htmlFor="razonContacto" className="text-brand-navy font-medium text-sm">
-                  {t('reasonLabel')} *
+                  {t('razon')} *
                 </label>
                 <select
                   id="razonContacto"
                   className={`${inputClass(!!errors.razonContacto)} cursor-pointer`}
                   {...register('razonContacto', { required: true })}
                 >
-                  <option value="">-- Selecciona --</option>
-                  <option value="proveedor">{t('reasons.proveedor')}</option>
-                  <option value="cliente">{t('reasons.cliente')}</option>
-                  <option value="alianza">{t('reasons.alianza')}</option>
-                  <option value="otro">{t('reasons.otro')}</option>
+                  <option value="">...</option>
+                  <option value="proveedor">{t('razon_proveedor')}</option>
+                  <option value="cliente">{t('razon_cliente')}</option>
+                  <option value="alianza">{t('razon_alianza')}</option>
+                  <option value="otro">{t('razon_otro')}</option>
                 </select>
               </div>
 
               <div className="flex flex-col space-y-2">
                 <label htmlFor="mensaje" className="text-brand-navy font-medium text-sm">
-                  {t('messageLabel')} *
+                  {t('mensaje')} *
                 </label>
                 <textarea
                   id="mensaje"
                   rows={5}
-                  placeholder={t('messagePlaceholder')}
+                  placeholder={t('mensaje')}
                   className={`${inputClass(!!errors.mensaje)} resize-none`}
                   {...register('mensaje', { required: true })}
                 />
               </div>
 
               {isError && (
-                <p className="text-red-500 text-sm">Hubo un error al enviar tu mensaje. Intenta de nuevo.</p>
+                <p className="text-red-500 text-sm">{t('error')}</p>
               )}
 
               <button
@@ -149,7 +150,7 @@ export function ContactFormSection() {
                 disabled={isSubmitting}
                 className="btn-primary w-full bg-brand-green text-white font-medium py-4 px-6 min-h-[44px] hover:bg-opacity-90 transition-all rounded-sm disabled:opacity-50 flex items-center justify-center space-x-2"
               >
-                <span>{isSubmitting ? t('sending') : t('submit')}</span>
+                <span>{t('enviar')}</span>
               </button>
             </form>
           </AnimatedSection>

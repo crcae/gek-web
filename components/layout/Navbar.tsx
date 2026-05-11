@@ -2,20 +2,19 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 
 export function Navbar() {
-  const t = useTranslations('Navbar');
+  const t = useTranslations('nav');
+  const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef<HTMLElement>(null);
-
-  const currentLocale = pathname.split('/')[1] || 'es';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 30);
@@ -23,18 +22,18 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLanguageChange = (locale: string) => {
+  const handleLanguageChange = (newLocale: string) => {
     const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}/, '');
-    router.push(`/${locale}${pathWithoutLocale === '' ? '/' : pathWithoutLocale}`);
+    router.push(`/${newLocale}${pathWithoutLocale === '' ? '/' : pathWithoutLocale}`);
     setIsOpen(false);
   };
 
   const navLinks = [
-    { key: 'inicio', label: 'Inicio', href: `/${currentLocale}` },
-    { key: 'quienesSomos', label: t('quienesSomos'), href: `/${currentLocale}/quienes-somos` },
-    { key: 'historia', label: t('historia'), href: `/${currentLocale}/historia` },
-    { key: 'holding', label: t('holding'), href: `/${currentLocale}/holding` },
-    { key: 'contacto', label: t('contacto'), href: `/${currentLocale}/contacto` },
+    { key: 'inicio', label: t('home'), href: `/${locale}` },
+    { key: 'quienesSomos', label: t('quienes'), href: `/${locale}/quienes-somos` },
+    { key: 'historia', label: t('historia'), href: `/${locale}/historia` },
+    { key: 'holding', label: t('holding'), href: `/${locale}/holding` },
+    { key: 'contacto', label: t('contacto'), href: `/${locale}/contacto` },
   ];
 
   // Close menu on outside click
@@ -66,10 +65,10 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <div className="flex-shrink-0 flex items-center">
-          <Link href={`/${currentLocale}`} onClick={() => setIsOpen(false)} className="block">
+          <Link href={`/${locale}`} prefetch={true} onClick={() => setIsOpen(false)} className="block">
             <Image
               src="/images/logos/GrupoExportador_Logo1.png"
-              alt="Grupo Exportador del Campo"
+              alt={t('logo_alt')}
               width={180}
               height={55}
               priority
@@ -86,6 +85,7 @@ export function Navbar() {
             <Link
               key={link.key}
               href={link.href}
+              prefetch={true}
               className={`nav-link text-brand-white hover:text-brand-green transition-colors font-body text-sm ${
                 pathname === link.href ? 'active' : ''
               }`}
@@ -102,7 +102,7 @@ export function Navbar() {
             <select
               onChange={(e) => handleLanguageChange(e.target.value)}
               className="bg-brand-navy text-brand-white border border-brand-gray/30 rounded-md py-1 px-2 font-body text-xs focus:outline-none focus:border-brand-green cursor-pointer"
-              value={currentLocale}
+              value={locale}
             >
               <option value="es">ES</option>
               <option value="en">EN</option>
@@ -114,7 +114,7 @@ export function Navbar() {
           <button
             className="lg:hidden text-brand-white p-2 rounded-md hover:bg-brand-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setIsOpen((prev) => !prev)}
-            aria-label={isOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-label={isOpen ? t('cerrar_menu') : t('abrir_menu')}
             aria-expanded={isOpen}
           >
             {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -134,6 +134,7 @@ export function Navbar() {
               <Link
                 key={link.key}
                 href={link.href}
+                prefetch={true}
                 onClick={() => setIsOpen(false)}
                 className={`font-display text-lg text-brand-white hover:text-brand-green transition-colors py-4 px-2 ${
                   i !== navLinks.length - 1 ? 'border-b border-brand-white/10' : ''
@@ -146,17 +147,17 @@ export function Navbar() {
 
           {/* Language row at bottom */}
           <div className="mt-6 pt-4 border-t border-brand-white/10 flex items-center gap-4">
-            {['es', 'en', 'de'].map((locale) => (
+            {['es', 'en', 'de'].map((l) => (
               <button
-                key={locale}
-                onClick={() => handleLanguageChange(locale)}
+                key={l}
+                onClick={() => handleLanguageChange(l)}
                 className={`font-body text-sm font-medium min-h-[44px] px-3 rounded-md transition-colors ${
-                  currentLocale === locale
+                  locale === l
                     ? 'text-brand-green border border-brand-green'
                     : 'text-brand-white/60 hover:text-brand-white'
                 }`}
               >
-                {locale.toUpperCase()}
+                {l.toUpperCase()}
               </button>
             ))}
           </div>

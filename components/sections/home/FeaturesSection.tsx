@@ -5,13 +5,15 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
 
 export function FeaturesSection({ locale }: { locale: string }) {
-  const t = useTranslations('Features');
+  const t = useTranslations('features');
+  const tHome = useTranslations('home');
+  const tNav = useTranslations('nav');
 
   const features = [
-    { id: 'quienesSomos', href: `/${locale}/quienes-somos`, icon: Users },
-    { id: 'historia', href: `/${locale}/historia`, icon: BookOpen },
-    { id: 'holding', href: `/${locale}/holding`, icon: Building2 },
-    { id: 'contacto', href: `/${locale}/contacto`, icon: Phone },
+    { id: 'quienes', href: `/${locale}/quienes-somos`, icon: Users, descKey: 'quienes_desc' },
+    { id: 'historia', href: `/${locale}/historia`, icon: BookOpen, descKey: 'historia_desc' },
+    { id: 'holding', href: `/${locale}/holding`, icon: Building2, descKey: 'holding_desc' },
+    { id: 'contacto', href: `/${locale}/contacto`, icon: Phone, descKey: 'contacto_desc' },
   ];
 
   return (
@@ -20,7 +22,7 @@ export function FeaturesSection({ locale }: { locale: string }) {
         <div className="flex flex-col items-center mb-12 text-center">
           <AnimatedSection animation="fade-up">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-              {t('title' as any)}
+              {tHome('secciones_titulo')}
             </h2>
           </AnimatedSection>
           <AnimatedLine className="h-[3px] bg-brand-green" />
@@ -41,10 +43,10 @@ export function FeaturesSection({ locale }: { locale: string }) {
                       <Icon className="w-7 h-7 text-brand-navy group-hover:text-brand-green transition-colors" />
                     </div>
                     <h3 className="font-display text-xl font-bold text-brand-navy mb-3">
-                      {t(`${feature.id}.title` as any)}
+                      {tNav(feature.id as any)}
                     </h3>
                     <p className="font-body text-brand-navy/70 leading-relaxed flex-grow">
-                      {t(`${feature.id}.description` as any)}
+                      {t(feature.descKey as any)}
                     </p>
                   </div>
                 </Link>

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/db';
 
@@ -19,6 +20,14 @@ export async function POST(req: Request) {
 
   const noticia = await prisma.noticia.create({
     data: { titulo_es, linkedinEmbedUrl, publicada: !!publicada },
+  });
+
+  // Revalidar noticias
+  revalidateTag('noticias');
+  
+  // Revalidar home (donde se ven las noticias)
+  ['es', 'en', 'de'].forEach(locale => {
+    revalidatePath(`/${locale}`);
   });
 
   return NextResponse.json({ ok: true, id: noticia.id });

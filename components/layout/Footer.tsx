@@ -3,11 +3,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export function Footer({ locale }: { locale: string }) {
-  const t = useTranslations('Footer');
-  const tNav = useTranslations('Navbar');
+  const t = useTranslations('footer');
+  const tNav = useTranslations('nav');
 
   const links = [
-    { id: 'quienesSomos', href: `/${locale}/quienes-somos` },
+    { id: 'quienes', href: `/${locale}/quienes-somos` },
     { id: 'historia', href: `/${locale}/historia` },
     { id: 'holding', href: `/${locale}/holding` },
     { id: 'contacto', href: `/${locale}/contacto` }
@@ -29,15 +29,16 @@ export function Footer({ locale }: { locale: string }) {
             />
           </Link>
           <div className="text-brand-white/70 font-body space-y-2 text-sm">
-            <p>{t('address')}</p>
-            <p>{t('phone')}</p>
-            <p>{t('domain')}</p>
+            <p>{t('direccion')}</p>
+            <p>{t('tel')}</p>
+            <p>{t('web')}</p>
           </div>
         </div>
 
         {/* Right Column */}
         <div className="flex flex-col items-center md:items-end">
           <nav className="flex flex-col items-center md:items-end space-y-3 mb-8">
+            <h4 className="text-brand-white font-display font-bold mb-2">{t('nav_titulo')}</h4>
             {links.map((link) => (
               <Link
                 key={link.id}
@@ -53,10 +54,10 @@ export function Footer({ locale }: { locale: string }) {
 
       {/* Copyright */}
       <div className="max-w-7xl mx-auto relative z-10 mt-16 pt-8 border-t border-brand-white/10 text-center text-brand-white/50 text-xs font-body flex flex-col md:flex-row justify-between items-center gap-4">
-        <p>{t('copyright')}</p>
+        <p>{t('derechos')}</p>
         <div className="flex space-x-4">
-          <Link href={`/${locale}/privacidad`} className="hover:text-brand-white transition-colors">Aviso de Privacidad</Link>
-          <Link href={`/${locale}/terminos`} className="hover:text-brand-white transition-colors">Términos y Condiciones</Link>
+          <Link href={`/${locale}/privacidad`} className="hover:text-brand-white transition-colors">{t('privacidad')}</Link>
+          <Link href={`/${locale}/terminos`} className="hover:text-brand-white transition-colors">{t('terminos')}</Link>
         </div>
       </div>
     </footer>

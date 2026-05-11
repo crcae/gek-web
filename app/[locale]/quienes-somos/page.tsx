@@ -4,45 +4,52 @@ import { ValoresGrid } from '@/components/sections/about/ValoresGrid';
 import { SupplyChainCarousel } from '@/components/sections/about/SupplyChainCarousel';
 import { ImageIcon } from 'lucide-react';
 import Image from 'next/image';
-import { getContenido } from '@/lib/contenido';
+import { getContenidoCached } from '@/lib/queries/cache';
 import { prisma } from '@/lib/db';
 import fs from 'fs';
 import path from 'path';
 
 export default async function QuienesSomos({ params: { locale } }: { params: { locale: string } }) {
-  const t = await getTranslations('About');
-
-  const [intro, mision, vision, cadenaTitulo, cadenaSubtitulo] = await Promise.all([
-    getContenido('quienes.intro', locale),
-    getContenido('quienes.mision', locale),
-    getContenido('quienes.vision', locale),
-    getContenido('quienes.cadena.titulo', locale),
-    getContenido('quienes.cadena.subtitulo', locale),
-  ]);
-
-  // Leer imágenes de la BD (sección zacatecas)
-  const dbImages = await prisma.imagenSitio.findMany({
-    where: { seccion: 'zacatecas' },
-    orderBy: { createdAt: 'desc' },
-  });
-
-  const zacatecasImages = dbImages
-    .filter(img => fs.existsSync(path.join(process.cwd(), 'public', img.url)))
-    .map(img => img.url);
-
-  // Seleccionamos máximo 10 fotos representativas para el carrusel
-  const carouselImages = zacatecasImages.slice(0, 10);
-
-  const hasPrimus = fs.existsSync(path.join(process.cwd(), 'public/images/logos/PrimusGFS_Logo_web.png'));
+  const t = await getTranslations('quienes');
 
   const idsValores = ['honestidad', 'compromiso', 'humildad', 'profesionalismo', 'lealtad', 'transparencia'];
-  const valoresDesc = await Promise.all(
-    idsValores.map(id => getContenido(`quienes.valor.${id}`, locale))
-  );
+  
+  const contenido = await getContenidoCached([
+    'quienes.intro',
+    'quienes.mision',
+    'quienes.vision',
+    'quienes.cadena.titulo',
+    'quienes.cadena.subtitulo',
+    ...idsValores.map(id => `quienes.valor.${id}`)
+  ], locale);
+
+  const intro = contenido['quienes.intro'];
+  const mision = contenido['quienes.mision'];
+  const vision = contenido['quienes.vision'];
+  const cadenaTitulo = contenido['quienes.cadena.titulo'];
+  const cadenaSubtitulo = contenido['quienes.cadena.subtitulo'];
+  
+  const valoresDesc = idsValores.map(id => contenido[`quienes.valor.${id}`]);
+
+  // Leer fotos de Zacatecas del filesystem
+  let fotosZacatecas: string[] = [];
+  try {
+    const carpetaZacatecas = path.join(process.cwd(), 'public/images/zacatecas');
+    if (fs.existsSync(carpetaZacatecas)) {
+      fotosZacatecas = fs.readdirSync(carpetaZacatecas)
+        .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
+        .map(f => `/images/zacatecas/${f}`);
+    }
+  } catch (err) {
+    console.error('Error reading zacatecas folder:', err);
+  }
+
+  const carouselImages = fotosZacatecas.slice(0, 8);
+  const hasPrimus = fs.existsSync(path.join(process.cwd(), 'public/images/logos/PrimusGFS_Logo_web.png'));
 
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHero title={t('title')} subtitle={t('subtitle')} />
+      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} />
 
       {/* Intro — foto debajo del texto en mobile */}
       <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
@@ -53,7 +60,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
             </h2>
             <div className="w-[60px] h-[3px] bg-brand-green mb-6" />
             <p className="font-body text-brand-navy/80 text-lg leading-relaxed">
-              {intro ?? t('intro')}
+              {intro || t('intro_titulo')}
             </p>
           </div>
           <div className="w-full md:w-1/2">
@@ -74,8 +81,8 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       {/* Carrusel Cadena de Suministro */}
       <SupplyChainCarousel 
         images={carouselImages}
-        title={cadenaTitulo ?? 'Control sobre la cadena de suministro completa'}
-        subtitle={cadenaSubtitulo ?? '3 generaciones amando el campo'}
+        title={cadenaTitulo || t('cadena_titulo')}
+        subtitle={cadenaSubtitulo || t('cadena_subtitulo')}
         hasPrimus={hasPrimus}
       />
 
@@ -84,18 +91,18 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-brand-white p-8 md:p-10 rounded-sm border-t-[3px] border-brand-green shadow-sm">
             <h3 className="font-display text-2xl font-bold text-brand-navy mb-4">
-              {t('misionTitle')}
+              {t('mision_titulo')}
             </h3>
             <p className="font-body text-brand-navy/80 leading-relaxed text-lg">
-              {mision ?? t('mision')}
+              {mision || t('mision_titulo')}
             </p>
           </div>
           <div className="bg-brand-white p-8 md:p-10 rounded-sm border-t-[3px] border-brand-green shadow-sm">
             <h3 className="font-display text-2xl font-bold text-brand-navy mb-4">
-              {t('visionTitle')}
+              {t('vision_titulo')}
             </h3>
             <p className="font-body text-brand-navy/80 leading-relaxed text-lg">
-              {vision ?? t('vision')}
+              {vision || t('vision_titulo')}
             </p>
           </div>
         </div>
@@ -109,21 +116,21 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-12">
           <div className="w-full md:w-1/2 md:border-r md:border-brand-white/10 md:pr-12">
             <h3 className="font-display text-2xl font-bold text-brand-green mb-4">
-              {t('divisionCampo.title')}
+              {t('division_campo_titulo')}
             </h3>
             <p className="font-body text-brand-white/80 leading-relaxed text-lg">
-              {t('divisionCampo.desc')}
+              {t('division_campo_titulo')}
             </p>
           </div>
           <div className="w-full md:w-1/2 md:pl-4">
             <h3 className="font-display text-2xl font-bold text-brand-green mb-4">
-              {t('divisionSedis.title')}
+              {t('division_sedis_titulo')}
             </h3>
             <p className="font-body text-brand-white/80 leading-relaxed text-lg mb-6">
-              {t('divisionSedis.desc')}
+              {t('division_sedis_titulo')}
             </p>
             <div className="w-full h-32 bg-brand-white/5 rounded-sm flex items-center justify-center border border-brand-white/10 border-dashed">
-              <span className="font-body text-brand-white/40 text-sm">{t('fotoProximamente')} (Monterrey)</span>
+              <span className="font-body text-brand-white/40 text-sm">...</span>
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
 
 export function ValoresGrid({ dbValores }: { dbValores?: { id: string, desc: string | null }[] }) {
-  const t = useTranslations('About');
+  const t = useTranslations('quienes');
 
   const valores = [
     { id: 'honestidad', icon: Target },
@@ -23,7 +23,7 @@ export function ValoresGrid({ dbValores }: { dbValores?: { id: string, desc: str
         <div className="flex flex-col items-center mb-12 text-center">
           <AnimatedSection animation="fade-up">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
-              {t('valoresTitle')}
+              {t('valores_titulo')}
             </h2>
           </AnimatedSection>
           <AnimatedLine className="h-[3px] bg-brand-green" />
@@ -42,10 +42,10 @@ export function ValoresGrid({ dbValores }: { dbValores?: { id: string, desc: str
                     <Icon className="w-6 h-6" />
                   </div>
                   <h3 className="font-display text-xl font-bold text-brand-navy mb-3">
-                    {t(`valores.${valor.id}.title` as any)}
+                    {t(valor.id as any)}
                   </h3>
                   <p className="font-body text-brand-navy/70 leading-relaxed">
-                    {dbVal?.desc || t(`valores.${valor.id}.desc` as any)}
+                    {dbVal?.desc || ''}
                   </p>
                 </div>
               </AnimatedSection>

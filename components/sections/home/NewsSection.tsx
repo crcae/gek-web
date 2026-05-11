@@ -14,7 +14,7 @@ interface Noticia {
 }
 
 export function NewsSection({ noticias }: { noticias: Noticia[], locale: string }) {
-  const t = useTranslations('News');
+  const t = useTranslations('home');
 
   const hasNews = noticias && noticias.length > 0;
 
@@ -24,7 +24,7 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
         <div className="flex flex-col items-center mb-12">
           <AnimatedSection animation="fade-up">
             <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4 text-center">
-              {t('title')}
+              {t('noticias_titulo')}
             </h2>
           </AnimatedSection>
           <AnimatedLine className="h-[2px] bg-brand-green" />
@@ -68,10 +68,10 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
                 <LinkedinIcon className="w-8 h-8" />
               </div>
               <h3 className="font-display text-2xl font-bold text-brand-navy mb-3">
-                Conecta con nosotros en LinkedIn
+                {t('noticias_titulo')}
               </h3>
               <p className="font-body text-gray-600 mb-8 max-w-lg mx-auto">
-                Próximamente compartiremos noticias y actualizaciones desde nuestra página corporativa oficial de LinkedIn.
+                {t('noticias_vacia')}
               </p>
               <a
                 href="https://www.linkedin.com/company/grupo-exportador-del-campo/posts/?feedView=all"
@@ -80,7 +80,7 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
                 className="inline-flex items-center gap-2 bg-[#0A66C2] text-white px-6 py-3 rounded-md font-medium hover:bg-[#084e96] transition-colors shadow-sm"
               >
                 <LinkedinIcon className="w-5 h-5" />
-                Seguirnos en LinkedIn →
+                {t('noticias_linkedin_btn')} →
               </a>
             </div>
           </AnimatedSection>

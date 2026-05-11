@@ -2,11 +2,9 @@ import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { routing } from './lib/routing';
 
-const intlMiddleware = createMiddleware({
-  locales: ['es', 'en', 'de'],
-  defaultLocale: 'es',
-});
+const intlMiddleware = createMiddleware(routing);
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

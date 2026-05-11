@@ -1,10 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import Image from 'next/image';
+import { getTranslations } from 'next-intl/server';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
 
 export async function BrandsSection() {
+  const t = await getTranslations('home');
   const brands = [
     { name: "Vizcaíno Fruit's", file: 'VizcainoFruits_Logo.png' },
     { name: 'Vizcaíno Premium', file: 'VizcainoPremium_Logo_web.png' },
@@ -26,7 +28,7 @@ export async function BrandsSection() {
         <div className="flex flex-col items-center mb-16 text-center">
           <AnimatedSection animation="fade-up">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-              Nuestras empresas y marcas
+              {t('marcas_titulo')}
             </h2>
           </AnimatedSection>
           <AnimatedLine className="h-[3px] bg-brand-green" />
@@ -54,7 +56,7 @@ export async function BrandsSection() {
                   <span className="font-display font-bold text-brand-navy text-xl text-center px-4">
                     {brand.name}
                   </span>
-                  <span className="font-body text-xs text-brand-navy/40 mt-2">Próximamente</span>
+                  <span className="font-body text-xs text-brand-navy/40 mt-2">{t('proximamente')}</span>
                 </div>
               )}
             </AnimatedSection>

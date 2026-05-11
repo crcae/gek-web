@@ -1,38 +1,39 @@
 import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { OrganigramaChart } from '@/components/sections/holding/OrganigramaChart';
-import { getUnidadesNegocio } from '@/lib/queries/holding';
+import { getUnidadesNegocioCached, getContenidoCached } from '@/lib/queries/cache';
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
-import { getContenido } from '@/lib/contenido';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
 import fs from 'fs';
 import path from 'path';
 
 export default async function Holding({ params: { locale } }: { params: { locale: string } }) {
-  const t = await getTranslations('Holding');
+  const t = await getTranslations('holding');
 
-  // Fetch from DB
-  const [
-    intro, 
-    unidades, 
-    m1Nombre, m1Desc, m1Prod,
-    m2Nombre, m2Desc, m2Prod,
-    m3Nombre, m3Desc, m3Prod
-  ] = await Promise.all([
-    getContenido('holding.intro', locale),
-    getUnidadesNegocio(),
-    getContenido('holding.marca1.nombre', locale),
-    getContenido('holding.marca1.descripcion', locale),
-    getContenido('holding.marca1.productos', locale),
-    getContenido('holding.marca2.nombre', locale),
-    getContenido('holding.marca2.descripcion', locale),
-    getContenido('holding.marca2.productos', locale),
-    getContenido('holding.marca3.nombre', locale),
-    getContenido('holding.marca3.descripcion', locale),
-    getContenido('holding.marca3.productos', locale),
+  const contentIds = [
+    'holding.intro',
+    'holding.marca1.nombre', 'holding.marca1.descripcion', 'holding.marca1.productos',
+    'holding.marca2.nombre', 'holding.marca2.descripcion', 'holding.marca2.productos',
+    'holding.marca3.nombre', 'holding.marca3.descripcion', 'holding.marca3.productos'
+  ];
+
+  const [unidades, contenido] = await Promise.all([
+    getUnidadesNegocioCached(),
+    getContenidoCached(contentIds, locale),
   ]);
+
+  const intro = contenido['holding.intro'];
+  const m1Nombre = contenido['holding.marca1.nombre'];
+  const m1Desc = contenido['holding.marca1.descripcion'];
+  const m1Prod = contenido['holding.marca1.productos'];
+  const m2Nombre = contenido['holding.marca2.nombre'];
+  const m2Desc = contenido['holding.marca2.descripcion'];
+  const m2Prod = contenido['holding.marca2.productos'];
+  const m3Nombre = contenido['holding.marca3.nombre'];
+  const m3Desc = contenido['holding.marca3.descripcion'];
+  const m3Prod = contenido['holding.marca3.productos'];
 
   const marcas = [
     { 
@@ -57,13 +58,13 @@ export default async function Holding({ params: { locale } }: { params: { locale
 
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHero title={t('title')} subtitle={t('subtitle')} />
+      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} />
 
       {/* Intro */}
       <section className="w-full bg-brand-white py-20 px-6 border-b border-brand-gray/20">
         <div className="max-w-4xl mx-auto text-center">
           <p className="font-body text-brand-navy/80 text-xl leading-relaxed">
-            {intro ?? t('intro')}
+            {intro || t('intro_fallback')}
           </p>
         </div>
       </section>
@@ -74,7 +75,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
           <div className="flex flex-col items-center mb-16 text-center">
             <AnimatedSection animation="fade-up">
               <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-                {t('unidadesTitle')}
+                {t('unidades_titulo')}
               </h2>
             </AnimatedSection>
             <AnimatedLine className="h-[3px] bg-brand-green" />
@@ -110,7 +111,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
           <div className="flex flex-col items-center mb-16 text-center">
             <AnimatedSection animation="fade-up">
               <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-                Nuestras Marcas
+                {t('divisiones_titulo')}
               </h2>
             </AnimatedSection>
             <AnimatedLine className="h-[3px] bg-brand-green" />
@@ -171,10 +172,10 @@ export default async function Holding({ params: { locale } }: { params: { locale
         <div className="max-w-[1200px] mx-auto">
           <AnimatedSection animation="fade-up" className="mb-12">
             <h2 className="font-display text-3xl text-brand-navy">
-              Estructura Corporativa
+              {t('estructura_titulo')}
             </h2>
             <h3 className="font-display text-4xl font-bold text-brand-navy mb-4">
-              Unidades de Negocio
+              {t('unidades_titulo')}
             </h3>
             <AnimatedLine className="h-[3px] bg-brand-green" />
           </AnimatedSection>

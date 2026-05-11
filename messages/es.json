@@ -1,129 +1,132 @@
 {
-  "Navbar": {
-    "quienesSomos": "Quiénes Somos",
+  "nav": {
+    "home": "Inicio",
+    "quienes": "Quiénes Somos",
     "historia": "Historia",
     "holding": "Holding",
-    "contacto": "Contacto"
+    "contacto": "Contacto",
+    "abrir_menu": "Abrir menú",
+    "cerrar_menu": "Cerrar menú",
+    "logo_alt": "Grupo Exportador del Campo - Logo"
   },
-  "Hero": {
-    "tagline": "Más de 50 años llevando lo mejor del campo al mundo",
-    "subtitle": "Grupo Exportador del Campo: Tradición, Calidad y Excelencia Agrícola",
-    "cta": "Conocer más"
+  "home": {
+    "marcas_titulo": "Nuestras empresas y marcas",
+    "secciones_titulo": "Secciones Principales",
+    "noticias_titulo": "Noticias",
+    "noticias_vacia": "Próximamente compartiremos noticias y actualizaciones desde nuestra página de LinkedIn",
+    "noticias_linkedin_btn": "Seguirnos en LinkedIn",
+    "contacto_rapido_titulo": "¿Cómo podemos ayudarte?",
+    "proximamente": "Próximamente",
+    "hero_tagline_fallback": "Más de 50 años llevando lo mejor del campo al mundo"
   },
-  "Features": {
-    "title": "Secciones Principales",
-    "quienesSomos": {
-      "title": "Quiénes Somos",
-      "description": "Conoce el equipo y nuestra visión institucional"
-    },
-    "historia": {
-      "title": "Historia",
-      "description": "Más de 50 años de legado agroindustrial"
-    },
-    "holding": {
-      "title": "Holding",
-      "description": "Nuestra estructura corporativa y unidades de negocio"
-    },
-    "contacto": {
-      "title": "Contacto",
-      "description": "Proveedores, clientes y alianzas estratégicas"
-    }
+  "metricas": {
+    "anos_label": "Años de experiencia",
+    "anos_desc": "Produciendo y exportando desde Zacatecas",
+    "toneladas_label": "Toneladas exportadas",
+    "toneladas_desc": "En mercados de México y Estados Unidos",
+    "colaboradores_label": "Colaboradores",
+    "colaboradores_desc": "En nuestras unidades de negocio"
   },
-  "News": {
-    "title": "Noticias",
-    "readMore": "Leer más",
-    "comingSoon": "Próximamente"
+  "features": {
+    "quienes_desc": "Conoce el equipo y nuestra visión institucional",
+    "historia_desc": "Más de 50 años de legado agroindustrial",
+    "holding_desc": "Nuestra estructura corporativa y unidades de negocio",
+    "contacto_desc": "Proveedores, clientes y alianzas estratégicas"
   },
-  "Divisions": {
-    "hortalizas": {
-      "title": "Hortalizas (Vizcaíno Fruit's)",
-      "description": "Lechugas iceberg, italiana, orejona, sangría"
-    },
-    "chiles": {
-      "title": "Chiles Picosos (Vizcaíno Premium)",
-      "description": "Jalapeño, serrano, poblano, anaheim, húngaro, cebollas"
-    },
-    "servicios": {
-      "title": "Servicios (Vizcaíno Services)",
-      "description": "Maquilado, refrigeración, almacenamiento, logística"
-    }
+  "quienes": {
+    "titulo_pagina": "Quiénes Somos",
+    "subtitulo_pagina": "Tres generaciones comprometidas con el campo",
+    "intro_titulo": "Quiénes Somos",
+    "mision_titulo": "Misión",
+    "vision_titulo": "Visión",
+    "valores_titulo": "Nuestros Valores",
+    "honestidad": "Honestidad",
+    "compromiso": "Compromiso",
+    "humildad": "Humildad",
+    "profesionalismo": "Profesionalismo",
+    "lealtad": "Lealtad",
+    "transparencia": "Transparencia",
+    "cadena_titulo": "Control completo de la cadena de suministro",
+    "cadena_subtitulo": "3 generaciones amando el campo",
+    "division_campo_titulo": "División Campo",
+    "division_sedis_titulo": "División Sedis",
+    "primus_badge": "Certificación Primus"
   },
-  "Contact": {
-    "title": "¿Cómo podemos ayudarte?",
-    "nameLabel": "Nombre completo",
-    "namePlaceholder": "Escribe tu nombre",
-    "emailLabel": "Correo electrónico",
-    "emailPlaceholder": "tu@email.com",
-    "reasonLabel": "Razón de contacto",
-    "reasons": {
-      "proveedor": "Proveedor",
-      "cliente": "Cliente",
-      "alianza": "Alianza estratégica",
-      "otro": "Otro"
-    },
-    "messageLabel": "Mensaje",
-    "messagePlaceholder": "Escribe tu mensaje aquí...",
-    "submit": "Enviar mensaje",
-    "sending": "Enviando...",
-    "success": "Tu mensaje ha sido enviado correctamente. Nos pondremos en contacto pronto."
+  "historia": {
+    "titulo_pagina": "Historia",
+    "subtitulo_pagina": "Más de 50 años de legado",
+    "origen_titulo": "Nuestros Orígenes",
+    "timeline_titulo": "Línea del Tiempo",
+    "fundadores_titulo": "Fundadores",
+    "galeria_titulo": "Galería Fotográfica Zacatecas",
+    "ampliar": "Ampliar",
+    "origen_fallback": "Historia del origen de Grupo Exportador del Campo...",
+    "fundadores_fallback": "Nuestro legado es la base de nuestra empresa.",
+    "hito1_titulo": "Fundación",
+    "hito1_desc": "El Sr. Ramiro Vizcaíno inicia la producción y comercialización de hortalizas en Loreto, Zacatecas.",
+    "hito1_periodo": "Origen",
+    "hito2_titulo": "Primera planta enfriadora",
+    "hito2_desc": "Construcción de la primera planta de preenfriamiento en Zacatecas.",
+    "hito3_titulo": "Incursión a la agricultura",
+    "hito3_desc": "Compra del primer rancho agrícola, consolidando el control sobre la producción.",
+    "hito4_titulo": "Expansión comercial",
+    "hito4_desc": "Apertura de dos puntos de venta en Monterrey y Guadalajara.",
+    "hito5_titulo": "Constitución del Grupo",
+    "hito5_desc": "Transición de empresa familiar a institución: constitución formal de Grupo Exportador del Campo.",
+    "hito6_titulo": "Primera exportación",
+    "hito6_desc": "Primera exportación oficial como Grupo Exportador del Campo.",
+    "hito7_titulo": "Inauguración CEDIS",
+    "hito7_desc": "Apertura del Centro de Distribución en San Nicolás de los Garza, Nuevo León.",
+    "hito8_titulo": "Segunda planta enfriadora",
+    "hito8_desc": "Inauguración de la segunda planta de preenfriamiento, duplicando la capacidad operativa.",
+    "hito9_titulo": "Presente y Futuro",
+    "hito9_desc": "Continuamos creciendo con la visión de trascender como institución agroindustrial de clase mundial.",
+    "hito9_periodo": "Hoy"
   },
-  "Footer": {
-    "address": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, Nuevo León",
-    "phone": "Tel. 8112799607",
-    "domain": "www.grupoexportadordelcampo.com",
-    "copyright": "© 2026 Grupo Exportador del Campo. Todos los derechos reservados."
+  "holding": {
+    "titulo_pagina": "Holding",
+    "subtitulo_pagina": "Estructura corporativa y unidades de negocio",
+    "estructura_titulo": "Estructura Corporativa",
+    "estructura_subtitulo": "Unidades de Negocio",
+    "unidades_titulo": "Unidades de Negocio",
+    "divisiones_titulo": "Divisiones de Negocio",
+    "ranchos_name": "Ranchos Producción",
+    "planta_name": "Planta Preenfriamiento",
+    "pdv_name": "Puntos de Venta",
+    "intro_fallback": "Estructura corporativa de Grupo Exportador del Campo..."
   },
-  "About": {
-    "title": "Quiénes Somos",
-    "subtitle": "Conoce el equipo y nuestra visión institucional",
-    "intro": "Grupo Exportador del Campo es un holding agroindustrial en transición de negocio familiar a institución corporativa. Llevamos lo mejor del campo a su mesa.",
-    "misionTitle": "Misión",
-    "mision": "Seguir la tradición de más de 3 generaciones de poner al alcance de los consumidores chiles y hortalizas de calidad, con alto valor agregado garantizando la máxima calidad del mercado.",
-    "visionTitle": "Visión",
-    "vision": "Empresa de producción y comercialización de altos volúmenes en mercados nacionales y extranjeros, con calidad sanitaria certificada y con una trazabilidad que dé confianza al cliente final.",
-    "valoresTitle": "Nuestros Valores",
-    "valores": {
-      "honestidad": { "title": "Honestidad", "desc": "Siempre entregando lo mejor para nuestros clientes" },
-      "compromiso": { "title": "Compromiso", "desc": "Dar lo mejor y cumplir para nuestros clientes" },
-      "humildad": { "title": "Humildad", "desc": "Siempre con respeto y humildad para atender a nuestros clientes" },
-      "profesionalismo": { "title": "Profesionalismo", "desc": "Equipo de trabajo responsable en dar lo mejor" },
-      "lealtad": { "title": "Lealtad", "desc": "Respetando a nuestros clientes y el compromiso de entregar lo mejor" },
-      "transparencia": { "title": "Transparencia", "desc": "Cuentas claras, con un servicio completo de principio a fin" }
-    },
-    "divisionesTitle": "Divisiones Principales",
-    "divisionCampo": { "title": "División Campo", "desc": "Nuestros campos de producción en Loreto, Zacatecas, donde nace la calidad de nuestros productos." },
-    "divisionSedis": { "title": "División Sedis", "desc": "Nuestros centros de distribución en Monterrey, enfocados en logística y alcance nacional e internacional." },
-    "fotoProximamente": "Fotografía próximamente"
+  "contacto": {
+    "titulo_pagina": "Contacto",
+    "subtitulo_pagina": "Proveedores, clientes y alianzas estratégicas",
+    "info_titulo": "Contáctanos",
+    "bienvenida": "Ya sea que seas proveedor, cliente o busques una alianza estratégica, estamos aquí para escucharte.",
+    "nombre": "Nombre completo",
+    "email": "Correo electrónico",
+    "telefono": "Teléfono (opcional)",
+    "razon": "Razón de contacto",
+    "razon_proveedor": "Proveedor",
+    "razon_cliente": "Cliente",
+    "razon_alianza": "Alianza estratégica",
+    "razon_otro": "Otro",
+    "mensaje": "Mensaje",
+    "enviar": "Enviar mensaje",
+    "exito": "Mensaje enviado con éxito. Nos pondremos en contacto pronto.",
+    "error": "Ocurrió un error. Por favor intenta de nuevo."
   },
-  "History": {
-    "title": "Nuestra Historia",
-    "subtitle": "Más de 50 años de legado agroindustrial",
-    "origen": "Hace más de 50 años, el Sr. Ramiro Vizcaíno inició la producción en Loreto, Zacatecas. Desde entonces, hemos crecido expandiendo nuestros horizontes a mercados en todo México y Estados Unidos, marcando el camino para las siguientes generaciones.",
-    "timeline": {
-      "fundacion": { "year": "Fundación", "title": "El inicio", "desc": "Sr. Ramiro Vizcaíno inicia producción en Loreto, Zacatecas" },
-      "crecimiento": { "year": "Crecimiento", "title": "Expansión internacional", "desc": "Expansión a mercados de México y Estados Unidos" },
-      "segundaGen": { "year": "Segunda generación", "title": "Consolidación", "desc": "Consolidación del modelo de negocio familiar" },
-      "expansionNorte": { "year": "Expansión Norte", "title": "Nuevas fronteras", "desc": "Llegada a San Nicolás de los Garza, Nuevo León" },
-      "terceraGen": { "year": "Tercera generación", "title": "Institucionalización", "desc": "Transición hacia institución corporativa (hoy)" }
-    },
-    "fundadoresTitle": "Fundadores",
-    "fundadoresDesc": "Su legado es el cimiento de lo que hoy es Grupo Exportador del Campo",
-    "fundador": "Fundador",
-    "fundadora": "Fundadora",
-    "galeriaTitle": "Material fotográfico de Zacatecas"
+  "footer": {
+    "direccion": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, NL",
+    "tel": "Tel: +52 811 279 9607",
+    "web": "www.grupoexportadordelcampo.com",
+    "derechos": "Todos los derechos reservados.",
+    "nav_titulo": "Navegación",
+    "privacidad": "Aviso de Privacidad",
+    "terminos": "Términos y Condiciones"
   },
-  "Holding": {
-    "title": "Estructura Corporativa",
-    "subtitle": "Nuestra estructura corporativa y unidades de negocio",
-    "intro": "Grupo Exportador del Campo opera bajo una estructura corporativa sólida (similar a la estructura de FEMSA), organizada en unidades de negocio y divisiones estratégicas enfocadas en la excelencia, dirigida a instituciones y aliados comerciales.",
-    "unidadesTitle": "Unidades de Negocio",
-    "divisionesTitle": "Divisiones de Negocio",
-    "organigramaTitle": "Organigrama Corporativo",
-    "organigramaPlaceholder": "Estructura corporativa completa — En actualización"
+  "pagina": {
+    "cargando": "Cargando..."
   },
-  "ContactPage": {
-    "title": "Contacto",
-    "subtitle": "Estamos aquí para escucharte",
-    "bienvenida": "Ya sea que seas proveedor, cliente o busques una alianza estratégica, estamos aquí para escucharte."
+  "metadata": {
+    "title": "Grupo Exportador del Campo (GEK)",
+    "description": "Más de 50 años llevando lo mejor del campo al mundo"
   }
 }

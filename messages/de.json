@@ -1,129 +1,132 @@
 {
-  "Navbar": {
-    "quienesSomos": "Über uns",
+  "nav": {
+    "home": "Startseite",
+    "quienes": "Über uns",
     "historia": "Geschichte",
     "holding": "Holding",
-    "contacto": "Kontakt"
+    "contacto": "Kontakt",
+    "abrir_menu": "Menü öffnen",
+    "cerrar_menu": "Menü schließen",
+    "logo_alt": "Grupo Exportador del Campo - Logo"
   },
-  "Hero": {
-    "tagline": "Mehr als 50 Jahre bringen wir das Beste vom Feld in die Welt",
-    "subtitle": "Grupo Exportador del Campo: Tradition, Qualität und landwirtschaftliche Exzellenz",
-    "cta": "Mehr erfahren"
+  "home": {
+    "marcas_titulo": "Unsere Unternehmen und Marken",
+    "secciones_titulo": "Hauptbereiche",
+    "noticias_titulo": "Neuigkeiten",
+    "noticias_vacia": "Wir werden bald Neuigkeiten und Updates von unserer LinkedIn-Seite teilen",
+    "noticias_linkedin_btn": "Folgen Sie uns auf LinkedIn",
+    "contacto_rapido_titulo": "Wie können wir Ihnen helfen?",
+    "proximamente": "Demnächst",
+    "hero_tagline_fallback": "Über 50 Jahre das Beste vom Feld in die Welt"
   },
-  "Features": {
-    "title": "Hauptbereiche",
-    "quienesSomos": {
-      "title": "Über uns",
-      "description": "Lernen Sie das Team und unsere institutionelle Vision kennen"
-    },
-    "historia": {
-      "title": "Geschichte",
-      "description": "Über 50 Jahre agro-industrielles Erbe"
-    },
-    "holding": {
-      "title": "Holding",
-      "description": "Unsere Unternehmensstruktur und Geschäftsbereiche"
-    },
-    "contacto": {
-      "title": "Kontakt",
-      "description": "Lieferanten, Kunden und strategische Allianzen"
-    }
+  "metricas": {
+    "anos_label": "Jahre Erfahrung",
+    "anos_desc": "Produktion und Export aus Zacatecas",
+    "toneladas_label": "Exportierte Tonnen",
+    "toneladas_desc": "In Märkten Mexikos und der Vereinigten Staaten",
+    "colaboradores_label": "Mitarbeiter",
+    "colaboradores_desc": "In unseren Geschäftseinheiten"
   },
-  "News": {
-    "title": "Neuigkeiten",
-    "readMore": "Weiterlesen",
-    "comingSoon": "Demnächst"
+  "features": {
+    "quienes_desc": "Lernen Sie unser Team und unsere institutionelle Vision kennen",
+    "historia_desc": "Über 50 Jahre agrarindustrielles Erbe",
+    "holding_desc": "Unsere Unternehmensstruktur und Geschäftseinheiten",
+    "contacto_desc": "Lieferanten, Kunden und strategische Allianzen"
   },
-  "Divisions": {
-    "hortalizas": {
-      "title": "Gemüse (Vizcaíno Fruit's)",
-      "description": "Eisbergsalat, Romana, roter und grüner Blattsalat"
-    },
-    "chiles": {
-      "title": "Scharfe Chilis (Vizcaíno Premium)",
-      "description": "Jalapeño, Serrano, Poblano, Anaheim, ungarische Paprika, Zwiebeln"
-    },
-    "servicios": {
-      "title": "Dienstleistungen (Vizcaíno Services)",
-      "description": "Verarbeitung, Kühlung, Lagerung, Logistik"
-    }
+  "quienes": {
+    "titulo_pagina": "Über uns",
+    "subtitulo_pagina": "Drei Generationen dem Feld verpflichtet",
+    "intro_titulo": "Wer wir sind",
+    "mision_titulo": "Mission",
+    "vision_titulo": "Vision",
+    "valores_titulo": "Unsere Werte",
+    "honestidad": "Ehrlichkeit",
+    "compromiso": "Engagement",
+    "humildad": "Bescheidenheit",
+    "profesionalismo": "Professionalismus",
+    "lealtad": "Loyalität",
+    "transparencia": "Transparenz",
+    "cadena_titulo": "Vollständige Kontrolle der Lieferkette",
+    "cadena_subtitulo": "3 Generationen mit Leidenschaft für das Feld",
+    "division_campo_titulo": "Abteilung Campo",
+    "division_sedis_titulo": "Abteilung Sedis",
+    "primus_badge": "Primus-Zertifizierung"
   },
-  "Contact": {
-    "title": "Wie können wir Ihnen helfen?",
-    "nameLabel": "Vollständiger Name",
-    "namePlaceholder": "Geben Sie Ihren Namen ein",
-    "emailLabel": "E-Mail-Adresse",
-    "emailPlaceholder": "sie@email.com",
-    "reasonLabel": "Kontaktgrund",
-    "reasons": {
-      "proveedor": "Lieferant",
-      "cliente": "Kunde",
-      "alianza": "Strategische Allianz",
-      "otro": "Andere"
-    },
-    "messageLabel": "Nachricht",
-    "messagePlaceholder": "Schreiben Sie hier Ihre Nachricht...",
-    "submit": "Nachricht senden",
-    "sending": "Senden...",
-    "success": "Ihre Nachricht wurde erfolgreich gesendet. Wir werden uns in Kürze bei Ihnen melden."
+  "historia": {
+    "titulo_pagina": "Geschichte",
+    "subtitulo_pagina": "Über 50 Jahre Erbe",
+    "origen_titulo": "Unsere Ursprünge",
+    "timeline_titulo": "Zeitleiste",
+    "fundadores_titulo": "Gründer",
+    "galeria_titulo": "Fotogalerie Zacatecas",
+    "ampliar": "Vergrößern",
+    "origen_fallback": "Geschichte der Ursprünge der Grupo Exportador del Campo...",
+    "fundadores_fallback": "Unser Erbe ist das Fundament unseres Unternehmens.",
+    "hito1_titulo": "Gründung",
+    "hito1_desc": "Herr Ramiro Vizcaíno beginnt mit der Produktion und Vermarktung von Gemüse in Loreto, Zacatecas.",
+    "hito1_periodo": "Ursprung",
+    "hito2_titulo": "Erste Kühlanlage",
+    "hito2_desc": "Bau der ersten Vorkühlanlage in Zacatecas.",
+    "hito3_titulo": "Einstieg in die Landwirtschaft",
+    "hito3_desc": "Kauf des ersten Landwirtschaftsranches zur Festigung der Produktionskontrolle.",
+    "hito4_titulo": "Kommerzielle Expansion",
+    "hito4_desc": "Eröffnung zweier Verkaufsstellen in Monterrey und Guadalajara.",
+    "hito5_titulo": "Gruppenkonstituierung",
+    "hito5_desc": "Übergang vom Familienunternehmen zur Institution: formelle Konstituierung der Grupo Exportador del Campo.",
+    "hito6_titulo": "Erster Export",
+    "hito6_desc": "Erster offizieller Export als Grupo Exportador del Campo.",
+    "hito7_titulo": "CEDIS-Eröffnung",
+    "hito7_desc": "Eröffnung des Vertriebszentrums in San Nicolás de los Garza, Nuevo León.",
+    "hito8_titulo": "Zweite Kühlanlage",
+    "hito8_desc": "Einweihung der zweiten Vorkühlanlage, die die Betriebskapazität verdoppelt.",
+    "hito9_titulo": "Gegenwart und Zukunft",
+    "hito9_desc": "Wir wachsen weiter mit der Vision, als weltweit führende agrarindustrielle Institution zu bestehen.",
+    "hito9_periodo": "Heute"
   },
-  "Footer": {
-    "address": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, Nuevo León",
-    "phone": "Tel. +52 8112799607",
-    "domain": "www.grupoexportadordelcampo.com",
-    "copyright": "© 2026 Grupo Exportador del Campo. Alle Rechte vorbehalten."
+  "holding": {
+    "titulo_pagina": "Holding",
+    "subtitulo_pagina": "Unternehmensstruktur und Geschäftseinheiten",
+    "estructura_titulo": "Unternehmensstruktur",
+    "estructura_subtitulo": "Geschäftseinheiten",
+    "unidades_titulo": "Geschäftseinheiten",
+    "divisiones_titulo": "Geschäftsbereiche",
+    "ranchos_name": "Produktionsfarmen",
+    "planta_name": "Vorkühlanlage",
+    "pdv_name": "Verkaufsstellen",
+    "intro_fallback": "Unternehmensstruktur der Grupo Exportador del Campo..."
   },
-  "About": {
-    "title": "Über uns",
-    "subtitle": "Lernen Sie das Team und unsere institutionelle Vision kennen",
-    "intro": "Die Grupo Exportador del Campo ist eine agro-industrielle Holding, die sich vom Familienunternehmen zur Unternehmensinstitution wandelt. Wir bringen das Beste vom Feld auf Ihren Tisch.",
-    "misionTitle": "Mission",
-    "mision": "Fortführung der Tradition von über 3 Generationen, indem wir den Verbrauchern Qualitäts-Chilis und -Gemüse mit hohem Mehrwert zur Verfügung stellen und die höchste Qualität auf dem Markt garantieren.",
-    "visionTitle": "Vision",
-    "vision": "Ein Produktions- und Vermarktungsunternehmen mit hohen Volumina auf nationalen und internationalen Märkten, mit zertifizierter hygienischer Qualität und Rückverfolgbarkeit, die dem Endkunden Vertrauen gibt.",
-    "valoresTitle": "Unsere Werte",
-    "valores": {
-      "honestidad": { "title": "Ehrlichkeit", "desc": "Immer das Beste für unsere Kunden liefern" },
-      "compromiso": { "title": "Engagement", "desc": "Unser Bestes geben und die Bedürfnisse unserer Kunden erfüllen" },
-      "humildad": { "title": "Demut", "desc": "Unsere Kunden immer mit Respekt und Demut bedienen" },
-      "profesionalismo": { "title": "Professionalität", "desc": "Ein verantwortungsbewusstes Team, das sein Bestes gibt" },
-      "lealtad": { "title": "Loyalität", "desc": "Respekt für unsere Kunden und unsere Verpflichtung, das Beste zu liefern" },
-      "transparencia": { "title": "Transparenz", "desc": "Klare Konten, mit umfassendem Service von Anfang bis Ende" }
-    },
-    "divisionesTitle": "Hauptbereiche",
-    "divisionCampo": { "title": "Bereich Feld", "desc": "Unsere Produktionsfelder in Loreto, Zacatecas, wo die Qualität unserer Produkte geboren wird." },
-    "divisionSedis": { "title": "Bereich Sedis", "desc": "Unsere Vertriebszentren in Monterrey, konzentriert auf Logistik und nationale sowie internationale Reichweite." },
-    "fotoProximamente": "Foto demnächst"
+  "contacto": {
+    "titulo_pagina": "Kontakt",
+    "subtitulo_pagina": "Lieferanten, Kunden und strategische Allianzen",
+    "info_titulo": "Kontaktieren Sie uns",
+    "bienvenida": "Ob Sie Lieferant, Kunde oder auf der Suche nach einer strategischen Allianz sind – wir sind hier, um Ihnen zuzuhören.",
+    "nombre": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "telefono": "Telefon (optional)",
+    "razon": "Kontaktgrund",
+    "razon_proveedor": "Lieferant",
+    "razon_cliente": "Kunde",
+    "razon_alianza": "Strategische Allianz",
+    "razon_otro": "Sonstiges",
+    "mensaje": "Nachricht",
+    "enviar": "Nachricht senden",
+    "exito": "Nachricht erfolgreich gesendet. Wir werden uns in Kürze bei Ihnen melden.",
+    "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut."
   },
-  "History": {
-    "title": "Unsere Geschichte",
-    "subtitle": "Über 50 Jahre agro-industrielles Erbe",
-    "origen": "Vor mehr als 50 Jahren begann Herr Ramiro Vizcaíno mit der Produktion in Loreto, Zacatecas. Seitdem sind wir gewachsen und haben unsere Horizonte auf Märkte in ganz Mexiko und den USA ausgeweitet und so den Weg für die nächsten Generationen geebnet.",
-    "timeline": {
-      "fundacion": { "year": "Gründung", "title": "Der Anfang", "desc": "Herr Ramiro Vizcaíno beginnt die Produktion in Loreto, Zacatecas" },
-      "crecimiento": { "year": "Wachstum", "title": "Internationale Expansion", "desc": "Expansion in Märkte in Mexiko und den USA" },
-      "segundaGen": { "year": "Zweite Generation", "title": "Konsolidierung", "desc": "Konsolidierung des Geschäftsmodells der Familie" },
-      "expansionNorte": { "year": "Norderweiterung", "title": "Neue Grenzen", "desc": "Ankunft in San Nicolás de los Garza, Nuevo León" },
-      "terceraGen": { "year": "Dritte Generation", "title": "Institutionalisierung", "desc": "Übergang zur Unternehmensinstitution (heute)" }
-    },
-    "fundadoresTitle": "Gründer",
-    "fundadoresDesc": "Ihr Erbe ist das Fundament dessen, was die Grupo Exportador del Campo heute ist",
-    "fundador": "Gründer",
-    "fundadora": "Gründerin",
-    "galeriaTitle": "Zacatecas Fotomaterial"
+  "footer": {
+    "direccion": "Av. Los Ángeles #1000, Int 124, San Nicolás de los Garza, NL",
+    "tel": "Tel: +52 811 279 9607",
+    "web": "www.grupoexportadordelcampo.com",
+    "derechos": "Alle Rechte vorbehalten.",
+    "nav_titulo": "Navigation",
+    "privacidad": "Datenschutzrichtlinie",
+    "terminos": "Allgemeine Geschäftsbedingungen"
   },
-  "Holding": {
-    "title": "Unternehmensstruktur",
-    "subtitle": "Unsere Unternehmensstruktur und Geschäftsbereiche",
-    "intro": "Die Grupo Exportador del Campo operiert unter einer soliden Unternehmensstruktur (ähnlich der Struktur von FEMSA), organisiert in Geschäftseinheiten und strategischen Bereichen mit Fokus auf Exzellenz, gerichtet an Institutionen und kommerzielle Verbündete.",
-    "unidadesTitle": "Geschäftseinheiten",
-    "divisionesTitle": "Geschäftsbereiche",
-    "organigramaTitle": "Unternehmens-Organigramm",
-    "organigramaPlaceholder": "Vollständige Unternehmensstruktur — Wird aktualisiert"
+  "pagina": {
+    "cargando": "Wird geladen..."
   },
-  "ContactPage": {
-    "title": "Kontakt",
-    "subtitle": "Wir sind hier, um Ihnen zuzuhören",
-    "bienvenida": "Egal ob Sie Lieferant, Kunde sind oder eine strategische Allianz suchen, wir sind hier, um Ihnen zuzuhören."
+  "metadata": {
+    "title": "Grupo Exportador del Campo (GEK)",
+    "description": "Über 50 Jahre Erfahrung darin, das Beste vom Feld in die Welt zu tragen"
   }
 }

@@ -1,8 +1,7 @@
-import type { Metadata } from 'next';
 import { Playfair_Display, Lora } from 'next/font/google';
 import '@/app/globals.css';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getTranslations, getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 const playfairDisplay = Playfair_Display({
@@ -17,10 +16,13 @@ const lora = Lora({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: 'Grupo Exportador del Campo (GEK)',
-  description: 'Más de 50 años llevando lo mejor del campo al mundo',
-};
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
+  const t = await getTranslations({ locale, namespace: 'metadata' });
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 const locales = ['es', 'en', 'de'];
 
@@ -41,7 +43,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${playfairDisplay.variable} ${lora.variable}`}>
       <body className="font-body bg-brand-white text-brand-navy antialiased min-h-screen flex flex-col">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar />
           <main className="flex-grow pt-14">
             {children}

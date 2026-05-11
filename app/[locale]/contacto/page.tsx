@@ -4,12 +4,12 @@ import { ContactFormSection } from '@/components/sections/shared/ContactFormSect
 import { MapPin, Phone, Globe } from 'lucide-react';
 
 export default async function Contacto() {
-  const t = await getTranslations('ContactPage');
-  const tFooter = await getTranslations('Footer');
+  const t = await getTranslations('contacto');
+  const tFooter = await getTranslations('footer');
 
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHero title={t('title')} subtitle={t('subtitle')} />
+      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} />
 
       <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -17,7 +17,7 @@ export default async function Contacto() {
           {/* Info — primero en mobile */}
           <div className="flex flex-col">
             <h2 className="font-display text-2xl md:text-3xl font-bold text-brand-navy mb-4">
-              Contáctanos
+              {t('info_titulo')}
             </h2>
             <div className="w-[60px] h-[3px] bg-brand-green mb-8" />
 
@@ -31,9 +31,9 @@ export default async function Contacto() {
                   <MapPin className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-brand-navy mb-1">Dirección</h4>
+                  <h4 className="font-display font-bold text-brand-navy mb-1">...</h4>
                   <p className="font-body text-brand-navy/70 leading-relaxed max-w-xs">
-                    {tFooter('address')}
+                    {tFooter('direccion')}
                   </p>
                 </div>
               </div>
@@ -43,9 +43,9 @@ export default async function Contacto() {
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-brand-navy mb-1">Teléfono</h4>
+                  <h4 className="font-display font-bold text-brand-navy mb-1">...</h4>
                   <p className="font-body text-brand-navy/70 leading-relaxed">
-                    {tFooter('phone')}
+                    {tFooter('tel')}
                   </p>
                 </div>
               </div>
@@ -55,9 +55,9 @@ export default async function Contacto() {
                   <Globe className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-display font-bold text-brand-navy mb-1">Sitio Web</h4>
+                  <h4 className="font-display font-bold text-brand-navy mb-1">...</h4>
                   <p className="font-body text-brand-navy/70 leading-relaxed">
-                    {tFooter('domain')}
+                    {tFooter('web')}
                   </p>
                 </div>
               </div>
