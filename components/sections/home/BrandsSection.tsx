@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import Image from 'next/image';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
 
@@ -40,10 +41,13 @@ export async function BrandsSection() {
               className="flex flex-col items-center justify-center px-12 h-32 w-full md:w-1/3"
             >
               {brand.exists ? (
-                <img
+                <Image
                   src={brand.url}
                   alt={brand.name}
+                  width={200}
+                  height={80}
                   className="max-h-full max-w-full object-contain"
+                  quality={80}
                 />
               ) : (
                 <div className="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-brand-navy/20 rounded-md bg-white">

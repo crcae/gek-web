@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { Timeline } from '@/components/sections/history/Timeline';
 import { GaleriaGrid } from '@/components/sections/history/GaleriaGrid';
+import Image from 'next/image';
 import { getContenido } from '@/lib/contenido';
 import { prisma } from '@/lib/db';
 import fs from 'fs';
@@ -85,7 +86,14 @@ export default async function Historia({ params: { locale } }: { params: { local
 
           <div className="flex flex-col items-center">
             <div className="w-full max-w-3xl mb-8 flex justify-center">
-              <img src={fundadoresImg} alt="Fundadores de la Empresa" className="max-w-full h-auto rounded-sm border-2 border-brand-green shadow-lg" />
+              <Image 
+                src={fundadoresImg} 
+                alt="Fundadores de la Empresa" 
+                width={800}
+                height={500}
+                className="max-w-full h-auto rounded-sm border-2 border-brand-green shadow-lg" 
+                quality={80}
+              />
             </div>
             
             <div className="flex flex-col items-center text-center">

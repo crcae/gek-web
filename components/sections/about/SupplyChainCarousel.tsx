@@ -56,10 +56,14 @@ export function SupplyChainCarousel({
                     index === currentIndex ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
-                  <img
+                  <Image
                     src={src}
                     alt={`Slide ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 1200px"
+                    priority={index === 0}
+                    loading={index === 0 ? 'eager' : 'lazy'}
                   />
                 </div>
               ))}
@@ -105,9 +109,11 @@ export function SupplyChainCarousel({
           {/* Primus Badge */}
           <div className="absolute bottom-4 right-4 z-10">
             {hasPrimus ? (
-              <img 
+              <Image 
                 src="/images/logos/PrimusGFS_Logo_web.png" 
                 alt="Primus GFS Certification" 
+                width={128}
+                height={64}
                 className="w-24 md:w-32 object-contain"
               />
             ) : (

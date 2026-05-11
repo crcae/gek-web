@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { OrganigramaChart } from '@/components/sections/holding/OrganigramaChart';
 import { getUnidadesNegocio } from '@/lib/queries/holding';
+import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import { getContenido } from '@/lib/contenido';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
@@ -125,10 +126,13 @@ export default async function Holding({ params: { locale } }: { params: { locale
                 <div className="card-hover bg-white p-8 rounded-sm shadow-sm border-t-[3px] border-t-brand-green border-x border-b border-brand-gray/20 flex flex-col h-full">
                   <div className="h-24 flex items-center justify-center mb-6">
                     {logoExists ? (
-                      <img 
+                      <Image 
                         src={`/images/logos/${marca.logoFile}`} 
                         alt={marca.nombre}
+                        width={200}
+                        height={100}
                         className="max-h-full max-w-full object-contain"
+                        quality={80}
                       />
                     ) : (
                       <span className="font-display text-brand-navy text-2xl font-bold text-center">

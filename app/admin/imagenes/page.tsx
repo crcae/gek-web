@@ -142,10 +142,12 @@ export default function ImagenesPage() {
           {imagenes.map((img) => (
             <div key={img.id} className="group relative bg-white rounded-lg border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all">
               <div className="aspect-square relative">
-                <img
+                <Image
                   src={img.url}
                   alt={img.nombre}
-                  className="object-cover w-full h-full"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <button

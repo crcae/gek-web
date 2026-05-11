@@ -3,6 +3,7 @@ import { PageHero } from '@/components/sections/shared/PageHero';
 import { ValoresGrid } from '@/components/sections/about/ValoresGrid';
 import { SupplyChainCarousel } from '@/components/sections/about/SupplyChainCarousel';
 import { ImageIcon } from 'lucide-react';
+import Image from 'next/image';
 import { getContenido } from '@/lib/contenido';
 import { prisma } from '@/lib/db';
 import fs from 'fs';
@@ -57,10 +58,13 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
           </div>
           <div className="w-full md:w-1/2">
             <div className="aspect-video rounded-sm overflow-hidden border border-brand-gray/20 shadow-sm">
-              <img 
+              <Image 
                 src="/images/zacatecas/_DSC3562.jpg" 
                 alt="Campo Zacatecas" 
+                width={800}
+                height={450}
                 className="w-full h-full object-cover"
+                quality={75}
               />
             </div>
           </div>
