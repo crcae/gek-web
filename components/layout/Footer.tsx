@@ -43,7 +43,7 @@ export function Footer({ locale }: { locale: string }) {
               <Link
                 key={link.id}
                 href={link.href}
-                className="text-brand-white hover:text-brand-green transition-colors font-body text-sm min-h-[44px] flex items-center"
+                className="text-brand-white hover:text-brand-green transition-colors font-body text-base min-h-[44px] flex items-center"
               >
                 {tNav(link.id as any)}
               </Link>

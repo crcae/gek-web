@@ -56,7 +56,7 @@ export function Navbar() {
   return (
     <nav
       ref={menuRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b-2 border-brand-green ${
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 border-b-2 border-brand-green ${
         scrolled
           ? 'py-1.5 bg-brand-navy shadow-lg shadow-black/20'
           : 'py-2 bg-brand-navy'
@@ -86,9 +86,9 @@ export function Navbar() {
               key={link.key}
               href={link.href}
               prefetch={true}
-              className={`nav-link text-brand-white hover:text-brand-green transition-colors font-body text-sm ${
-                pathname === link.href ? 'active' : ''
-              }`}
+              className={`nav-link text-brand-white hover:text-brand-green transition-colors font-body font-medium tracking-wide ${
+                scrolled ? 'text-base' : 'text-lg'
+              } ${pathname === link.href ? 'active' : ''}`}
             >
               {link.label}
             </Link>

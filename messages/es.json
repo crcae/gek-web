@@ -25,7 +25,9 @@
     "toneladas_label": "Toneladas exportadas",
     "toneladas_desc": "En mercados de México y Estados Unidos",
     "colaboradores_label": "Colaboradores",
-    "colaboradores_desc": "En nuestras unidades de negocio"
+    "colaboradores_desc": "En nuestras unidades de negocio",
+    "hectareas_label": "Hectáreas de superficie para producción",
+    "hectareas_desc": ""
   },
   "features": {
     "quienes_desc": "Conoce el equipo y nuestra visión institucional",

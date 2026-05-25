@@ -12,43 +12,58 @@ export function HeroSection({ tagline, subtitle }: { tagline: string; subtitle: 
   };
 
   return (
-    <section className="relative w-full h-[calc(100vh-3.5rem)] overflow-hidden bg-gradient-to-b from-brand-navy to-gray-900 flex flex-col items-center justify-center">
+    <section className="relative w-full h-screen overflow-hidden bg-brand-navy">
       {/* Background Video */}
+      {/* VIDEO: colocar hero.mp4 en /public/videos/institucional/
+          Resolución recomendada: 1920x1080, formato MP4 H.264
+          Tamaño máximo recomendado: 15MB (comprimir con HandBrake si es necesario) */}
       <video
         autoPlay
         muted
         loop
         playsInline
         poster="/images/zacatecas/_DSC3760.jpg"
-        className="absolute inset-0 w-full h-full object-cover z-0 bg-brand-navy"
+        className="absolute inset-0 w-full h-full object-cover z-0"
       >
         <source src="/videos/institucional/hero.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-brand-navy/65 z-10" />
+      <div 
+        className="absolute inset-0 z-10" 
+        style={{ background: 'linear-gradient(to right, rgba(13,27,36,0.85) 0%, rgba(13,27,36,0.6) 50%, rgba(13,27,36,0.3) 100%)' }}
+      />
 
-      {/* Content */}
-      <div className="relative z-20 flex flex-col items-center text-center px-4 max-w-4xl mx-auto">
+      {/* Content aligned bottom-left */}
+      <div className="absolute bottom-20 left-6 md:left-16 z-20 flex flex-col items-start px-4 max-w-4xl">
+        
+        {/* Eyebrow */}
+        <AnimatedSection animation="fade-up" delay={1} className="flex items-center gap-4 mb-4">
+          <div className="h-[2px] w-[40px] bg-brand-green" />
+          <span className="text-[11px] tracking-[0.2em] text-white/70 uppercase font-lora">
+            Desde Loreto, Zacatecas
+          </span>
+        </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={1}>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-brand-white font-bold leading-tight mb-4">
-            {tagline}
+        {/* Tagline */}
+        <AnimatedSection animation="fade-up" delay={2}>
+          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-brand-white font-bold leading-tight mb-4" dangerouslySetInnerHTML={{ __html: tagline }}>
           </h1>
         </AnimatedSection>
 
-        <AnimatedLine className="h-[2px] bg-brand-green mb-6 mx-auto stagger-2" />
-
-        <AnimatedSection animation="fade-up" delay={2}>
-          <p className="font-body text-brand-white/85 text-base md:text-xl mb-10 max-w-2xl">
+        {/* Subtitle */}
+        <AnimatedSection animation="fade-up" delay={3}>
+          <p className="font-lora text-white/80 text-lg max-w-2xl mt-4 line-clamp-2">
             {subtitle}
           </p>
         </AnimatedSection>
 
-        <AnimatedSection animation="fade-up" delay={3}>
+        {/* CTA (hidden) */}
+        <AnimatedSection animation="fade-up" delay={4} className="hidden mt-8">
+          {/* TODO: activar cuando esté listo */}
           <button
             onClick={scrollToNext}
-            className="btn-primary w-full sm:w-auto bg-brand-green text-brand-white font-body py-3 px-8 text-lg font-medium hover:bg-opacity-90 transition-all rounded-sm min-h-[44px]"
+            className="btn-primary bg-brand-green text-brand-white font-body py-3 px-8 text-lg font-medium hover:bg-opacity-90 transition-all rounded-sm min-h-[44px]"
           >
             {t('cta')}
           </button>

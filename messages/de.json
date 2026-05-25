@@ -25,7 +25,9 @@
     "toneladas_label": "Exportierte Tonnen",
     "toneladas_desc": "In Märkten Mexikos und der Vereinigten Staaten",
     "colaboradores_label": "Mitarbeiter",
-    "colaboradores_desc": "In unseren Geschäftseinheiten"
+    "colaboradores_desc": "In unseren Geschäftseinheiten",
+    "hectareas_label": "Hektar Produktionsfläche",
+    "hectareas_desc": ""
   },
   "features": {
     "quienes_desc": "Lernen Sie unser Team und unsere institutionelle Vision kennen",
