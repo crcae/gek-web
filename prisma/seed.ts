@@ -105,25 +105,26 @@ async function main() {
   // Contenido del sitio
   const contenidos = [
     // HOME
-    { id: 'home.hero.tagline', seccion: 'home', campo: 'Tagline del Hero', valor_es: 'Volumen que cumple, calidad que respalda.', valor_en: 'Volume that delivers, quality that backs it up.', valor_de: 'Volumen, der liefert – Qualität, die überzeugt.' },
+    { id: 'home.hero.tagline', seccion: 'home', campo: 'Tagline del Hero', valor_es: 'Porque aunque los tiempos cambien, somos y seremos GEC', valor_en: 'Because even if times change, we are and will be GEC', valor_de: 'Denn auch wenn sich die Zeiten ändern, wir sind und bleiben GEC' },
     { id: 'home.hero.sub', seccion: 'home', campo: 'Subtítulo del Hero', valor_es: 'Grupo Exportador del Campo: Tradición, Calidad y Excelencia Agrícola', valor_en: 'Grupo Exportador del Campo: Tradition, Quality and Agricultural Excellence', valor_de: 'Grupo Exportador del Campo: Tradition, Qualität und landwirtschaftliche Exzellenz' },
+    { id: 'home.marcas_titulo', seccion: 'home', campo: 'Título Marcas', valor_es: 'Las Marcas que nos Representan', valor_en: 'The Brands That Represent Us', valor_de: 'Die Marken, die uns repräsentieren' },
     { id: 'home.metrica1.numero', seccion: 'home', campo: 'Métrica 1: Número', valor_es: '+50', valor_en: '+50', valor_de: '+50' },
     { id: 'home.metrica1.label', seccion: 'home', campo: 'Métrica 1: Label', valor_es: 'Años de experiencia', valor_en: 'Years of experience', valor_de: 'Jahre Erfahrung' },
-    { id: 'home.metrica1.descripcion', seccion: 'home', campo: 'Métrica 1: Descripción', valor_es: 'Produciendo y exportando desde Zacatecas', valor_en: 'Producing and exporting from Zacatecas', valor_de: 'Produktion und Export aus Zacatecas' },
-    { id: 'home.metrica2.numero', seccion: 'home', campo: 'Métrica 2: Número', valor_es: '25,000', valor_en: '25,000', valor_de: '25.000' },
-    { id: 'home.metrica2.label', seccion: 'home', campo: 'Métrica 2: Label', valor_es: 'Toneladas exportadas', valor_en: 'Exported tons', valor_de: 'Exportierte Tonnen' },
-    { id: 'home.metrica2.descripcion', seccion: 'home', campo: 'Métrica 2: Descripción', valor_es: 'En mercados de México y Estados Unidos', valor_en: 'In markets across Mexico and the United States', valor_de: 'Auf Märkten in Mexiko und den Vereinigten Staaten' },
-    { id: 'home.metrica3.numero', seccion: 'home', campo: 'Métrica 3: Número', valor_es: '+120', valor_en: '+120', valor_de: '+120' },
+    { id: 'home.metrica1.descripcion', seccion: 'home', campo: 'Métrica 1: Descripción', valor_es: 'En producción y comercialización del campo.', valor_en: 'In field production and marketing.', valor_de: 'In der landwirtschaftlichen Produktion und Vermarktung.' },
+    { id: 'home.metrica2.numero', seccion: 'home', campo: 'Métrica 2: Número', valor_es: '+30,000', valor_en: '+30,000', valor_de: '+30.000' },
+    { id: 'home.metrica2.label', seccion: 'home', campo: 'Métrica 2: Label', valor_es: 'Toneladas exportadas al año', valor_en: 'Tons exported per year', valor_de: 'Exportierte Tonnen pro Jahr' },
+    { id: 'home.metrica2.descripcion', seccion: 'home', campo: 'Métrica 2: Descripción', valor_es: 'En mercados alrededor del mundo', valor_en: 'In markets around the world', valor_de: 'In Märkten auf der ganzen Welt' },
+    { id: 'home.metrica3.numero', seccion: 'home', campo: 'Métrica 3: Número', valor_es: '+200', valor_en: '+200', valor_de: '+200' },
     { id: 'home.metrica3.label', seccion: 'home', campo: 'Métrica 3: Label', valor_es: 'Colaboradores', valor_en: 'Collaborators', valor_de: 'Mitarbeiter' },
-    { id: 'home.metrica3.descripcion', seccion: 'home', campo: 'Métrica 3: Descripción', valor_es: 'En nuestras unidades de negocio', valor_en: 'Across our business units', valor_de: 'In unseren Geschäftseinheiten' },
-    { id: 'home.metrica4.numero', seccion: 'home', campo: 'Métrica 4: Número', valor_es: '400', valor_en: '400', valor_de: '400' },
-    { id: 'home.metrica4.label', seccion: 'home', campo: 'Métrica 4: Label', valor_es: 'Hectáreas de superficie para producción', valor_en: 'Hectares of production area', valor_de: 'Hektar Produktionsfläche' },
-    { id: 'home.metrica4.descripcion', seccion: 'home', campo: 'Métrica 4: Descripción', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'home.metrica3.descripcion', seccion: 'home', campo: 'Métrica 3: Descripción', valor_es: 'Repartidos en nuestras unidades de negocio.', valor_en: 'Spread across our business units.', valor_de: 'Verteilt auf unsere Geschäftseinheiten.' },
+    { id: 'home.metrica4.numero', seccion: 'home', campo: 'Métrica 4: Número', valor_es: '+400', valor_en: '+400', valor_de: '+400' },
+    { id: 'home.metrica4.label', seccion: 'home', campo: 'Métrica 4: Label', valor_es: 'Hectáreas de superficie', valor_en: 'Hectares of surface area', valor_de: 'Hektar Anbaufläche' },
+    { id: 'home.metrica4.descripcion', seccion: 'home', campo: 'Métrica 4: Descripción', valor_es: 'Listas para la producción bajo normativas de inocuidad', valor_en: 'Ready for production under safety regulations', valor_de: 'Bereit für die Produktion unter Sicherheitsvorschriften' },
 
-    { id: 'features.quienes.imagen', seccion: 'home', campo: 'Imagen: Quiénes Somos', valor_es: '/images/zacatecas/_DSC3781.jpg', valor_en: '/images/zacatecas/_DSC3781.jpg', valor_de: '/images/zacatecas/_DSC3781.jpg' },
-    { id: 'features.historia.imagen', seccion: 'home', campo: 'Imagen: Historia', valor_es: '/images/fundadores/Ceferina_y_Ramiro.jpg', valor_en: '/images/fundadores/Ceferina_y_Ramiro.jpg', valor_de: '/images/fundadores/Ceferina_y_Ramiro.jpg' },
-    { id: 'features.holding.imagen', seccion: 'home', campo: 'Imagen: Holding', valor_es: '/images/holding/Gec_logo2.png', valor_en: '/images/holding/Gec_logo2.png', valor_de: '/images/holding/Gec_logo2.png' },
-    { id: 'features.contacto.imagen', seccion: 'home', campo: 'Imagen: Contacto', valor_es: '/images/zacatecas/_DSC3760.jpg', valor_en: '/images/zacatecas/_DSC3760.jpg', valor_de: '/images/zacatecas/_DSC3760.jpg' },
+    { id: 'features.quienes.imagen', seccion: 'home', campo: 'Imagen: Quiénes Somos', valor_es: '/images/features/quienes.jpg', valor_en: '/images/features/quienes.jpg', valor_de: '/images/features/quienes.jpg' },
+    { id: 'features.historia.imagen', seccion: 'home', campo: 'Imagen: Historia', valor_es: '/images/features/historia.jpg', valor_en: '/images/features/historia.jpg', valor_de: '/images/features/historia.jpg' },
+    { id: 'features.holding.imagen', seccion: 'home', campo: 'Imagen: Holding', valor_es: '/images/features/holding.jpg', valor_en: '/images/features/holding.jpg', valor_de: '/images/features/holding.jpg' },
+    { id: 'features.contacto.imagen', seccion: 'home', campo: 'Imagen: Contacto', valor_es: '/images/features/contacto.jpg', valor_en: '/images/features/contacto.jpg', valor_de: '/images/features/contacto.jpg' },
     
     // QUIÉNES SOMOS
     { id: 'quienes.intro', seccion: 'quienes', campo: 'Texto de introducción', valor_es: '<strong>Grupo Exportador del Campo</strong> nace del modelo de negocio desarrollado por Don Ramiro Vizcaíno, para la <strong>producción, tratamiento, empaque y comercialización</strong> de todo tipo de productos del campo. Con más de <strong>50 años de experiencia</strong>, nos comprometemos contigo para ofrecer <strong>lo mejor del campo</strong>, brindándote un <strong>soporte integral</strong> en cada una de nuestras unidades de negocio, de inicio a fin.', valor_en: '<strong>Grupo Exportador del Campo</strong> was born from the business model developed by Don Ramiro Vizcaíno, for the <strong>production, processing, packaging and commercialization</strong> of all types of field products. With more than <strong>50 years of experience</strong>, we are committed to offering you <strong>the best of the field</strong>, providing <strong>comprehensive support</strong> across each of our business units, from start to finish.', valor_de: '<strong>Grupo Exportador del Campo</strong> entstand aus dem Geschäftsmodell von Don Ramiro Vizcaíno für die <strong>Produktion, Verarbeitung, Verpackung und Vermarktung</strong> aller Art von Feldprodukten. Mit mehr als <strong>50 Jahren Erfahrung</strong> verpflichten wir uns, Ihnen <strong>das Beste vom Feld</strong> anzubieten und <strong>umfassenden Support</strong> in jeder unserer Geschäftseinheiten zu bieten.' },
@@ -171,6 +172,33 @@ async function main() {
     })
   }
   console.log('✅ Contenido del sitio sembrado')
+
+  // Sembrar Evento de prueba
+  await prisma.evento.upsert({
+    where: { id: 'evt-mexico-conf' },
+    update: {
+      titulo: 'The Mexico Conference',
+      descripcion: 'El único evento en México dedicado a toda la cadena de suministro de productos frescos.',
+      fecha: 'Mayo 13-14, 2026',
+      lugar: 'Guadalajara, México',
+      industria: 'Produce fresco',
+      url: 'https://www.freshproduce.com',
+      imagenUrl: '/images/eventos/mexico-conf.png',
+      activo: true,
+    },
+    create: {
+      id: 'evt-mexico-conf',
+      titulo: 'The Mexico Conference',
+      descripcion: 'El único evento en México dedicado a toda la cadena de suministro de productos frescos.',
+      fecha: 'Mayo 13-14, 2026',
+      lugar: 'Guadalajara, México',
+      industria: 'Produce fresco',
+      url: 'https://www.freshproduce.com',
+      imagenUrl: '/images/eventos/mexico-conf.png',
+      activo: true,
+    }
+  })
+  console.log('✅ Evento inicial sembrado')
 
   console.log('\n✅ Seed completado — GEK CMS listo')
 }

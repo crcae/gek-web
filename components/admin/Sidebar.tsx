@@ -11,15 +11,19 @@ import {
   LogOut,
   ImageIcon,
   FileText,
+  Calendar,
+  Users
 } from 'lucide-react';
 
 const navItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/leads', label: 'Leads', icon: Users },
+  { href: '/admin/eventos', label: 'Eventos', icon: Calendar },
+  { href: '/admin/clientes', label: 'Clientes', icon: ImageIcon },
   { href: '/admin/noticias', label: 'Noticias', icon: Newspaper },
   { href: '/admin/holding', label: 'Holding', icon: Building2 },
   { href: '/admin/contenido', label: 'Contenido', icon: FileText },
   { href: '/admin/imagenes', label: 'Imágenes', icon: ImageIcon },
-  { href: '/admin/mensajes', label: 'Mensajes', icon: MessageSquare },
 ];
 
 interface SidebarProps {
@@ -64,7 +68,7 @@ export function Sidebar({ userName, unreadCount, onClose }: SidebarProps) {
             >
               <Icon className="w-4 h-4 shrink-0" />
               <span>{item.label}</span>
-              {item.label === 'Mensajes' && unreadCount > 0 && (
+              {item.label === 'Leads' && unreadCount > 0 && (
                 <span className="ml-auto bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {unreadCount > 9 ? '9+' : unreadCount}
                 </span>

@@ -81,3 +81,40 @@ model ImagenSitio {
   url       String
   createdAt DateTime @default(now())
 }
+
+model Evento {
+  id          String   @id @default(cuid())
+  titulo      String
+  descripcion String?
+  fecha       String
+  lugar       String
+  industria   String?
+  url         String?
+  imagenUrl   String?
+  activo      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+model Lead {
+  id              String   @id @default(cuid())
+  tipo            String   // cliente|proveedor|bolsa|alianza|etc
+  productos       String?  // JSON array de selecciones
+  mercado         String?  // JSON array
+  volumen         String?
+  nombre          String
+  empresa         String?
+  email           String
+  whatsapp        String?
+  comentarios     String?
+  createdAt       DateTime @default(now())
+  leido           Boolean  @default(false)
+}
+
+model ClienteLogo {
+  id        String   @id @default(cuid())
+  nombre    String
+  url       String
+  filename  String
+  orden     Int      @default(0)
+  createdAt DateTime @default(now())
+}

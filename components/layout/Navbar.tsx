@@ -4,17 +4,23 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import Image from 'next/image';
+import { MegaMenu } from './MegaMenu';
+import { MobileDrawer } from './MobileDrawer';
 
 export function Navbar() {
   const t = useTranslations('nav');
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const menuRef = useRef<HTMLElement>(null);
+  const [activeHoverKey, setActiveHoverKey] = useState<string | null>(null);
+  
+  const navbarRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 30);
@@ -25,47 +31,53 @@ export function Navbar() {
   const handleLanguageChange = (newLocale: string) => {
     const pathWithoutLocale = pathname.replace(/^\/[a-z]{2}/, '');
     router.push(`/${newLocale}${pathWithoutLocale === '' ? '/' : pathWithoutLocale}`);
-    setIsOpen(false);
+    setMobileOpen(false);
   };
 
   const navLinks = [
-    { key: 'inicio', label: t('home'), href: `/${locale}` },
     { key: 'quienesSomos', label: t('quienes'), href: `/${locale}/quienes-somos` },
     { key: 'historia', label: t('historia'), href: `/${locale}/historia` },
     { key: 'holding', label: t('holding'), href: `/${locale}/holding` },
     { key: 'contacto', label: t('contacto'), href: `/${locale}/contacto` },
   ];
 
-  // Close menu on outside click
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isOpen]);
+  // Helper to clear timeout
+  const clearHoverTimeout = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  };
 
-  // Close menu on route change
-  useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
+  const handleMouseEnterLink = (key: string) => {
+    clearHoverTimeout();
+    setActiveHoverKey(key);
+  };
+
+  const handleMouseLeaveLink = () => {
+    clearHoverTimeout();
+    hoverTimeoutRef.current = setTimeout(() => {
+      setActiveHoverKey(null);
+    }, 150); // slight delay to prevent flickering
+  };
+
+  const handleMouseEnterMenu = () => {
+    clearHoverTimeout();
+  };
 
   return (
-    <nav
-      ref={menuRef}
-      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 border-b-2 border-brand-green ${
-        scrolled
-          ? 'py-1.5 bg-brand-navy shadow-lg shadow-black/20'
-          : 'py-2 bg-brand-navy'
+    <div 
+      ref={navbarRef}
+      className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 border-b-2 border-brand-green bg-brand-navy ${
+        scrolled ? 'py-1.5 shadow-lg shadow-black/20' : 'py-2'
       }`}
+      onMouseLeave={handleMouseLeaveLink}
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        
         {/* Logo */}
         <div className="flex-shrink-0 flex items-center">
-          <Link href={`/${locale}`} prefetch={true} onClick={() => setIsOpen(false)} className="block">
+          <Link href={`/${locale}`} prefetch={true} className="block">
             <Image
               src="/images/logos/GrupoExportador_Logo1.png"
               alt={t('logo_alt')}
@@ -80,89 +92,73 @@ export function Navbar() {
         </div>
 
         {/* Desktop Navigation Links — lg+ */}
-        <div className="hidden lg:flex items-center space-x-6">
+        <div className="hidden lg:flex items-center space-x-8">
           {navLinks.map((link) => (
-            <Link
+            <div
               key={link.key}
-              href={link.href}
-              prefetch={true}
-              className={`nav-link text-brand-white hover:text-brand-green transition-colors font-body font-medium tracking-wide ${
-                scrolled ? 'text-base' : 'text-lg'
-              } ${pathname === link.href ? 'active' : ''}`}
+              onMouseEnter={() => handleMouseEnterLink(link.key)}
+              className="relative py-4"
             >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Right side: language selector (desktop) + hamburger (mobile) */}
-        <div className="flex items-center gap-3">
-          {/* Language selector — desktop only */}
-          <div className="hidden lg:block">
-            <select
-              onChange={(e) => handleLanguageChange(e.target.value)}
-              className="bg-brand-navy text-brand-white border border-brand-gray/30 rounded-md py-1 px-2 font-body text-xs focus:outline-none focus:border-brand-green cursor-pointer"
-              value={locale}
-            >
-              <option value="es">ES</option>
-              <option value="en">EN</option>
-              <option value="de">DE</option>
-            </select>
-          </div>
-
-          {/* Hamburger button — mobile/tablet only */}
-          <button
-            className="lg:hidden text-brand-white p-2 rounded-md hover:bg-brand-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
-            onClick={() => setIsOpen((prev) => !prev)}
-            aria-label={isOpen ? t('cerrar_menu') : t('abrir_menu')}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile dropdown panel */}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-        }`}
-      >
-        <div className="bg-brand-navy border-t border-brand-white/10 px-6 pb-6">
-          <nav className="flex flex-col">
-            {navLinks.map((link, i) => (
               <Link
-                key={link.key}
                 href={link.href}
                 prefetch={true}
-                onClick={() => setIsOpen(false)}
-                className={`font-display text-lg text-brand-white hover:text-brand-green transition-colors py-4 px-2 ${
-                  i !== navLinks.length - 1 ? 'border-b border-brand-white/10' : ''
+                className={`nav-link text-brand-white hover:text-brand-green transition-colors font-body font-medium tracking-wide text-xl ${
+                  pathname === link.href ? 'active text-brand-green border-b-2 border-brand-green pb-1' : ''
                 }`}
               >
                 {link.label}
               </Link>
-            ))}
-          </nav>
+            </div>
+          ))}
+        </div>
 
-          {/* Language row at bottom */}
-          <div className="mt-6 pt-4 border-t border-brand-white/10 flex items-center gap-4">
-            {['es', 'en', 'de'].map((l) => (
+        {/* Right side: language switcher flags & mobile hamburger */}
+        <div className="flex items-center gap-6">
+          
+          {/* Flag selector: ES | EN | DE */}
+          <div className="hidden lg:flex items-center gap-1.5 bg-black/20 p-1 rounded-md border border-white/5">
+            {[
+              { code: 'es', flag: '🇲🇽', label: 'ES' },
+              { code: 'en', flag: '🇺🇸', label: 'EN' },
+              { code: 'de', flag: '🇩🇪', label: 'DE' },
+            ].map((lang) => (
               <button
-                key={l}
-                onClick={() => handleLanguageChange(l)}
-                className={`font-body text-sm font-medium min-h-[44px] px-3 rounded-md transition-colors ${
-                  locale === l
-                    ? 'text-brand-green border border-brand-green'
-                    : 'text-brand-white/60 hover:text-brand-white'
+                key={lang.code}
+                onClick={() => handleLanguageChange(lang.code)}
+                className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold font-body transition-all min-h-[30px] rounded ${
+                  locale === lang.code
+                    ? 'bg-brand-green text-white shadow-md'
+                    : 'text-white opacity-70 hover:opacity-100 hover:bg-white/5'
                 }`}
               >
-                {l.toUpperCase()}
+                <span>{lang.flag}</span>
+                <span>{lang.label}</span>
               </button>
             ))}
           </div>
+
+          {/* Hamburger menu button for Mobile */}
+          <button
+            className="lg:hidden text-brand-white p-2 rounded-md hover:bg-brand-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+            onClick={() => setMobileOpen(true)}
+            aria-label={t('abrir_menu')}
+          >
+            <Menu className="w-6 h-6" />
+          </button>
         </div>
       </div>
-    </nav>
+
+      {/* MegaMenu Dropdown */}
+      <div onMouseEnter={handleMouseEnterMenu}>
+        <MegaMenu activeKey={activeHoverKey} onClose={() => setActiveHoverKey(null)} />
+      </div>
+
+      {/* Mobile Drawer */}
+      <MobileDrawer
+        isOpen={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        navLinks={navLinks}
+      />
+    </div>
   );
 }

@@ -1,11 +1,21 @@
 'use client';
 
+import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
+import { Volume2, VolumeX } from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
-import { AnimatedLine } from '@/components/ui/AnimatedLine';
 
 export function HeroSection({ tagline, subtitle }: { tagline: string; subtitle: string }) {
-  const t = useTranslations('Hero');
+  const t = useTranslations('home');
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleSound = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
   const scrollToNext = () => {
     document.getElementById('features-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -14,12 +24,10 @@ export function HeroSection({ tagline, subtitle }: { tagline: string; subtitle: 
   return (
     <section className="relative w-full h-screen overflow-hidden bg-brand-navy">
       {/* Background Video */}
-      {/* VIDEO: colocar hero.mp4 en /public/videos/institucional/
-          Resolución recomendada: 1920x1080, formato MP4 H.264
-          Tamaño máximo recomendado: 15MB (comprimir con HandBrake si es necesario) */}
       <video
+        ref={videoRef}
         autoPlay
-        muted
+        muted={isMuted}
         loop
         playsInline
         poster="/images/zacatecas/_DSC3760.jpg"
@@ -28,10 +36,12 @@ export function HeroSection({ tagline, subtitle }: { tagline: string; subtitle: 
         <source src="/videos/institucional/hero.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay */}
+      {/* Subtle Overlay */}
       <div 
-        className="absolute inset-0 z-10" 
-        style={{ background: 'linear-gradient(to right, rgba(13,27,36,0.85) 0%, rgba(13,27,36,0.6) 50%, rgba(13,27,36,0.3) 100%)' }}
+        className="absolute inset-0 z-10 pointer-events-none" 
+        style={{
+          background: 'linear-gradient(to right, rgba(13,27,36,0.70) 0%, rgba(13,27,36,0.45) 60%, rgba(13,27,36,0.20) 100%)'
+        }}
       />
 
       {/* Content aligned bottom-left */}
@@ -40,14 +50,15 @@ export function HeroSection({ tagline, subtitle }: { tagline: string; subtitle: 
         {/* Eyebrow */}
         <AnimatedSection animation="fade-up" delay={1} className="flex items-center gap-4 mb-4">
           <div className="h-[2px] w-[40px] bg-brand-green" />
-          <span className="text-[11px] tracking-[0.2em] text-white/70 uppercase font-lora">
-            Desde Loreto, Zacatecas
+          <span className="text-[11px] tracking-[0.2em] text-white/70 uppercase font-lora font-medium">
+            {t('hero_eyebrow')}
           </span>
         </AnimatedSection>
 
         {/* Tagline */}
         <AnimatedSection animation="fade-up" delay={2}>
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-brand-white font-bold leading-tight mb-4" dangerouslySetInnerHTML={{ __html: tagline }}>
+          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-brand-white font-bold leading-tight mb-4">
+            {t('hero_tagline')} <span className="text-brand-green">GEC</span>
           </h1>
         </AnimatedSection>
 
@@ -60,15 +71,24 @@ export function HeroSection({ tagline, subtitle }: { tagline: string; subtitle: 
 
         {/* CTA (hidden) */}
         <AnimatedSection animation="fade-up" delay={4} className="hidden mt-8">
-          {/* TODO: activar cuando esté listo */}
+          {/* TODO: activar CTA cuando esté listo */}
           <button
             onClick={scrollToNext}
             className="btn-primary bg-brand-green text-brand-white font-body py-3 px-8 text-lg font-medium hover:bg-opacity-90 transition-all rounded-sm min-h-[44px]"
           >
-            {t('cta')}
+            {t('hero_cta')}
           </button>
         </AnimatedSection>
       </div>
+
+      {/* Sound Control Button */}
+      <button
+        onClick={toggleSound}
+        className="absolute bottom-6 right-6 z-30 w-11 h-11 bg-black/50 hover:bg-black/75 rounded-full flex items-center justify-center text-white transition-colors focus:outline-none focus:ring-2 focus:ring-brand-green"
+        aria-label={isMuted ? t('activar_sonido') : t('silenciar_sonido')}
+      >
+        {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+      </button>
     </section>
   );
 }

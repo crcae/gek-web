@@ -193,3 +193,26 @@
 @media (pointer: coarse) {
   .cursor-dot, .cursor-ring { display: none; }
 }
+
+/* ─── Infinite Logo Scroll (ClientesSection) ────────────────────────── */
+
+@keyframes scroll-logos {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.logos-track {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  width: max-content;
+  animation: scroll-logos 45s linear infinite;
+}
+
+.logos-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logos-track { animation: none; }
+}

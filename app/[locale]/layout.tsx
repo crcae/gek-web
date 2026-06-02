@@ -7,6 +7,8 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import { Topbar } from '@/components/layout/Topbar';
 import { CustomCursor } from '@/components/ui/CustomCursor';
+import { FloatingButtons } from '@/components/ui/FloatingButtons';
+
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
@@ -52,6 +54,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer locale={locale} />
+          <FloatingButtons />
         </NextIntlClientProvider>
       </body>
     </html>

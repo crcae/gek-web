@@ -17,7 +17,7 @@ export default async function AdminLayout({
     return <div className={inter.className}>{children}</div>;
   }
 
-  const unreadCount = await prisma.mensajeContacto.count({
+  const unreadCount = await prisma.lead.count({
     where: { leido: false },
   });
 

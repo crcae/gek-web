@@ -2,6 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { Timeline } from '@/components/sections/history/Timeline';
 import { GaleriaGrid } from '@/components/sections/history/GaleriaGrid';
+import { MapaZacatecas } from '@/components/sections/history/MapaZacatecas';
 import Image from 'next/image';
 import { getContenidoCached } from '@/lib/queries/cache';
 import fs from 'fs';
@@ -11,16 +12,12 @@ export default async function Historia({ params: { locale } }: { params: { local
   const t = await getTranslations('historia');
 
   const contenido = await getContenidoCached([
-    'historia.origen.titulo',
-    'historia.origen.texto',
     'historia.fundadores.texto'
   ], locale);
 
-  const origenTitulo = contenido['historia.origen.titulo'];
-  const origenTexto = contenido['historia.origen.texto'];
   const fundadoresTexto = contenido['historia.fundadores.texto'];
 
-  // Leer fotos de Zacatecas del filesystem
+  // Fotos de Zacatecas
   let fotosZacatecas: string[] = [];
   try {
     const carpetaZacatecas = path.join(process.cwd(), 'public/images/zacatecas');
@@ -29,11 +26,9 @@ export default async function Historia({ params: { locale } }: { params: { local
         .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
         .map(f => `/images/zacatecas/${f}`);
     }
-  } catch (err) {
-    console.error('Error reading zacatecas folder:', err);
-  }
+  } catch {}
 
-  // Leer fotos de Fundadores del filesystem
+  // Fotos de Fundadores
   let fotosFundadores: string[] = [];
   try {
     const carpetaFundadores = path.join(process.cwd(), 'public/images/fundadores');
@@ -42,49 +37,58 @@ export default async function Historia({ params: { locale } }: { params: { local
         .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
         .map(f => `/images/fundadores/${f}`);
     }
-  } catch (err) {
-    console.error('Error reading fundadores folder:', err);
-  }
+  } catch {}
 
   const galeriaImages = fotosZacatecas.slice(0, 12);
-  const fundadoresImg = fotosFundadores[0] || "/images/zacatecas/_DSC3592.jpg";
+  const fundadoresImg = fotosFundadores[0] || '/images/zacatecas/_DSC3592.jpg';
 
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} />
+      {/* Hero — texto abajo-izquierda */}
+      <PageHero
+        title={t('titulo_pagina')}
+        subtitle={t('subtitulo_pagina')}
+        align="bottom-left"
+      />
 
-      {/* Origen — foto debajo en mobile */}
-      <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
-          <div className="w-full md:w-1/2">
-            <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-              {origenTitulo || t('origen_titulo')}
+      {/* Nacidos en Zacatecas — texto izquierda + mapa animado derecha */}
+      <section className="w-full bg-brand-white py-16 md:py-24 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+          {/* Texto */}
+          <div className="w-full md:w-1/2 order-2 md:order-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-brand-green block mb-3">
+              {t('origen_titulo')}
+            </span>
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
+              {t('nacidos_titulo')}
             </h2>
             <div className="w-[60px] h-[3px] bg-brand-green mb-6" />
             <p className="font-body text-brand-navy/80 text-lg leading-relaxed">
-              {origenTexto || t('origen_fallback')}
+              {t('nacidos_texto')}
             </p>
           </div>
-          <div className="w-full md:w-1/2">
-            <div className="aspect-video bg-white rounded-sm flex flex-col items-center justify-center border border-brand-gray/20 shadow-sm relative overflow-hidden">
-              <div className="absolute inset-0 bg-brand-navy/5" />
-              <div className="w-12 h-12 bg-brand-green rounded-full flex items-center justify-center shadow-lg relative z-10">
-                <div className="w-4 h-4 bg-white rounded-full" />
-              </div>
-              <p className="font-display text-brand-navy font-bold mt-4 relative z-10">Loreto, Zacatecas</p>
-            </div>
+
+          {/* Mapa animado */}
+          <div className="w-full md:w-1/2 order-1 md:order-2">
+            <MapaZacatecas />
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="w-full bg-white py-16 md:py-20 px-4 sm:px-6">
+      <section className="w-full bg-[#F8FAF9] py-16 md:py-20 px-4 sm:px-6 border-t border-brand-gray/20">
         <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
+              {t('timeline_titulo')}
+            </h2>
+            <div className="w-[60px] h-[3px] bg-brand-green mx-auto" />
+          </div>
           <Timeline />
         </div>
       </section>
 
-      {/* Fundadores — 1 col mobile, 2 col md */}
+      {/* Fundadores */}
       <section className="w-full bg-brand-navy py-16 md:py-20 px-4 sm:px-6 border-y-4 border-brand-green">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-display text-3xl font-bold text-brand-white mb-4">
@@ -96,16 +100,15 @@ export default async function Historia({ params: { locale } }: { params: { local
 
           <div className="flex flex-col items-center">
             <div className="w-full max-w-3xl mb-8 flex justify-center">
-              <Image 
-                src={fundadoresImg} 
-                alt="Fundadores" 
+              <Image
+                src={fundadoresImg}
+                alt="Fundadores"
                 width={800}
                 height={500}
-                className="max-w-full h-auto rounded-sm border-2 border-brand-green shadow-lg" 
+                className="max-w-full h-auto rounded-sm border-2 border-brand-green shadow-lg"
                 quality={80}
               />
             </div>
-            
             <div className="flex flex-col items-center text-center">
               <h3 className="font-display text-2xl md:text-3xl font-bold text-brand-white mb-2">
                 Sr. Ramiro Vizcaíno y Sra. Ceferina Vizcaíno
@@ -116,18 +119,19 @@ export default async function Historia({ params: { locale } }: { params: { local
       </section>
 
       {/* Galería */}
-      <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col items-center mb-12 text-center">
-            <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-              {t('galeria_titulo')}
-            </h2>
-            <div className="w-[60px] h-[3px] bg-brand-green" />
+      {galeriaImages.length > 0 && (
+        <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col items-center mb-12 text-center">
+              <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
+                {t('galeria_titulo')}
+              </h2>
+              <div className="w-[60px] h-[3px] bg-brand-green" />
+            </div>
+            <GaleriaGrid images={galeriaImages} />
           </div>
-
-          <GaleriaGrid images={galeriaImages} />
-        </div>
-      </section>
+        </section>
+      )}
     </div>
   );
 }

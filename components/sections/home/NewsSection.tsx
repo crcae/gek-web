@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
+import { EventosSection } from './EventosSection';
 
 const LinkedinIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -13,17 +15,23 @@ interface Noticia {
   linkedinEmbedUrl: string;
 }
 
-export function NewsSection({ noticias }: { noticias: Noticia[], locale: string }) {
+export function NewsSection({ noticias, locale }: { noticias: Noticia[], locale: string }) {
   const t = useTranslations('home');
 
   const hasNews = noticias && noticias.length > 0;
 
   return (
-    <section className="w-full bg-white py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="relative w-full bg-[#2C3E4B] py-20 px-6 overflow-hidden">
+      {/* Isotipo Watermark in Navy background */}
+      <div 
+        className="absolute left-[-120px] top-[-120px] w-[380px] h-[380px] bg-no-repeat bg-contain pointer-events-none opacity-[0.06]"
+        style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10 text-white">
         <div className="flex flex-col items-center mb-12">
           <AnimatedSection animation="fade-up">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4 text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 text-center">
               {t('noticias_titulo')}
             </h2>
           </AnimatedSection>
@@ -38,7 +46,7 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
                 animation="fade-up"
                 delay={(idx + 1) as 1 | 2 | 3}
               >
-                <div className="card-hover relative bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-200 flex flex-col h-full pt-4">
+                <div className="card-hover relative bg-white/5 rounded-lg overflow-hidden shadow-lg transition-all border border-white/10 flex flex-col h-full pt-4">
                   {/* Badge LinkedIn */}
                   <div className="absolute top-0 right-0 bg-[#0A66C2] text-white px-3 py-1 text-xs font-bold rounded-bl-lg z-10 flex items-center gap-1">
                     <LinkedinIcon className="w-3 h-3" />
@@ -46,7 +54,7 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
                   </div>
 
                   {/* Iframe */}
-                  <div className="w-full flex-grow relative bg-gray-50 flex justify-center">
+                  <div className="w-full flex-grow relative bg-white/5 flex justify-center">
                     <iframe
                       src={noticia.linkedinEmbedUrl}
                       height="450"
@@ -63,21 +71,21 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
           </div>
         ) : (
           <AnimatedSection animation="fade-in" delay={2}>
-            <div className="flex flex-col items-center justify-center p-12 bg-gray-50 rounded-xl border border-gray-100 max-w-3xl mx-auto text-center">
-              <div className="w-16 h-16 bg-[#0A66C2]/10 text-[#0A66C2] rounded-full flex items-center justify-center mb-6">
+            <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-xl border border-white/10 max-w-3xl mx-auto text-center">
+              <div className="w-16 h-16 bg-[#0A66C2]/20 text-white rounded-full flex items-center justify-center mb-6 border border-[#0A66C2]/40">
                 <LinkedinIcon className="w-8 h-8" />
               </div>
-              <h3 className="font-display text-2xl font-bold text-brand-navy mb-3">
+              <h3 className="font-display text-2xl font-bold text-white mb-3">
                 {t('noticias_titulo')}
               </h3>
-              <p className="font-body text-gray-600 mb-8 max-w-lg mx-auto">
+              <p className="font-body text-white/70 mb-8 max-w-lg mx-auto">
                 {t('noticias_vacia')}
               </p>
               <a
                 href="https://www.linkedin.com/company/grupo-exportador-del-campo/posts/?feedView=all"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-[#0A66C2] text-white px-6 py-3 rounded-md font-medium hover:bg-[#084e96] transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 bg-[#0A66C2] text-white px-6 py-3 rounded-md font-medium hover:bg-[#084e96] transition-colors shadow-md active:scale-95"
               >
                 <LinkedinIcon className="w-5 h-5" />
                 {t('noticias_linkedin_btn')} →
@@ -85,6 +93,12 @@ export function NewsSection({ noticias }: { noticias: Noticia[], locale: string 
             </div>
           </AnimatedSection>
         )}
+
+        {/* Dynamic Events Sub-section — own Suspense to avoid re-suspending the parent */}
+        <Suspense fallback={<div className="mt-20 border-t border-white/10 pt-16 h-48 opacity-20 animate-pulse" />}>
+          <EventosSection />
+        </Suspense>
+
       </div>
     </section>
   );

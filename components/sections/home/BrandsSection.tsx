@@ -23,8 +23,14 @@ export async function BrandsSection() {
   });
 
   return (
-    <section className="w-full bg-brand-white py-20 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section className="w-full bg-brand-white py-20 px-6 relative overflow-hidden">
+      {/* Watermark Isotipo on White Background */}
+      <div 
+        className="absolute right-[-100px] top-[-100px] w-[350px] h-[350px] bg-no-repeat bg-contain pointer-events-none opacity-[0.04]"
+        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-center mb-16 text-center">
           <AnimatedSection animation="fade-up">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
@@ -42,23 +48,25 @@ export async function BrandsSection() {
               delay={(idx + 1) as 1 | 2 | 3}
               className="flex flex-col items-center justify-center px-12 h-32 w-full md:w-1/3"
             >
-              {brand.exists ? (
-                <Image
-                  src={brand.url}
-                  alt={brand.name}
-                  width={200}
-                  height={80}
-                  className="max-h-full max-w-full object-contain"
-                  quality={80}
-                />
-              ) : (
-                <div className="w-full h-full flex flex-col items-center justify-center border-2 border-dashed border-brand-navy/20 rounded-md bg-white">
-                  <span className="font-display font-bold text-brand-navy text-xl text-center px-4">
-                    {brand.name}
-                  </span>
-                  <span className="font-body text-xs text-brand-navy/40 mt-2">{t('proximamente')}</span>
-                </div>
-              )}
+              <div className="w-full h-full flex items-center justify-center transition-all duration-250 ease-out hover:scale-108 hover:-translate-y-1 hover:drop-shadow-[0_8px_20px_rgba(77,178,107,0.3)] cursor-default">
+                {brand.exists ? (
+                  <Image
+                    src={brand.url}
+                    alt={brand.name}
+                    width={200}
+                    height={80}
+                    className="max-h-full max-w-full object-contain cursor-default"
+                    quality={80}
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center border border-brand-green/20 rounded-md bg-white p-4 cursor-default">
+                    <span className="font-display font-bold text-brand-navy text-lg text-center truncate w-full">
+                      {brand.name}
+                    </span>
+                    <span className="font-body text-xs text-brand-green mt-1">GEC</span>
+                  </div>
+                )}
+              </div>
             </AnimatedSection>
           ))}
         </div>
