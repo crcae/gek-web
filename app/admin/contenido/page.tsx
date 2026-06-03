@@ -45,6 +45,17 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'quienes.divisiones.subtitulo': '→ Quiénes Somos · Subtítulo sección Divisiones',
   'quienes.division.campo':     '→ Quiénes Somos · Descripción División Campo',
   'quienes.division.sedis':     '→ Quiénes Somos · Descripción División Sedis',
+  'quienes.franja.imagen':                '→ Quiénes Somos · Franja decorativa arriba del título (PageHero)',
+  'quienes.ceo.imagen':                   '→ Quiénes Somos · Foto del Director General Joaquín Vizcaíno',
+  'quienes.ecosistema.mision.imagen':     '→ Quiénes Somos · Fondo del panel izquierdo del Ecosistema (Misión)',
+  'quienes.ecosistema.vision.imagen':     '→ Quiénes Somos · Fondo del panel central del Ecosistema (Visión)',
+  'quienes.ecosistema.valores.imagen':    '→ Quiénes Somos · Fondo del panel derecho del Ecosistema (Valores)',
+  'quienes.cedis.ficha1.imagen':          '→ Quiénes Somos · Primera ficha CEDIS (Desinfección y Clasificación)',
+  'quienes.cedis.ficha2.imagen':          '→ Quiénes Somos · Segunda ficha CEDIS (Empaque)',
+  'quienes.cedis.ficha3.imagen':          '→ Quiénes Somos · Tercera ficha CEDIS (Preparación Logística)',
+  'quienes.cedis.ficha4.imagen':          '→ Quiénes Somos · Cuarta ficha CEDIS (Distribución)',
+  'quienes.division.campo.imagen':        '→ Quiénes Somos · Foto cuadro izquierdo en Nuestras Divisiones',
+  'quienes.division.sedis.imagen':        '→ Quiénes Somos · Foto cuadro derecho en Nuestras Divisiones',
   'quienes.campo.titulo':       '→ Quiénes Somos · Título sección Procesos Campo',
   'quienes.campo.subtitulo':    '→ Quiénes Somos · Subtítulo sección Procesos Campo',
   'quienes.cedis.titulo':       '→ Quiénes Somos · Título sección Procesos CEDIS',
@@ -132,13 +143,42 @@ export default function ContenidoPage() {
             </p>
           </div>
         )}
-        {activeSeccion && groupedData[activeSeccion]?.map((item) => (
-          <ContentField key={item.id} item={item} />
-        ))}
+        {activeSeccion && (() => {
+          const all = groupedData[activeSeccion] ?? [];
+          const imgItems = all.filter(i => esImagen(i.id, i.valor_es));
+          const txtItems = all.filter(i => !esImagen(i.id, i.valor_es));
+
+          if (imgItems.length === 0) {
+            return txtItems.map(item => <ContentField key={item.id} item={item} />);
+          }
+
+          return (
+            <>
+              {/* Sección imágenes — arriba */}
+              <div className="flex items-center gap-4 mb-5">
+                <div className="flex-1 h-px bg-gray-200" />
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 px-2">Imágenes</span>
+                <div className="flex-1 h-px bg-gray-200" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                {imgItems.map(item => <ContentField key={item.id} item={item} />)}
+              </div>
+
+              {/* Sección textos — abajo */}
+              <div className="flex items-center gap-4 mb-5">
+                <div className="flex-1 h-px bg-gray-200" />
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 px-2">Textos</span>
+                <div className="flex-1 h-px bg-gray-200" />
+              </div>
+              {txtItems.map(item => <ContentField key={item.id} item={item} />)}
+            </>
+          );
+        })()}
       </div>
     </div>
   );
 }
+
 
 function ContentField({ item }: { item: Contenido }) {
   const [form, setForm] = useState({

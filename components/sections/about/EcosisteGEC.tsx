@@ -3,13 +3,19 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Heart, TrendingUp, Star } from 'lucide-react';
+import Image from 'next/image';
 
 interface Props {
   misionText: string;
   visionText: string;
+  imagenes?: {
+    mision?: string;
+    vision?: string;
+    valores?: string;
+  };
 }
 
-export function EcosisteGEC({ misionText, visionText }: Props) {
+export function EcosisteGEC({ misionText, visionText, imagenes = {} }: Props) {
   const t = useTranslations('quienes');
   const [activo, setActivo] = useState<number | null>(null);
 
@@ -24,18 +30,21 @@ export function EcosisteGEC({ misionText, visionText }: Props) {
       Icono: Heart,
       contenido: misionText,
       gradiente: 'from-brand-navy to-[#1A3D2B]',
+      imagen: imagenes.mision || '',
     },
     {
       titulo: t('pens_vision_titulo'),
       Icono: TrendingUp,
       contenido: visionText,
       gradiente: 'from-brand-navy to-[#0D2233]',
+      imagen: imagenes.vision || '',
     },
     {
       titulo: t('pens_valores_titulo'),
       Icono: Star,
       contenido: null,
       gradiente: 'from-brand-navy to-[#1E4A6A]',
+      imagen: imagenes.valores || '',
     },
   ];
 
@@ -68,7 +77,14 @@ export function EcosisteGEC({ misionText, visionText }: Props) {
                 onMouseEnter={() => setActivo(i)}
                 onMouseLeave={() => setActivo(null)}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${panel.gradiente}`} />
+                {panel.imagen ? (
+                  <>
+                    <Image src={panel.imagen} alt="" fill className="object-cover" sizes="600px" unoptimized />
+                    <div className={`absolute inset-0 transition-opacity duration-300 ${isOpen ? 'bg-brand-navy/75' : 'bg-brand-navy/85'}`} />
+                  </>
+                ) : (
+                  <div className={`absolute inset-0 bg-gradient-to-br ${panel.gradiente}`} />
+                )}
 
                 <div className="relative z-10 h-full flex flex-col justify-end p-6">
                   <panel.Icono className="w-8 h-8 text-brand-green mb-3" />

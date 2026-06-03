@@ -26,6 +26,18 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
     'quienes.divisiones.subtitulo',
     'quienes.division.campo',
     'quienes.division.sedis',
+    // imágenes gestionadas desde admin
+    'quienes.franja.imagen',
+    'quienes.ceo.imagen',
+    'quienes.ecosistema.mision.imagen',
+    'quienes.ecosistema.vision.imagen',
+    'quienes.ecosistema.valores.imagen',
+    'quienes.cedis.ficha1.imagen',
+    'quienes.cedis.ficha2.imagen',
+    'quienes.cedis.ficha3.imagen',
+    'quienes.cedis.ficha4.imagen',
+    'quienes.division.campo.imagen',
+    'quienes.division.sedis.imagen',
     ...idsValores.map(id => `quienes.valor.${id}`)
   ], locale);
 
@@ -36,6 +48,23 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const divisionesSubtitulo = contenido['quienes.divisiones.subtitulo'];
   const divisionCampoDesc = contenido['quienes.division.campo'];
   const divisionSedisDesc = contenido['quienes.division.sedis'];
+
+  // Imágenes desde admin (Vercel Blob URL o vacío)
+  const imgFranja    = contenido['quienes.franja.imagen'] || null;
+  const imgCeo       = contenido['quienes.ceo.imagen'] || null;
+  const ecoImagenes  = {
+    mision:  contenido['quienes.ecosistema.mision.imagen'] || undefined,
+    vision:  contenido['quienes.ecosistema.vision.imagen'] || undefined,
+    valores: contenido['quienes.ecosistema.valores.imagen'] || undefined,
+  };
+  const cedisImagenes: [string, string, string, string] = [
+    contenido['quienes.cedis.ficha1.imagen'] || '',
+    contenido['quienes.cedis.ficha2.imagen'] || '',
+    contenido['quienes.cedis.ficha3.imagen'] || '',
+    contenido['quienes.cedis.ficha4.imagen'] || '',
+  ];
+  const imgDivCampo  = contenido['quienes.division.campo.imagen'] || null;
+  const imgDivSedis  = contenido['quienes.division.sedis.imagen'] || null;
 
   // Fotos
   const readImages = (folder: string): string[] => {
@@ -54,13 +83,13 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const primeraFotoZacatecas = fotosZacatecas[0] ?? null;
   const primeraFotoSedis = fotosSedis[0] ?? null;
 
-  // CEO
-  const ceoPath = join(process.cwd(), 'public/images/quienes/ceo.jpg');
-  const ceoExists = existsSync(ceoPath);
+  // CEO — DB primero, filesystem como fallback
+  const ceoLocalPath = join(process.cwd(), 'public/images/quienes/ceo.jpg');
+  const ceoSrc = imgCeo || (existsSync(ceoLocalPath) ? '/images/quienes/ceo.jpg' : null);
 
-  // Franja hero
-  const franjaPath = join(process.cwd(), 'public/images/quienes/franja-inicio.jpg');
-  const franjaImage = existsSync(franjaPath) ? '/images/quienes/franja-inicio.jpg' : null;
+  // Franja hero — DB primero, filesystem como fallback
+  const franjaLocalPath = join(process.cwd(), 'public/images/quienes/franja-inicio.jpg');
+  const franjaImage = imgFranja ?? (existsSync(franjaLocalPath) ? '/images/quienes/franja-inicio.jpg' : null);
 
   // Camión decorativo
   const truckPath = join(process.cwd(), 'public/images/camiones/truck1.png');
@@ -106,9 +135,9 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
           <div className="w-full md:w-[45%] relative md:-mb-20 md:mt-6">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <div className="relative h-72 md:h-96">
-                {ceoExists ? (
+                {ceoSrc ? (
                   <Image
-                    src="/images/quienes/ceo.jpg"
+                    src={ceoSrc}
                     alt="Joaquín Vizcaíno — Director General"
                     fill
                     className="object-cover object-top"
@@ -141,7 +170,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       </section>
 
       {/* ── 2. Ecosistema de Pensamiento — Misión / Visión / Valores ── */}
-      <EcosisteGEC misionText={mision} visionText={vision} />
+      <EcosisteGEC misionText={mision} visionText={vision} imagenes={ecoImagenes} />
 
       {/* ── 3. Fichas interactivas — Procesos Campo ── */}
       <ProcesosField />
@@ -150,7 +179,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       <CapitalHumano />
 
       {/* ── 5. Procesos CEDIS ── */}
-      <CedisProcesos />
+      <CedisProcesos imagenes={cedisImagenes} />
 
       {/* ── 6. Primus GFS badge ── */}
       {primusLogoPath && (
@@ -207,13 +236,14 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
             {/* División Campo */}
             <div className="rounded-2xl overflow-hidden shadow-md border border-brand-gray/10">
               <div className="relative w-full h-[260px]">
-                {primeraFotoZacatecas ? (
+                {(imgDivCampo || primeraFotoZacatecas) ? (
                   <Image
-                    src={primeraFotoZacatecas}
+                    src={imgDivCampo || primeraFotoZacatecas!}
                     alt="División Campo"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 600px"
+                    unoptimized={!!imgDivCampo}
                   />
                 ) : (
                   <div className="w-full h-full bg-brand-green/10 flex items-center justify-center">
@@ -236,13 +266,14 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
             {/* División Sedis */}
             <div className="rounded-2xl overflow-hidden shadow-md border border-brand-gray/10">
               <div className="relative w-full h-[260px]">
-                {primeraFotoSedis ? (
+                {(imgDivSedis || primeraFotoSedis) ? (
                   <Image
-                    src={primeraFotoSedis}
+                    src={imgDivSedis || primeraFotoSedis!}
                     alt="División Sedis"
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 600px"
+                    unoptimized={!!imgDivSedis}
                   />
                 ) : (
                   <div className="w-full h-full bg-brand-navy/10 flex items-center justify-center">

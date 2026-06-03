@@ -151,6 +151,19 @@ async function main() {
     { id: 'quienes.cedis.titulo', seccion: 'quienes', campo: 'Título sección procesos CEDIS', valor_es: '¿A dónde llegamos? A ti.', valor_en: 'Where do we arrive? To you.', valor_de: 'Wo kommen wir an? Bei Ihnen.' },
     { id: 'quienes.cedis.subtitulo', seccion: 'quienes', campo: 'Subtítulo sección procesos CEDIS', valor_es: 'Un vistazo a nuestros procesos de desinfección, clasificación, empaque y preparación logística en nuestro CEDIS.', valor_en: 'A look at our disinfection, classification, packaging and logistics preparation processes at our CEDIS.', valor_de: 'Ein Blick auf unsere Prozesse zur Desinfektion, Klassifizierung, Verpackung und logistischen Vorbereitung in unserem CEDIS.' },
 
+    // QUIÉNES SOMOS — imágenes
+    { id: 'quienes.franja.imagen', seccion: 'quienes', campo: 'Franja inicio (encabezado)', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.ceo.imagen', seccion: 'quienes', campo: 'Foto CEO — Director General', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.ecosistema.mision.imagen', seccion: 'quienes', campo: 'Ecosistema GEC — Panel Misión', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.ecosistema.vision.imagen', seccion: 'quienes', campo: 'Ecosistema GEC — Panel Visión', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.ecosistema.valores.imagen', seccion: 'quienes', campo: 'Ecosistema GEC — Panel Valores', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.cedis.ficha1.imagen', seccion: 'quienes', campo: 'CEDIS — Ficha 1: Desinfección y Clasificación', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.cedis.ficha2.imagen', seccion: 'quienes', campo: 'CEDIS — Ficha 2: Empaque', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.cedis.ficha3.imagen', seccion: 'quienes', campo: 'CEDIS — Ficha 3: Preparación Logística', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.cedis.ficha4.imagen', seccion: 'quienes', campo: 'CEDIS — Ficha 4: Distribución', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.division.campo.imagen', seccion: 'quienes', campo: 'División Campo — foto principal', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'quienes.division.sedis.imagen', seccion: 'quienes', campo: 'División Sedis — foto principal', valor_es: '', valor_en: '', valor_de: '' },
+
     // HISTORIA
     { id: 'historia.origen.titulo', seccion: 'historia', campo: 'Título — sección origen', valor_es: 'El Origen', valor_en: 'Our Origins', valor_de: 'Unsere Ursprünge' },
     { id: 'historia.origen.texto', seccion: 'historia', campo: 'Texto narrativo de origen', valor_es: 'Hace más de 50 años, en las áridas pero fértiles tierras de Loreto Zacatecas, nuestro fundador Don Ramiro Vizcaíno tomó las riendas de un proyecto que marcaría el camino de tres generaciones. Desde entonces, hemos crecido expandiendo nuestros horizontes a mercados en todo México y Estados Unidos, marcando el camino para las siguientes generaciones.', valor_en: 'More than 50 years ago, in the arid but fertile lands of Loreto Zacatecas, our founder Don Ramiro Vizcaíno took the reins of a project that would mark the path of three generations. Since then, we have grown by expanding our horizons to markets throughout Mexico and the United States, paving the way for the next generations.', valor_de: 'Vor mehr als 50 Jahren, in den kargen, aber fruchtbaren Böden von Loreto Zacatecas, übernahm unser Gründer Don Ramiro Vizcaíno die Zügel eines Projekts, das den Weg dreier Generationen prägen sollte. Seitdem sind wir gewachsen und haben unsere Horizonte auf Märkte in ganz Mexiko und den USA ausgedehnt.' },
