@@ -50,26 +50,26 @@ export function ClientesSection({ logos }: ClientesSectionProps) {
       </div>
 
       {/* Infinite Carousel Container */}
-      <div className="w-full overflow-hidden py-4 bg-gray-50/50">
+      <div className="w-full overflow-hidden py-4">
         <div className="logos-track">
           {doubled.map((client, idx) => (
             <div
               key={`${client.id}-${idx}`}
-              className="shrink-0 w-[160px] h-[72px] rounded-lg flex items-center justify-center select-none border border-slate-200 shadow-sm bg-[#E2E8F0] hover:bg-[#CBD5E1] transition-colors"
+              className="shrink-0 w-[240px] h-[108px] flex items-center justify-center select-none"
             >
               {client.url ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={client.url}
                   alt={client.nombre}
-                  className="max-w-[120px] max-h-[52px] object-contain"
+                  className="max-w-[180px] max-h-[78px] object-contain"
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center w-full h-full px-3">
-                  <span className="font-bold text-brand-navy text-[11px] leading-tight line-clamp-2 text-center">
+                  <span className="font-bold text-brand-navy text-[13px] leading-tight line-clamp-2 text-center">
                     {client.nombre}
                   </span>
-                  <span className="text-[9px] text-brand-green font-bold mt-0.5 tracking-wider uppercase">
+                  <span className="text-[10px] text-brand-green font-bold mt-0.5 tracking-wider uppercase">
                     GEC
                   </span>
                 </div>

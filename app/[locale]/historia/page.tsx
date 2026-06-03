@@ -5,6 +5,8 @@ import { GaleriaGrid } from '@/components/sections/history/GaleriaGrid';
 import { MapaZacatecas } from '@/components/sections/history/MapaZacatecas';
 import Image from 'next/image';
 import { getContenidoCached } from '@/lib/queries/cache';
+import { existsSync } from 'fs';
+import { join } from 'path';
 import fs from 'fs';
 import path from 'path';
 
@@ -42,6 +44,10 @@ export default async function Historia({ params: { locale } }: { params: { local
   const galeriaImages = fotosZacatecas.slice(0, 12);
   const fundadoresImg = fotosFundadores[0] || '/images/zacatecas/_DSC3592.jpg';
 
+  // Franja hero
+  const franjaPath = join(process.cwd(), 'public/images/historia/franja-inicio.jpg');
+  const franjaImage = existsSync(franjaPath) ? '/images/historia/franja-inicio.jpg' : null;
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero — texto abajo-izquierda */}
@@ -49,6 +55,7 @@ export default async function Historia({ params: { locale } }: { params: { local
         title={t('titulo_pagina')}
         subtitle={t('subtitulo_pagina')}
         align="bottom-left"
+        franjaImage={franjaImage}
       />
 
       {/* Nacidos en Zacatecas — texto izquierda + mapa animado derecha */}

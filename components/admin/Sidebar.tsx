@@ -12,7 +12,8 @@ import {
   ImageIcon,
   FileText,
   Calendar,
-  Users
+  Users,
+  ExternalLink,
 } from 'lucide-react';
 
 const navItems = [
@@ -80,6 +81,15 @@ export function Sidebar({ userName, unreadCount, onClose }: SidebarProps) {
 
       {/* User + Logout */}
       <div className="p-4 border-t border-white/10">
+        <a
+          href="/es"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-3 py-2 mb-2 text-sm text-white/40 hover:text-white transition-colors rounded-md hover:bg-white/5 w-full"
+        >
+          <ExternalLink className="w-4 h-4 shrink-0" />
+          Ver sitio público
+        </a>
         <p className="text-white/40 text-xs mb-3 truncate">{userName}</p>
         <button
           onClick={() => signOut({ callbackUrl: '/admin/login' })}

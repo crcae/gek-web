@@ -142,9 +142,9 @@
 
 /* ─── Custom Cursor ─────────────────────────────────────────────────── */
 
-/* Ocultar cursor nativo en desktop */
+/* Ocultar cursor nativo en desktop — solo en sitio público, nunca en admin */
 @media (pointer: fine) {
-  * { cursor: none !important; }
+  .public-site * { cursor: none !important; }
 }
 
 /* Cursor personalizado */

@@ -1,12 +1,15 @@
 import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
-import { ValoresGrid } from '@/components/sections/about/ValoresGrid';
 import { ProcesosField } from '@/components/sections/about/ProcesosField';
 import { EcosistemaGEC } from '@/components/sections/about/EcosistemaGEC';
+import { EcosisteGEC } from '@/components/sections/about/EcosisteGEC';
+import { CedisProcesos } from '@/components/sections/about/CedisProcesos';
 import { CapitalHumano } from '@/components/sections/about/CapitalHumano';
-import { Truck } from 'lucide-react';
+import { User, Truck } from 'lucide-react';
 import Image from 'next/image';
 import { getContenidoCached } from '@/lib/queries/cache';
+import { existsSync } from 'fs';
+import { join } from 'path';
 import fs from 'fs';
 import path from 'path';
 
@@ -27,16 +30,14 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   ], locale);
 
   const intro = contenido['quienes.intro'];
-  const mision = contenido['quienes.mision'];
-  const vision = contenido['quienes.vision'];
+  const mision = contenido['quienes.mision'] || t('mision_titulo');
+  const vision = contenido['quienes.vision'] || t('vision_titulo');
   const divisionesTitulo = contenido['quienes.divisiones.titulo'];
   const divisionesSubtitulo = contenido['quienes.divisiones.subtitulo'];
   const divisionCampoDesc = contenido['quienes.division.campo'];
   const divisionSedisDesc = contenido['quienes.division.sedis'];
 
-  const valoresDesc = idsValores.map(id => contenido[`quienes.valor.${id}`]);
-
-  // Fotos campo y CEDIS
+  // Fotos
   const readImages = (folder: string): string[] => {
     try {
       const p = path.join(process.cwd(), 'public/images', folder);
@@ -50,23 +51,41 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
 
   const fotosZacatecas = readImages('zacatecas').slice(0, 10);
   const fotosSedis = readImages('sedis').slice(0, 10);
-
   const primeraFotoZacatecas = fotosZacatecas[0] ?? null;
   const primeraFotoSedis = fotosSedis[0] ?? null;
 
+  // CEO
+  const ceoPath = join(process.cwd(), 'public/images/quienes/ceo.jpg');
+  const ceoExists = existsSync(ceoPath);
+
+  // Franja hero
+  const franjaPath = join(process.cwd(), 'public/images/quienes/franja-inicio.jpg');
+  const franjaImage = existsSync(franjaPath) ? '/images/quienes/franja-inicio.jpg' : null;
+
+  // Camión decorativo
+  const truckPath = join(process.cwd(), 'public/images/camiones/truck1.png');
+  const truckExists = existsSync(truckPath);
+
+  // Primus logo
   const primusLogoPath = [
     '/images/logos/PrimusGFS_Logo_web.png',
     '/images/logos/primus-cert.png',
-  ].find(p => fs.existsSync(path.join(process.cwd(), 'public', p)));
+  ].find(p => existsSync(join(process.cwd(), 'public', p)));
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero */}
-      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} align="bottom-left" />
+      <PageHero
+        title={t('titulo_pagina')}
+        subtitle={t('subtitulo_pagina')}
+        align="bottom-left"
+        franjaImage={franjaImage}
+      />
 
-      {/* ── 1. Intro — texto + foto ── */}
+      {/* ── 1. Intro — texto + card CEO ── */}
       <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-center">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-start">
+          {/* Columna izquierda — texto */}
           <div className="w-full md:w-[55%]">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
               Grupo Exportador del Campo
@@ -76,60 +95,62 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
               className="rich-text font-body text-brand-navy/80 text-lg leading-relaxed"
               dangerouslySetInnerHTML={{ __html: intro || t('intro_titulo') }}
             />
-            {/* Slogan debajo del párrafo */}
-            <div className="mt-8 border-l-4 border-brand-green pl-4">
-              <p className="font-display text-xl font-bold text-brand-navy">
-                {t('slogan')} <span className="text-brand-green">GEC</span>
+            <div className="mt-8 pt-6 border-t border-brand-green/20">
+              <p className="font-display text-2xl md:text-3xl text-brand-green font-semibold tracking-wide">
+                {t('slogan')} <span className="text-brand-navy">GEC</span>
               </p>
             </div>
           </div>
-          <div className="w-full md:w-[45%]">
-            {primeraFotoZacatecas ? (
-              <div className="overflow-hidden rounded-xl shadow-md">
-                <Image
-                  src={primeraFotoZacatecas}
-                  alt="Campo Zacatecas"
-                  width={800}
-                  height={533}
-                  className="w-full h-full object-cover"
-                  quality={80}
-                />
+
+          {/* Columna derecha — card CEO */}
+          <div className="w-full md:w-[45%] relative md:-mb-20 md:mt-6">
+            <div className="rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative h-72 md:h-96">
+                {ceoExists ? (
+                  <Image
+                    src="/images/quienes/ceo.jpg"
+                    alt="Joaquín Vizcaíno — Director General"
+                    fill
+                    className="object-cover object-top"
+                    style={{
+                      maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                    }}
+                  />
+                ) : (
+                  <div className="w-full h-full bg-brand-navy/40 flex items-center justify-center">
+                    <User className="w-16 h-16 text-brand-green/40" />
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-navy" />
               </div>
-            ) : (
-              <div className="aspect-video bg-brand-green/10 rounded-xl flex items-center justify-center border border-brand-green/20">
-                <Truck className="w-12 h-12 text-brand-green/30" />
+              <div className="bg-brand-navy px-6 py-5">
+                <p className="text-brand-green text-xs font-medium uppercase tracking-widest mb-2">
+                  {t('ceo_eyebrow')}
+                </p>
+                <h3 className="font-display text-white text-2xl font-bold leading-tight mb-3">
+                  &ldquo;{t('ceo_frase')}&rdquo;
+                </h3>
+                <p className="text-white/70 text-sm font-body leading-relaxed">
+                  {t('ceo_desc')}
+                </p>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── 2. Misión & Visión ── */}
-      <section className="w-full bg-white py-16 md:py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-brand-white p-8 md:p-10 rounded-xl border-t-[3px] border-brand-green shadow-sm">
-            <h3 className="font-display text-2xl font-bold text-brand-navy mb-4">{t('mision_titulo')}</h3>
-            <p className="font-body text-brand-navy/80 leading-relaxed text-lg">
-              {mision || t('mision_titulo')}
-            </p>
-          </div>
-          <div className="bg-brand-white p-8 md:p-10 rounded-xl border-t-[3px] border-brand-green shadow-sm">
-            <h3 className="font-display text-2xl font-bold text-brand-navy mb-4">{t('vision_titulo')}</h3>
-            <p className="font-body text-brand-navy/80 leading-relaxed text-lg">
-              {vision || t('vision_titulo')}
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* ── 2. Ecosistema de Pensamiento — Misión / Visión / Valores ── */}
+      <EcosisteGEC misionText={mision} visionText={vision} />
 
-      {/* ── 3. Valores ── */}
-      <ValoresGrid dbValores={valoresDesc.map((v, i) => ({ id: idsValores[i], desc: v }))} />
-
-      {/* ── 4. Fichas interactivas — Procesos Campo ── */}
+      {/* ── 3. Fichas interactivas — Procesos Campo ── */}
       <ProcesosField />
 
-      {/* ── 5. Capital Humano ── */}
+      {/* ── 4. Capital Humano ── */}
       <CapitalHumano />
+
+      {/* ── 5. Procesos CEDIS ── */}
+      <CedisProcesos />
 
       {/* ── 6. Primus GFS badge ── */}
       {primusLogoPath && (
@@ -158,7 +179,6 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
 
       {/* ── 8. Divisiones — con camión decorativo ── */}
       <section className="w-full bg-[#F8FAF9] py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
-        {/* Camión decorativo */}
         <div
           className="absolute right-[-20px] bottom-0 w-[300px] h-[180px] bg-no-repeat bg-contain bg-right-bottom pointer-events-none opacity-[0.06]"
           style={{ backgroundImage: 'url(/images/camiones/truck2.png)' }}
@@ -242,6 +262,19 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
               </div>
             </div>
           </div>
+
+          {/* Camión decorativo grande */}
+          {truckExists && (
+            <div className="mt-12 flex justify-center overflow-hidden">
+              <Image
+                src="/images/camiones/truck1.png"
+                alt="Flota Grupo Exportador del Campo"
+                width={800}
+                height={320}
+                className="object-contain w-full max-w-3xl opacity-85 hover:opacity-100 transition-opacity duration-300"
+              />
+            </div>
+          )}
         </div>
       </section>
     </div>

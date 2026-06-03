@@ -46,10 +46,13 @@ export function ProcesosField() {
           <span className="text-xs font-bold uppercase tracking-wider text-brand-green block mb-3">
             {t('proc_eyebrow')}
           </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-3">
             {t('proc_titulo')}
           </h2>
-          <div className="w-[60px] h-[3px] bg-brand-green mx-auto" />
+          <p className="font-body text-white/60 text-base max-w-2xl mx-auto mb-2">
+            {t('proc_sub')}
+          </p>
+          <div className="w-[60px] h-[3px] bg-brand-green mx-auto mt-4" />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

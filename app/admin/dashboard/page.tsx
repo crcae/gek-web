@@ -1,16 +1,16 @@
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
-import { Newspaper, MessageSquare, Building2, Plus, Eye } from 'lucide-react';
+import { Newspaper, MessageSquare, Calendar, Users, Plus, Eye } from 'lucide-react';
 
 export default async function Dashboard() {
   const session = await getServerSession();
 
-  const [noticiasPub, noticiasBorrador, mensajesNoLeidos, unidadesActivas] = await Promise.all([
+  const [leadsNoLeidos, eventosActivos, clientesCount, noticiasPub] = await Promise.all([
+    prisma.lead.count({ where: { leido: false } }),
+    prisma.evento.count({ where: { activo: true } }),
+    prisma.clienteLogo.count(),
     prisma.noticia.count({ where: { publicada: true } }),
-    prisma.noticia.count({ where: { publicada: false } }),
-    prisma.mensajeContacto.count({ where: { leido: false } }),
-    prisma.unidadNegocio.count({ where: { activa: true } }),
   ]);
 
   const ultimosMensajes = await prisma.mensajeContacto.findMany({
@@ -19,10 +19,10 @@ export default async function Dashboard() {
   });
 
   const metrics = [
-    { label: 'Noticias Publicadas', value: noticiasPub, icon: Newspaper, color: 'text-[#4DB26B]' },
-    { label: 'Noticias Borrador', value: noticiasBorrador, icon: Newspaper, color: 'text-gray-400' },
-    { label: 'Mensajes sin Leer', value: mensajesNoLeidos, icon: MessageSquare, color: 'text-red-500' },
-    { label: 'Unidades Activas', value: unidadesActivas, icon: Building2, color: 'text-blue-500' },
+    { label: 'Leads sin atender', value: leadsNoLeidos, icon: Users, color: leadsNoLeidos > 0 ? 'text-red-500' : 'text-[#4DB26B]', href: '/admin/leads' },
+    { label: 'Eventos activos', value: eventosActivos, icon: Calendar, color: 'text-blue-500', href: '/admin/eventos' },
+    { label: 'Logos de clientes', value: clientesCount, icon: MessageSquare, color: 'text-purple-500', href: '/admin/clientes' },
+    { label: 'Noticias publicadas', value: noticiasPub, icon: Newspaper, color: 'text-[#4DB26B]', href: '/admin/noticias' },
   ];
 
   return (
@@ -37,13 +37,13 @@ export default async function Dashboard() {
         {metrics.map((m) => {
           const Icon = m.icon;
           return (
-            <div key={m.label} className="bg-white rounded-lg p-6 shadow-sm border border-gray-100">
+            <Link key={m.label} href={m.href} className="bg-white rounded-lg p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow block">
               <div className="flex items-center justify-between mb-4">
                 <Icon className={`w-5 h-5 ${m.color}`} />
               </div>
               <p className={`text-4xl font-bold ${m.color} mb-1`}>{m.value}</p>
               <p className="text-gray-500 text-sm">{m.label}</p>
-            </div>
+            </Link>
           );
         })}
       </div>
@@ -63,11 +63,6 @@ export default async function Dashboard() {
         >
           <Eye className="w-4 h-4" />
           Ver mensajes
-          {mensajesNoLeidos > 0 && (
-            <span className="bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-              {mensajesNoLeidos}
-            </span>
-          )}
         </Link>
       </div>
 

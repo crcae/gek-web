@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Save, CheckCircle, ChevronDown, ChevronRight } from 'lucide-react';
+import { Save, CheckCircle } from 'lucide-react';
+import { ImageSelectorField } from '@/components/admin/ImageSelectorField';
 
 type Contenido = {
   id: string;
@@ -13,6 +14,67 @@ type Contenido = {
 };
 
 type GroupedContenido = Record<string, Contenido[]>;
+
+// Mapa de dónde aparece cada campo en el sitio público
+const CAMPO_DESCRIPCION: Record<string, string> = {
+  'home.hero.tagline':          '→ Home · Tagline principal del Hero (video)',
+  'home.hero.sub':              '→ Home · Subtítulo bajo el tagline del Hero',
+  'home.marcas_titulo':         '→ Home · Título sección "Las Marcas que nos Representan"',
+  'home.metrica1.numero':       '→ Home · Métricas · Número 1 (ej. +50)',
+  'home.metrica1.label':        '→ Home · Métricas · Etiqueta 1 (ej. Años de experiencia)',
+  'home.metrica1.descripcion':  '→ Home · Métricas · Descripción 1',
+  'home.metrica2.numero':       '→ Home · Métricas · Número 2',
+  'home.metrica2.label':        '→ Home · Métricas · Etiqueta 2',
+  'home.metrica2.descripcion':  '→ Home · Métricas · Descripción 2',
+  'home.metrica3.numero':       '→ Home · Métricas · Número 3',
+  'home.metrica3.label':        '→ Home · Métricas · Etiqueta 3',
+  'home.metrica3.descripcion':  '→ Home · Métricas · Descripción 3',
+  'home.metrica4.numero':       '→ Home · Métricas · Número 4',
+  'home.metrica4.label':        '→ Home · Métricas · Etiqueta 4',
+  'home.metrica4.descripcion':  '→ Home · Métricas · Descripción 4',
+  'features.quienes.imagen':    '→ Home · Foto de la card "Quiénes Somos"',
+  'features.historia.imagen':   '→ Home · Foto de la card "Historia"',
+  'features.holding.imagen':    '→ Home · Foto de la card "Holding"',
+  'features.contacto.imagen':   '→ Home · Foto de la card "Contacto"',
+  'quienes.intro':              '→ Quiénes Somos · Párrafo de introducción (acepta HTML)',
+  'quienes.mision':             '→ Quiénes Somos · Panel "Nuestra razón de ser" (Misión)',
+  'quienes.vision':             '→ Quiénes Somos · Panel "Seguimos apuntando alto" (Visión)',
+  'quienes.cadena.titulo':      '→ Quiénes Somos · Título sección cadena de suministro',
+  'quienes.cadena.subtitulo':   '→ Quiénes Somos · Subtítulo sección cadena de suministro',
+  'quienes.divisiones.titulo':  '→ Quiénes Somos · Título sección Divisiones (acepta HTML)',
+  'quienes.divisiones.subtitulo': '→ Quiénes Somos · Subtítulo sección Divisiones',
+  'quienes.division.campo':     '→ Quiénes Somos · Descripción División Campo',
+  'quienes.division.sedis':     '→ Quiénes Somos · Descripción División Sedis',
+  'quienes.campo.titulo':       '→ Quiénes Somos · Título sección Procesos Campo',
+  'quienes.campo.subtitulo':    '→ Quiénes Somos · Subtítulo sección Procesos Campo',
+  'quienes.cedis.titulo':       '→ Quiénes Somos · Título sección Procesos CEDIS',
+  'quienes.cedis.subtitulo':    '→ Quiénes Somos · Subtítulo sección Procesos CEDIS',
+  'quienes.valor.honestidad':   '→ Quiénes Somos · Valores · Descripción Honestidad',
+  'quienes.valor.compromiso':   '→ Quiénes Somos · Valores · Descripción Compromiso',
+  'quienes.valor.humildad':     '→ Quiénes Somos · Valores · Descripción Humildad',
+  'quienes.valor.profesionalismo': '→ Quiénes Somos · Valores · Descripción Profesionalismo',
+  'quienes.valor.lealtad':      '→ Quiénes Somos · Valores · Descripción Lealtad',
+  'quienes.valor.transparencia': '→ Quiénes Somos · Valores · Descripción Transparencia',
+  'historia.origen.titulo':     '→ Historia · Eyebrow "Nuestros Orígenes"',
+  'historia.origen.texto':      '→ Historia · Párrafo "Nacidos en Zacatecas"',
+  'historia.fundadores.texto':  '→ Historia · Texto debajo del título Fundadores',
+  'holding.intro':              '→ Holding · Párrafo de introducción corporativa',
+  'holding.organigrama.placeholder': '→ Holding · Texto placeholder del organigrama',
+  'holding.marca1.nombre':      '→ Holding · Nombre de la Marca 1 (Vizcaíno Fruit\'s)',
+  'holding.marca1.descripcion': '→ Holding · Descripción de la Marca 1',
+  'holding.marca1.productos':   '→ Holding · Productos de la Marca 1',
+  'holding.marca2.nombre':      '→ Holding · Nombre de la Marca 2 (Vizcaíno Premium)',
+  'holding.marca2.descripcion': '→ Holding · Descripción de la Marca 2',
+  'holding.marca2.productos':   '→ Holding · Productos de la Marca 2',
+  'holding.marca3.nombre':      '→ Holding · Nombre de la Marca 3 (Vizcaíno Services)',
+  'holding.marca3.descripcion': '→ Holding · Descripción de la Marca 3',
+  'holding.marca3.productos':   '→ Holding · Productos de la Marca 3',
+};
+
+// Detectar si un campo es de tipo imagen
+const esImagen = (id: string, valor: string) =>
+  id.toLowerCase().includes('imagen') ||
+  /\.(jpg|jpeg|png|webp|svg)$/i.test(valor?.trim() ?? '');
 
 export default function ContenidoPage() {
   const [groupedData, setGroupedData] = useState<GroupedContenido>({});
@@ -65,7 +127,8 @@ export default function ContenidoPage() {
         {activeSeccion === 'home' && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
             <p className="text-sm text-blue-800">
-              <span className="font-bold">ℹ️ Nota sobre Noticias:</span> Las noticias se publican desde la sección <a href="/admin/noticias" className="underline font-semibold">/admin/noticias</a> usando posts de LinkedIn. Para agregar una noticia, ve a LinkedIn, publica el post, y luego agrega el embed allá.
+              <span className="font-bold">ℹ️ Noticias:</span> Las noticias se publican desde{' '}
+              <a href="/admin/noticias" className="underline font-semibold">/admin/noticias</a>.
             </p>
           </div>
         )}
@@ -106,13 +169,22 @@ function ContentField({ item }: { item: Contenido }) {
     }
   };
 
+  const isImageField = esImagen(item.id, form.valor_es);
+  const descripcion = CAMPO_DESCRIPCION[item.id];
+
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
       <div className="px-6 py-4 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-gray-700">{item.campo}</h3>
-        <div className="flex items-center gap-3">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-700">{item.campo}</h3>
+          <p className="text-[10px] text-gray-400 font-mono mt-0.5">{item.id}</p>
+          {descripcion && (
+            <p className="text-xs text-blue-500 mt-1 font-medium">{descripcion}</p>
+          )}
+        </div>
+        <div className="flex items-center gap-3 shrink-0">
           {saved && (
-            <span className="flex items-center gap-1 text-green-600 text-xs font-medium animate-in fade-in duration-300">
+            <span className="flex items-center gap-1 text-green-600 text-xs font-medium">
               <CheckCircle className="w-3 h-3" />
               Guardado
             </span>
@@ -127,33 +199,49 @@ function ContentField({ item }: { item: Contenido }) {
           </button>
         </div>
       </div>
-      <div className="p-6 grid grid-cols-1 gap-6">
+
+      <div className="p-6 space-y-6">
+        {/* Campo Español */}
         <div>
-          <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Español (Requerido)</label>
-          <textarea
-            value={form.valor_es}
-            onChange={(e) => setForm({ ...form, valor_es: e.target.value })}
-            className="w-full px-4 py-2 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-[#4DB26B] focus:outline-none min-h-[80px] bg-white text-gray-700"
-          />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Inglés</label>
+          <label className="block text-xs font-bold text-gray-400 uppercase mb-2">
+            Español (Requerido)
+          </label>
+          {isImageField ? (
+            <ImageSelectorField
+              label="Español"
+              valorActual={form.valor_es}
+              onChange={(v) => setForm({ ...form, valor_es: v })}
+            />
+          ) : (
             <textarea
-              value={form.valor_en}
-              onChange={(e) => setForm({ ...form, valor_en: e.target.value })}
+              value={form.valor_es}
+              onChange={(e) => setForm({ ...form, valor_es: e.target.value })}
               className="w-full px-4 py-2 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-[#4DB26B] focus:outline-none min-h-[80px] bg-white text-gray-700"
             />
-          </div>
-          <div>
-            <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Alemán</label>
-            <textarea
-              value={form.valor_de}
-              onChange={(e) => setForm({ ...form, valor_de: e.target.value })}
-              className="w-full px-4 py-2 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-[#4DB26B] focus:outline-none min-h-[80px] bg-white text-gray-700"
-            />
-          </div>
+          )}
         </div>
+
+        {/* Campos EN / DE — solo para campos de texto (las imágenes comparten ruta) */}
+        {!isImageField && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Inglés</label>
+              <textarea
+                value={form.valor_en}
+                onChange={(e) => setForm({ ...form, valor_en: e.target.value })}
+                className="w-full px-4 py-2 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-[#4DB26B] focus:outline-none min-h-[80px] bg-white text-gray-700"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Alemán</label>
+              <textarea
+                value={form.valor_de}
+                onChange={(e) => setForm({ ...form, valor_de: e.target.value })}
+                className="w-full px-4 py-2 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-[#4DB26B] focus:outline-none min-h-[80px] bg-white text-gray-700"
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

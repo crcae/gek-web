@@ -45,7 +45,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${playfairDisplay.variable} ${lora.variable}`}>
-      <body className="font-body bg-brand-white text-brand-navy antialiased min-h-screen flex flex-col">
+      <body className="public-site font-body bg-brand-white text-brand-navy antialiased min-h-screen flex flex-col">
         <CustomCursor />
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Topbar />

@@ -14,11 +14,17 @@ type Imagen = {
 };
 
 const SECCIONES = [
-  { id: 'zacatecas', label: 'Zacatecas' },
+  { id: 'campo',      label: 'Campo (Procesos)' },
+  { id: 'capital',    label: 'Capital Humano' },
+  { id: 'quienes',    label: 'CEO / Franjas' },
+  { id: 'eventos',    label: 'Eventos / IFPA' },
+  { id: 'camiones',   label: 'Camiones' },
+  { id: 'clientes',   label: 'Logos Clientes' },
+  { id: 'zacatecas',  label: 'Zacatecas' },
   { id: 'fundadores', label: 'Fundadores' },
-  { id: 'holding', label: 'Holding' },
-  { id: 'sedis', label: 'Sedis' },
-  { id: 'logos', label: 'Logos' },
+  { id: 'holding',    label: 'Holding' },
+  { id: 'sedis',      label: 'Sedis' },
+  { id: 'logos',      label: 'Logos Marcas' },
 ];
 
 export default function ImagenesPage() {
