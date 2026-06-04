@@ -163,6 +163,16 @@ async function main() {
     { id: 'quienes.cedis.ficha4.imagen', seccion: 'quienes', campo: 'CEDIS — Ficha 4: Distribución', valor_es: '', valor_en: '', valor_de: '' },
     { id: 'quienes.division.campo.imagen', seccion: 'quienes', campo: 'División Campo — foto principal', valor_es: '', valor_en: '', valor_de: '' },
     { id: 'quienes.division.sedis.imagen', seccion: 'quienes', campo: 'División Sedis — foto principal', valor_es: '', valor_en: '', valor_de: '' },
+    
+    // CAPITAL HUMANO STATS
+    { id: 'quienes.capital.stat1.numero', seccion: 'quienes', campo: 'Capital Humano: Stat 1 Número', valor_es: '+200', valor_en: '+200', valor_de: '+200' },
+    { id: 'quienes.capital.stat1.label', seccion: 'quienes', campo: 'Capital Humano: Stat 1 Etiqueta', valor_es: 'Colaboradores', valor_en: 'Collaborators', valor_de: 'Mitarbeiter' },
+    { id: 'quienes.capital.stat2.numero', seccion: 'quienes', campo: 'Capital Humano: Stat 2 Número', valor_es: 'Décadas', valor_en: 'Decades', valor_de: 'Jahrzehnte' },
+    { id: 'quienes.capital.stat2.label', seccion: 'quienes', campo: 'Capital Humano: Stat 2 Etiqueta', valor_es: 'De experiencia agrícola', valor_en: 'Of agricultural experience', valor_de: 'Landwirtschaftliche Erfahrung' },
+    { id: 'quienes.capital.stat3.numero', seccion: 'quienes', campo: 'Capital Humano: Stat 3 Número', valor_es: 'Múltiples', valor_en: 'Multiple', valor_de: 'Mehrere' },
+    { id: 'quienes.capital.stat3.label', seccion: 'quienes', campo: 'Capital Humano: Stat 3 Etiqueta', valor_es: 'Regiones de operación', valor_en: 'Regions of operation', valor_de: 'Betriebsregionen' },
+    { id: 'quienes.capital.stat4.numero', seccion: 'quienes', campo: 'Capital Humano: Stat 4 Número', valor_es: 'Coordinado', valor_en: 'Coordinated', valor_de: 'Koordiniert' },
+    { id: 'quienes.capital.stat4.label', seccion: 'quienes', campo: 'Capital Humano: Stat 4 Etiqueta', valor_es: 'Trabajo en cada etapa', valor_en: 'Work at every stage', valor_de: 'Arbeit in jeder Phase' },
 
     // HISTORIA
     { id: 'historia.origen.titulo', seccion: 'historia', campo: 'Título — sección origen', valor_es: 'El Origen', valor_en: 'Our Origins', valor_de: 'Unsere Ursprünge' },

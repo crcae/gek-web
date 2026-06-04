@@ -8,6 +8,7 @@ import { Menu } from 'lucide-react';
 import Image from 'next/image';
 import { MegaMenu } from './MegaMenu';
 import { MobileDrawer } from './MobileDrawer';
+import { DesktopDrawer } from './DesktopDrawer';
 
 export function Navbar() {
   const t = useTranslations('nav');
@@ -16,6 +17,7 @@ export function Navbar() {
   const pathname = usePathname();
   
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeHoverKey, setActiveHoverKey] = useState<string | null>(null);
   
@@ -137,6 +139,15 @@ export function Navbar() {
             ))}
           </div>
 
+          {/* Desktop Drawer Toggle Button */}
+          <button
+            onClick={() => setDrawerOpen(true)}
+            className="hidden lg:flex text-brand-white p-2 rounded-md hover:bg-brand-white/10 transition-colors min-h-[44px] min-w-[44px] items-center justify-center"
+            aria-label="Abrir panel"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+
           {/* Hamburger menu button for Mobile */}
           <button
             className="lg:hidden text-brand-white p-2 rounded-md hover:bg-brand-white/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
@@ -158,6 +169,13 @@ export function Navbar() {
         isOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
         navLinks={navLinks}
+      />
+
+      {/* Desktop Drawer */}
+      <DesktopDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        locale={locale}
       />
     </div>
   );

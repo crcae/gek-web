@@ -1,10 +1,25 @@
 import Image from 'next/image';
 import { getTranslations } from 'next-intl/server';
+import { getContenidoCached } from '@/lib/queries/cache';
 import fs from 'fs';
 import path from 'path';
 
-export async function CapitalHumano() {
-  const t = await getTranslations('quienes');
+interface Props {
+  locale: string;
+}
+
+export async function CapitalHumano({ locale }: Props) {
+  const ids = [
+    'quienes.capital.stat1.numero', 'quienes.capital.stat1.label',
+    'quienes.capital.stat2.numero', 'quienes.capital.stat2.label',
+    'quienes.capital.stat3.numero', 'quienes.capital.stat3.label',
+    'quienes.capital.stat4.numero', 'quienes.capital.stat4.label'
+  ];
+
+  const [contenido, t] = await Promise.all([
+    getContenidoCached(ids, locale),
+    getTranslations('quienes'),
+  ]);
 
   let fotos: string[] = [];
   try {
@@ -17,10 +32,22 @@ export async function CapitalHumano() {
   } catch {}
 
   const numeros = [
-    { val: '+120', label: t('cap_colaboradores') },
-    { val: '+50',  label: t('cap_historia') },
-    { val: '3',    label: t('cap_generaciones') },
-    { val: '100%', label: t('cap_compromiso') },
+    {
+      val: contenido['quienes.capital.stat1.numero'] || '+200',
+      label: contenido['quienes.capital.stat1.label'] || t('cap_colaboradores')
+    },
+    {
+      val: contenido['quienes.capital.stat2.numero'] || 'Décadas',
+      label: contenido['quienes.capital.stat2.label'] || t('cap_historia')
+    },
+    {
+      val: contenido['quienes.capital.stat3.numero'] || 'Múltiples',
+      label: contenido['quienes.capital.stat3.label'] || t('cap_generaciones')
+    },
+    {
+      val: contenido['quienes.capital.stat4.numero'] || 'Coordinado',
+      label: contenido['quienes.capital.stat4.label'] || t('cap_compromiso')
+    },
   ];
 
   return (

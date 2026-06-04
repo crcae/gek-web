@@ -52,10 +52,10 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   // Imágenes desde admin (Vercel Blob URL o vacío)
   const imgFranja    = contenido['quienes.franja.imagen'] || null;
   const imgCeo       = contenido['quienes.ceo.imagen'] || null;
-  const ecoImagenes  = {
-    mision:  contenido['quienes.ecosistema.mision.imagen'] || undefined,
-    vision:  contenido['quienes.ecosistema.vision.imagen'] || undefined,
-    valores: contenido['quienes.ecosistema.valores.imagen'] || undefined,
+  const ecoImagenes = {
+    'quienes.ecosistema.mision.imagen': contenido['quienes.ecosistema.mision.imagen'] || '',
+    'quienes.ecosistema.vision.imagen': contenido['quienes.ecosistema.vision.imagen'] || '',
+    'quienes.ecosistema.valores.imagen': contenido['quienes.ecosistema.valores.imagen'] || '',
   };
   const cedisImagenes: [string, string, string, string] = [
     contenido['quienes.cedis.ficha1.imagen'] || '',
@@ -170,13 +170,13 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       </section>
 
       {/* ── 2. Ecosistema de Pensamiento — Misión / Visión / Valores ── */}
-      <EcosisteGEC misionText={mision} visionText={vision} imagenes={ecoImagenes} />
+      <EcosisteGEC imagenes={ecoImagenes} />
 
       {/* ── 3. Fichas interactivas — Procesos Campo ── */}
       <ProcesosField />
 
       {/* ── 4. Capital Humano ── */}
-      <CapitalHumano />
+      <CapitalHumano locale={locale} />
 
       {/* ── 5. Procesos CEDIS ── */}
       <CedisProcesos imagenes={cedisImagenes} />

@@ -1,167 +1,173 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
 import { Heart, TrendingUp, Star } from 'lucide-react';
-import Image from 'next/image';
 
-interface Props {
-  misionText: string;
-  visionText: string;
-  imagenes?: {
-    mision?: string;
-    vision?: string;
-    valores?: string;
-  };
-}
+const paneles = [
+  {
+    id: 'mision',
+    titulo: 'Nuestra razón de ser',
+    icono: Heart,
+    colorFondo: '#1A3D2B',
+    contenido: 'Seguir la tradición de más de 3 generaciones de poner al alcance de los consumidores chiles y hortalizas de calidad, con alto valor agregado garantizando la máxima calidad del mercado.',
+    imagenKey: 'quienes.ecosistema.mision.imagen',
+  },
+  {
+    id: 'vision',
+    titulo: 'Seguimos apuntando alto',
+    icono: TrendingUp,
+    colorFondo: '#1A2C3D',
+    contenido: 'Empresa de producción y comercialización de altos volúmenes en mercados nacionales y extranjeros, con calidad sanitaria certificada y con una trazabilidad que dé confianza al cliente final.',
+    imagenKey: 'quienes.ecosistema.vision.imagen',
+  },
+  {
+    id: 'valores',
+    titulo: 'Filosofía GEC',
+    icono: Star,
+    colorFondo: '#1E2D3A',
+    contenido: null, // Muestra grid de valores en lugar de texto
+    imagenKey: 'quienes.ecosistema.valores.imagen',
+    valores: ['Honestidad', 'Compromiso', 'Humildad', 'Profesionalismo', 'Lealtad', 'Transparencia'],
+  },
+];
 
-export function EcosisteGEC({ misionText, visionText, imagenes = {} }: Props) {
-  const t = useTranslations('quienes');
-  const [activo, setActivo] = useState<number | null>(null);
-
-  const valores = [
-    t('honestidad'), t('compromiso'), t('humildad'),
-    t('profesionalismo'), t('lealtad'), t('transparencia'),
-  ];
-
-  const paneles = [
-    {
-      titulo: t('pens_mision_titulo'),
-      Icono: Heart,
-      contenido: misionText,
-      gradiente: 'from-brand-navy to-[#1A3D2B]',
-      imagen: imagenes.mision || '',
-    },
-    {
-      titulo: t('pens_vision_titulo'),
-      Icono: TrendingUp,
-      contenido: visionText,
-      gradiente: 'from-brand-navy to-[#0D2233]',
-      imagen: imagenes.vision || '',
-    },
-    {
-      titulo: t('pens_valores_titulo'),
-      Icono: Star,
-      contenido: null,
-      gradiente: 'from-brand-navy to-[#1E4A6A]',
-      imagen: imagenes.valores || '',
-    },
-  ];
+export function EcosisteGEC({ imagenes }: { imagenes: Record<string, string> }) {
+  const [activo, setActivo] = useState<string | null>(null);
 
   return (
-    <section className="w-full bg-[#F8FAF9] py-16 md:py-20 px-4 sm:px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-brand-green block mb-3">
-            {t('pens_eyebrow')}
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-3">
-            {t('pens_titulo')}
-          </h2>
-          <p className="font-body text-brand-navy/60 text-base max-w-2xl mx-auto">
-            {t('pens_sub')}
-          </p>
-          <div className="w-[60px] h-[3px] bg-brand-green mx-auto mt-4" />
-        </div>
+    <section className="py-20 px-4">
+      {/* Eyebrow */}
+      <p className="text-center text-brand-green text-xs font-medium uppercase tracking-widest mb-3">
+        NUESTRA ESENCIA
+      </p>
 
-        {/* Desktop — paneles horizontales */}
-        <div className="hidden md:flex h-96 rounded-2xl overflow-hidden shadow-xl">
-          {paneles.map((panel, i) => {
-            const isOpen = activo === i;
-            return (
+      {/* Título */}
+      <h2 className="text-center font-display text-4xl md:text-5xl text-brand-navy font-bold mb-3">
+        Ecosistema de Pensamiento GEC
+      </h2>
+      <p className="text-center text-gray-500 text-base mb-12 max-w-xl mx-auto">
+        Los principios que guían cada decisión, desde el campo hasta el cliente.
+      </p>
+      <div className="w-12 h-0.5 bg-brand-green mx-auto mb-12" />
+
+      {/* Paneles */}
+      <div className="flex h-80 md:h-96 rounded-2xl overflow-hidden max-w-6xl mx-auto shadow-xl">
+        {paneles.map((panel) => {
+          const estaActivo = activo === panel.id;
+          const Icono = panel.icono;
+          const imagen = imagenes?.[panel.imagenKey];
+
+          return (
+            <div
+              key={panel.id}
+              onMouseEnter={() => setActivo(panel.id)}
+              onMouseLeave={() => setActivo(null)}
+              className={`relative transition-all duration-500 ease-out cursor-pointer overflow-hidden ${
+                estaActivo ? 'flex-[3]' : 'flex-1'
+              }`}
+              style={{ backgroundColor: panel.colorFondo }}
+            >
+              {/* Imagen de fondo si existe */}
+              {imagen && (
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-opacity duration-500"
+                  style={{
+                    backgroundImage: `url(${imagen})`,
+                    opacity: estaActivo ? 0.25 : 0.15,
+                  }}
+                />
+              )}
+
+              {/* Overlay */}
               <div
-                key={i}
-                className={`relative transition-all duration-500 cursor-pointer ${
-                  isOpen ? 'flex-[3]' : 'flex-1'
-                }`}
-                onMouseEnter={() => setActivo(i)}
-                onMouseLeave={() => setActivo(null)}
-              >
-                {panel.imagen ? (
-                  <>
-                    <Image src={panel.imagen} alt="" fill className="object-cover" sizes="600px" unoptimized />
-                    <div className={`absolute inset-0 transition-opacity duration-300 ${isOpen ? 'bg-brand-navy/75' : 'bg-brand-navy/85'}`} />
-                  </>
-                ) : (
-                  <div className={`absolute inset-0 bg-gradient-to-br ${panel.gradiente}`} />
-                )}
+                className="absolute inset-0"
+                style={{ backgroundColor: panel.colorFondo + 'CC' }}
+              />
 
-                <div className="relative z-10 h-full flex flex-col justify-end p-6">
-                  <panel.Icono className="w-8 h-8 text-brand-green mb-3" />
-                  <h3 className="font-display text-white text-xl font-bold">{panel.titulo}</h3>
+              {/* Contenido */}
+              <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-8">
+                <Icono className="w-7 h-7 text-brand-green mb-3 flex-shrink-0" />
 
-                  <div className={`transition-all duration-300 overflow-hidden ${
-                    isOpen ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'
-                  }`}>
-                    <div className="w-8 h-0.5 bg-brand-green mb-3" />
-                    {panel.contenido ? (
-                      <p className="text-white/80 text-sm font-body leading-relaxed">
-                        {panel.contenido}
-                      </p>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                        {valores.map((v) => (
-                          <div key={v} className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-brand-green shrink-0" />
-                            <span className="text-white/80 text-xs font-body">{v}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <h3 className="font-display text-white font-bold text-lg md:text-xl leading-tight">
+                  {panel.titulo}
+                </h3>
 
-                {/* Separador vertical entre paneles */}
-                {i < paneles.length - 1 && (
-                  <div className="absolute right-0 top-0 bottom-0 w-px bg-white/10 z-20" />
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Mobile — tabs verticales colapsables */}
-        <div className="flex flex-col gap-3 md:hidden">
-          {paneles.map((panel, i) => {
-            const isOpen = activo === i;
-            return (
-              <div
-                key={i}
-                className="rounded-xl overflow-hidden shadow-sm border border-gray-200"
-              >
-                <button
-                  className={`w-full flex items-center gap-4 p-5 text-left transition-colors duration-200 ${
-                    isOpen ? 'bg-brand-navy text-white' : 'bg-white hover:bg-gray-50 text-brand-navy'
+                {/* Texto expandido — solo visible cuando activo */}
+                <div
+                  className={`transition-all duration-400 overflow-hidden ${
+                    estaActivo ? 'max-h-64 opacity-100 mt-4' : 'max-h-0 opacity-0'
                   }`}
-                  onClick={() => setActivo(isOpen ? null : i)}
                 >
-                  <panel.Icono className={`w-6 h-6 shrink-0 ${isOpen ? 'text-brand-green' : 'text-brand-navy/40'}`} />
-                  <span className="font-display font-bold text-lg">{panel.titulo}</span>
-                </button>
-                <div className={`overflow-hidden transition-all duration-300 ${
-                  isOpen ? 'max-h-80' : 'max-h-0'
-                }`}>
-                  <div className="px-6 py-5 bg-brand-navy/5 border-t border-brand-navy/10">
-                    {panel.contenido ? (
-                      <p className="font-body text-brand-navy/80 text-sm leading-relaxed">
-                        {panel.contenido}
-                      </p>
-                    ) : (
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                        {valores.map((v) => (
-                          <div key={v} className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-brand-green shrink-0" />
-                            <span className="text-brand-navy/80 text-xs font-body">{v}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  <div className="w-8 h-0.5 bg-brand-green mb-3" />
+                  {panel.contenido ? (
+                    <p className="text-white/80 text-sm leading-relaxed">
+                      {panel.contenido}
+                    </p>
+                  ) : (
+                    // Panel Filosofía GEC: grid de valores
+                    <div className="grid grid-cols-2 gap-2">
+                      {panel.valores?.map((valor) => (
+                        <span key={valor} className="text-white/80 text-sm flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-green flex-shrink-0" />
+                          {valor}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Mobile: tabs verticales */}
+      <div className="md:hidden mt-6 space-y-3">
+        {paneles.map((panel) => {
+          const estaActivo = activo === panel.id;
+          const Icono = panel.icono;
+          return (
+            <div
+              key={panel.id}
+              className="rounded-xl overflow-hidden"
+              style={{ backgroundColor: panel.colorFondo }}
+            >
+              <button
+                onClick={() => setActivo(estaActivo ? null : panel.id)}
+                className="w-full flex items-center gap-3 p-4 text-left"
+              >
+                <Icono className="w-5 h-5 text-brand-green flex-shrink-0" />
+                <span className="font-display text-white font-bold">{panel.titulo}</span>
+                <span
+                  className={`ml-auto text-white/60 transition-transform ${
+                    estaActivo ? 'rotate-180' : ''
+                  }`}
+                >
+                  ▾
+                </span>
+              </button>
+              {estaActivo && (
+                <div className="px-4 pb-4">
+                  <div className="w-8 h-0.5 bg-brand-green mb-3" />
+                  {panel.contenido ? (
+                    <p className="text-white/80 text-sm leading-relaxed">
+                      {panel.contenido}
+                    </p>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2">
+                      {panel.valores?.map((valor) => (
+                        <span key={valor} className="text-white/80 text-sm flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
+                          {valor}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
