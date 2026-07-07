@@ -5,56 +5,56 @@ import { AnimatedLine } from '@/components/ui/AnimatedLine';
 interface PageHeroProps {
   title: string;
   subtitle?: string;
-  /** 'center' (default) centers content | 'bottom-left' pins it to bottom-left */
-  align?: 'center' | 'bottom-left';
-  /** When provided, renders a dual-color strip above the title block */
-  franjaImage?: string | null;
+  heroImage?: string | null;
+  textRight?: boolean;
 }
 
-export function PageHero({ title, subtitle, align = 'center', franjaImage }: PageHeroProps) {
-  const isBottomLeft = align === 'bottom-left';
-  const hasFranja = franjaImage !== undefined;
-
+export function PageHero({ title, subtitle, heroImage, textRight = false }: PageHeroProps) {
   return (
-    <section className={`relative w-full overflow-hidden bg-brand-navy border-b-4 border-brand-green ${
-      hasFranja ? 'min-h-[280px] h-[38vh] md:h-[46vh]' : 'h-[30vh] md:h-[40vh] min-h-[220px]'
-    }`}>
-      {/* Isotipo watermark — intentional, subtle */}
+    <section className="relative w-full h-[200px] md:h-[260px] bg-[#0D1B24] border-b-4 border-brand-green overflow-hidden">
+      {/* Background Watermark */}
       <div
-        className="absolute right-[-80px] top-[-80px] w-[300px] h-[300px] bg-no-repeat bg-contain pointer-events-none opacity-[0.05]"
+        className="absolute right-[-40px] top-[-40px] w-[200px] h-[200px] bg-no-repeat bg-contain pointer-events-none opacity-[0.03] z-0"
         style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
       />
 
-      <div className={`max-w-7xl mx-auto w-full h-full px-6 relative z-10 flex flex-col ${
-        isBottomLeft ? 'justify-end pb-8 md:pb-12' : 'justify-center pt-12 md:pt-16'
-      }`}>
-        {/* Franja dual — arriba del bloque de texto */}
-        {hasFranja && (
-          <div className="flex w-full h-20 mb-6 rounded-sm overflow-hidden">
-            <div className="w-1/2 bg-[#0D1B24]" />
-            <div className="w-1/2 relative overflow-hidden">
-              {franjaImage ? (
-                <Image src={franjaImage} alt="" fill className="object-cover" />
-              ) : (
-                <div className="w-full h-full bg-white/5" />
-              )}
-            </div>
-          </div>
-        )}
-
-        <AnimatedSection animation="fade-up">
-          <h1 className="font-display text-3xl md:text-5xl text-brand-white font-bold mb-4">
-            {title}
-          </h1>
-        </AnimatedSection>
-        <AnimatedLine className="h-[3px] bg-brand-green mb-4" />
-        {subtitle && (
-          <AnimatedSection animation="fade-up" delay={2}>
-            <p className={`font-body text-brand-white/80 text-base md:text-xl ${isBottomLeft ? 'max-w-lg' : 'max-w-2xl'}`}>
-              {subtitle}
-            </p>
+      <div className="max-w-7xl mx-auto w-full h-full px-6 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        {/* Text Column */}
+        <div className={`flex flex-col justify-center h-full py-4 ${textRight ? 'md:order-2' : 'md:order-1'}`}>
+          <AnimatedSection animation="fade-up">
+            <h1 className="font-display text-2xl md:text-4xl text-white font-bold mb-2">
+              {title}
+            </h1>
           </AnimatedSection>
-        )}
+          <AnimatedLine className="h-[2px] bg-brand-green mb-3 w-[60px]" />
+          {subtitle && (
+            <AnimatedSection animation="fade-up" delay={2}>
+              <p className="font-body text-white/80 text-xs md:text-sm max-w-xl">
+                {subtitle}
+              </p>
+            </AnimatedSection>
+          )}
+        </div>
+
+        {/* Image Column */}
+        <div className={`relative h-[80%] w-full hidden md:flex items-center justify-center ${textRight ? 'md:order-1' : 'md:order-2'}`}>
+          {heroImage ? (
+            <div className="relative w-full h-full rounded-lg overflow-hidden border border-white/10 shadow-lg bg-[#132B39]">
+              <Image
+                src={heroImage}
+                alt={title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
+          ) : (
+            <div className="relative w-full h-full rounded-lg overflow-hidden border border-white/5 bg-white/5 flex items-center justify-center">
+              <span className="text-white/20 text-xs font-body">No image uploaded</span>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

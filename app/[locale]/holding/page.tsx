@@ -14,6 +14,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
 
   const contentIds = [
     'holding.intro',
+    'holding.hero.imagen',
     'holding.marca1.nombre', 'holding.marca1.descripcion', 'holding.marca1.productos',
     'holding.marca2.nombre', 'holding.marca2.descripcion', 'holding.marca2.productos',
     'holding.marca3.nombre', 'holding.marca3.descripcion', 'holding.marca3.productos'
@@ -25,6 +26,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
   ]);
 
   const intro = contenido['holding.intro'];
+  const dbHeroImage = contenido['holding.hero.imagen'];
   const m1Nombre = contenido['holding.marca1.nombre'];
   const m1Desc = contenido['holding.marca1.descripcion'];
   const m1Prod = contenido['holding.marca1.productos'];
@@ -58,7 +60,11 @@ export default async function Holding({ params: { locale } }: { params: { locale
 
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} />
+      <PageHero
+        title={t('titulo_pagina')}
+        subtitle={t('subtitulo_pagina')}
+        heroImage={dbHeroImage || '/images/features/holding.jpg'}
+      />
 
       {/* Intro */}
       <section className="w-full bg-brand-white py-20 px-6 border-b border-brand-gray/20">

@@ -202,6 +202,12 @@ async function main() {
     { id: 'holding.marca3.nombre', seccion: 'holding', campo: 'Marca 3: Nombre', valor_es: 'Vizcaíno Services', valor_en: 'Vizcaíno Services', valor_de: 'Vizcaíno Services' },
     { id: 'holding.marca3.descripcion', seccion: 'holding', campo: 'Marca 3: Descripción', valor_es: 'División dedicada al negocio de maquila de productos, refrigeración, almacenamiento y servicios logísticos para traslados de diferentes productos del campo.', valor_en: 'Division dedicated to product maquiladora services, refrigeration, storage and logistics services for the transport of various field products.', valor_de: 'Abteilung für Maquiladora-Dienstleistungen, Kühlung, Lagerung und Logistikdienstleistungen für den Transport verschiedener Feldprodukte.' },
     { id: 'holding.marca3.productos', seccion: 'holding', campo: 'Marca 3: Productos', valor_es: 'Maquila, refrigeración, almacenamiento, logística', valor_en: 'Maquiladora, refrigeration, storage, logistics', valor_de: 'Maquiladora, Kühlung, Lagerung, Logistik' },
+
+    // HERO IMAGES FOR PAGES
+    { id: 'quienes.hero.imagen', seccion: 'quienes', campo: 'Hero Imagen', valor_es: '/images/quienes/franja-inicio.jpg', valor_en: '/images/quienes/franja-inicio.jpg', valor_de: '/images/quienes/franja-inicio.jpg' },
+    { id: 'historia.hero.imagen', seccion: 'historia', campo: 'Hero Imagen', valor_es: '/images/historia/franja-inicio.jpg', valor_en: '/images/historia/franja-inicio.jpg', valor_de: '/images/historia/franja-inicio.jpg' },
+    { id: 'holding.hero.imagen', seccion: 'holding', campo: 'Hero Imagen', valor_es: '/images/features/holding.jpg', valor_en: '/images/features/holding.jpg', valor_de: '/images/features/holding.jpg' },
+    { id: 'contacto.hero.imagen', seccion: 'contacto', campo: 'Hero Imagen', valor_es: '/images/features/contacto.jpg', valor_en: '/images/features/contacto.jpg', valor_de: '/images/features/contacto.jpg' }
   ]
 
   for (const c of contenidos) {

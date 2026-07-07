@@ -27,6 +27,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
     'quienes.division.campo',
     'quienes.division.sedis',
     // imágenes gestionadas desde admin
+    'quienes.hero.imagen',
     'quienes.franja.imagen',
     'quienes.ceo.imagen',
     'quienes.ecosistema.mision.imagen',
@@ -52,6 +53,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   // Imágenes desde admin (Vercel Blob URL o vacío)
   const imgFranja    = contenido['quienes.franja.imagen'] || null;
   const imgCeo       = contenido['quienes.ceo.imagen'] || null;
+  const imgHero      = contenido['quienes.hero.imagen'] || null;
   const ecoImagenes = {
     'quienes.ecosistema.mision.imagen': contenido['quienes.ecosistema.mision.imagen'] || '',
     'quienes.ecosistema.vision.imagen': contenido['quienes.ecosistema.vision.imagen'] || '',
@@ -89,7 +91,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
 
   // Franja hero — DB primero, filesystem como fallback
   const franjaLocalPath = join(process.cwd(), 'public/images/quienes/franja-inicio.jpg');
-  const franjaImage = imgFranja ?? (existsSync(franjaLocalPath) ? '/images/quienes/franja-inicio.jpg' : null);
+  const franjaImage = imgHero || imgFranja || (existsSync(franjaLocalPath) ? '/images/quienes/franja-inicio.jpg' : null);
 
   // Camión decorativo
   const truckPath = join(process.cwd(), 'public/images/camiones/truck1.png');
@@ -107,8 +109,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       <PageHero
         title={t('titulo_pagina')}
         subtitle={t('subtitulo_pagina')}
-        align="bottom-left"
-        franjaImage={franjaImage}
+        heroImage={franjaImage}
       />
 
       {/* ── 1. Intro — texto + card CEO ── */}

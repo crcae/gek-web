@@ -14,10 +14,12 @@ export default async function Historia({ params: { locale } }: { params: { local
   const t = await getTranslations('historia');
 
   const contenido = await getContenidoCached([
-    'historia.fundadores.texto'
+    'historia.fundadores.texto',
+    'historia.hero.imagen'
   ], locale);
 
   const fundadoresTexto = contenido['historia.fundadores.texto'];
+  const dbHeroImage = contenido['historia.hero.imagen'];
 
   // Fotos de Zacatecas
   let fotosZacatecas: string[] = [];
@@ -46,7 +48,7 @@ export default async function Historia({ params: { locale } }: { params: { local
 
   // Franja hero
   const franjaPath = join(process.cwd(), 'public/images/historia/franja-inicio.jpg');
-  const franjaImage = existsSync(franjaPath) ? '/images/historia/franja-inicio.jpg' : null;
+  const franjaImage = dbHeroImage || (existsSync(franjaPath) ? '/images/historia/franja-inicio.jpg' : null);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -54,8 +56,8 @@ export default async function Historia({ params: { locale } }: { params: { local
       <PageHero
         title={t('titulo_pagina')}
         subtitle={t('subtitulo_pagina')}
-        align="bottom-left"
-        franjaImage={franjaImage}
+        heroImage={franjaImage}
+        textRight={true}
       />
 
       {/* Nacidos en Zacatecas — texto izquierda + mapa animado derecha */}

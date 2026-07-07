@@ -53,6 +53,7 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'quienes.divisiones.subtitulo': '→ Quiénes Somos · Subtítulo sección Divisiones',
   'quienes.division.campo':     '→ Quiénes Somos · Descripción División Campo',
   'quienes.division.sedis':     '→ Quiénes Somos · Descripción División Sedis',
+  'quienes.hero.imagen':                  '→ Quiénes Somos · Imagen del banner superior (Hero)',
   'quienes.franja.imagen':                '→ Quiénes Somos · Franja decorativa arriba del título (PageHero)',
   'quienes.ceo.imagen':                   '→ Quiénes Somos · Foto del Director General Joaquín Vizcaíno',
   'quienes.ecosistema.mision.imagen':     '→ Quiénes Somos · Fondo del panel izquierdo del Ecosistema (Misión)',
@@ -74,9 +75,11 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'quienes.valor.profesionalismo': '→ Quiénes Somos · Valores · Descripción Profesionalismo',
   'quienes.valor.lealtad':      '→ Quiénes Somos · Valores · Descripción Lealtad',
   'quienes.valor.transparencia': '→ Quiénes Somos · Valores · Descripción Transparencia',
+  'historia.hero.imagen':       '→ Historia · Imagen del banner superior (Hero)',
   'historia.origen.titulo':     '→ Historia · Eyebrow "Nuestros Orígenes"',
   'historia.origen.texto':      '→ Historia · Párrafo "Nacidos en Zacatecas"',
   'historia.fundadores.texto':  '→ Historia · Texto debajo del título Fundadores',
+  'holding.hero.imagen':        '→ Holding · Imagen del banner superior (Hero)',
   'holding.intro':              '→ Holding · Párrafo de introducción corporativa',
   'holding.organigrama.placeholder': '→ Holding · Texto placeholder del organigrama',
   'holding.marca1.nombre':      '→ Holding · Nombre de la Marca 1 (Vizcaíno Fruit\'s)',
@@ -88,6 +91,7 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'holding.marca3.nombre':      '→ Holding · Nombre de la Marca 3 (Vizcaíno Services)',
   'holding.marca3.descripcion': '→ Holding · Descripción de la Marca 3',
   'holding.marca3.productos':   '→ Holding · Productos de la Marca 3',
+  'contacto.hero.imagen':       '→ Contacto · Imagen del banner superior (Hero)',
 };
 
 // Detectar si un campo es de tipo imagen

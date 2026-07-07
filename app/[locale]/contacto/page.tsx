@@ -2,14 +2,22 @@ import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { LeadPipeline } from '@/components/sections/home/LeadPipeline';
 import { MapPin, Phone, Globe } from 'lucide-react';
+import { getContenidoCached } from '@/lib/queries/cache';
 
-export default async function Contacto() {
+export default async function Contacto({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations('contacto');
   const tFooter = await getTranslations('footer');
 
+  const contenido = await getContenidoCached(['contacto.hero.imagen'], locale);
+  const dbHeroImage = contenido['contacto.hero.imagen'];
+
   return (
     <div className="flex flex-col min-h-screen">
-      <PageHero title={t('titulo_pagina')} subtitle={t('subtitulo_pagina')} />
+      <PageHero
+        title={t('titulo_pagina')}
+        subtitle={t('subtitulo_pagina')}
+        heroImage={dbHeroImage || '/images/features/contacto.jpg'}
+      />
 
       {/* Contact info strip */}
       <section className="w-full bg-brand-white py-12 px-4 sm:px-6 border-b border-brand-gray/20">
