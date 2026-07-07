@@ -95,7 +95,11 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'historia.slide3.texto':      '→ Historia · Presentación · Slide 3 · Texto descriptivo',
   'historia.slide3.imagen':     '→ Historia · Presentación · Slide 3 · Imagen',
 
-  'historia.fundadores.texto':  '→ Historia · Texto debajo del título Fundadores',
+  'historia.fundadores.titulo': '→ Historia · Fundadores · Título principal (ej: Fundadores)',
+  'historia.fundadores.subtitulo': '→ Historia · Fundadores · Subtítulo (ej: Tres generaciones después)',
+  'historia.fundadores.texto':  '→ Historia · Fundadores · Texto descriptivo',
+  'historia.fundadores.imagen': '→ Historia · Fundadores · Imagen Principal',
+  'historia.fundadores2.imagen': '→ Historia · Fundadores · Imagen Secundaria (Hover)',
   'holding.hero.imagen':        '→ Holding · Imagen del banner superior (Hero)',
   'holding.intro':              '→ Holding · Párrafo de introducción corporativa',
   'holding.organigrama.placeholder': '→ Holding · Texto placeholder del organigrama',

@@ -3,6 +3,7 @@ import { PageHero } from '@/components/sections/shared/PageHero';
 import { Timeline } from '@/components/sections/history/Timeline';
 import { GaleriaGrid } from '@/components/sections/history/GaleriaGrid';
 import { LegadoSlideshow } from '@/components/sections/history/LegadoSlideshow';
+import { FundadoresSection } from '@/components/sections/history/FundadoresSection';
 import Image from 'next/image';
 import { getContenidoCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
@@ -23,7 +24,11 @@ export default async function Historia({ params: { locale } }: { params: { local
   }
 
   const contenido = await getContenidoCached([
+    'historia.fundadores.titulo',
+    'historia.fundadores.subtitulo',
     'historia.fundadores.texto',
+    'historia.fundadores.imagen',
+    'historia.fundadores2.imagen',
     'historia.hero.imagen',
     'historia.slideshow.titulo',
     'historia.slide1.subtitulo',
@@ -42,6 +47,8 @@ export default async function Historia({ params: { locale } }: { params: { local
     ...hitoIds
   ], locale);
 
+  const fundadoresTitulo = contenido['historia.fundadores.titulo'] || 'Fundadores';
+  const fundadoresSubtitulo = contenido['historia.fundadores.subtitulo'] || 'Tres generaciones después';
   const fundadoresTexto = contenido['historia.fundadores.texto'];
   const dbHeroImage = contenido['historia.hero.imagen'];
   const slideshowTitulo = contenido['historia.slideshow.titulo'] || 'Nuestro Legado';
@@ -134,34 +141,13 @@ export default async function Historia({ params: { locale } }: { params: { local
       <Timeline hitos={hitos} titulo={timelineTitulo} />
 
       {/* Fundadores */}
-      <section className="w-full bg-brand-navy py-16 md:py-20 px-4 sm:px-6 border-y-4 border-brand-green">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-display text-3xl font-bold text-brand-white mb-4">
-            {t('fundadores_titulo')}
-          </h2>
-          <p className="font-body text-brand-white/70 mb-12 md:mb-16 max-w-xl mx-auto">
-            {fundadoresTexto || t('fundadores_fallback')}
-          </p>
-
-          <div className="flex flex-col items-center">
-            <div className="w-full max-w-3xl mb-8 flex justify-center">
-              <Image
-                src={fundadoresImg}
-                alt="Fundadores"
-                width={800}
-                height={500}
-                className="max-w-full h-auto rounded-sm border-2 border-brand-green shadow-lg"
-                quality={80}
-              />
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <h3 className="font-display text-2xl md:text-3xl font-bold text-brand-white mb-2">
-                Sr. Ramiro Vizcaíno y Sra. Ceferina Vizcaíno
-              </h3>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FundadoresSection
+        titulo={fundadoresTitulo}
+        subtitulo={fundadoresSubtitulo}
+        texto={fundadoresTexto || 'Lo que comenzó como un proyecto familiar dedicado al transporte y comercialización agrícola, hoy integra producción, preenfriamiento, distribución y exportación. Cada paso de este camino tiene su origen en los valores y la visión de quienes iniciaron esta historia.'}
+        imagenPrincipal={contenido['historia.fundadores.imagen'] || fundadoresImg}
+        imagenHover={contenido['historia.fundadores2.imagen'] || fundadoresImg}
+      />
 
       {/* Galería */}
       {galeriaImages.length > 0 && (
