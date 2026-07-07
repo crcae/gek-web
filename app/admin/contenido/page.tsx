@@ -78,6 +78,23 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'historia.hero.imagen':       '→ Historia · Imagen del banner superior (Hero)',
   'historia.origen.titulo':     '→ Historia · Eyebrow "Nuestros Orígenes"',
   'historia.origen.texto':      '→ Historia · Párrafo "Nacidos en Zacatecas"',
+  'historia.slideshow.titulo':  '→ Historia · Presentación · Título general ("Nuestro Legado")',
+  
+  'historia.slide1.subtitulo':  '→ Historia · Presentación · Slide 1 · Subtítulo',
+  'historia.slide1.pie':        '→ Historia · Presentación · Slide 1 · Pie de imagen',
+  'historia.slide1.texto':      '→ Historia · Presentación · Slide 1 · Texto descriptivo',
+  'historia.slide1.imagen':     '→ Historia · Presentación · Slide 1 · Imagen',
+  
+  'historia.slide2.subtitulo':  '→ Historia · Presentación · Slide 2 · Subtítulo',
+  'historia.slide2.pie':        '→ Historia · Presentación · Slide 2 · Pie de imagen',
+  'historia.slide2.texto':      '→ Historia · Presentación · Slide 2 · Texto descriptivo',
+  'historia.slide2.imagen':     '→ Historia · Presentación · Slide 2 · Imagen',
+  
+  'historia.slide3.subtitulo':  '→ Historia · Presentación · Slide 3 · Subtítulo',
+  'historia.slide3.pie':        '→ Historia · Presentación · Slide 3 · Pie de imagen',
+  'historia.slide3.texto':      '→ Historia · Presentación · Slide 3 · Texto descriptivo',
+  'historia.slide3.imagen':     '→ Historia · Presentación · Slide 3 · Imagen',
+
   'historia.fundadores.texto':  '→ Historia · Texto debajo del título Fundadores',
   'holding.hero.imagen':        '→ Holding · Imagen del banner superior (Hero)',
   'holding.intro':              '→ Holding · Párrafo de introducción corporativa',
@@ -222,7 +239,24 @@ function ContentField({ item }: { item: Contenido }) {
   };
 
   const isImageField = esImagen(item.id, form.valor_es);
-  const descripcion = CAMPO_DESCRIPCION[item.id];
+  let descripcion = CAMPO_DESCRIPCION[item.id];
+  if (!descripcion && item.id.startsWith('timeline.')) {
+    if (item.id === 'timeline.titulo') {
+      descripcion = '→ Timeline · Título de la línea de tiempo';
+    } else {
+      const parts = item.id.split('.');
+      const hitoNum = parts[1]?.replace('hito', '');
+      const fieldName = parts[2];
+      descripcion = `→ Timeline · Hito ${hitoNum} · ${
+        fieldName === 'anio' ? 'Año' :
+        fieldName === 'titulo' ? 'Título' :
+        fieldName === 'desc' ? 'Descripción' :
+        fieldName === 'imagen' ? 'Imagen' :
+        fieldName === 'generacion' ? 'Generación (1, 2, 3 o futuro)' :
+        fieldName
+      }`;
+    }
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">

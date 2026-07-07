@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { Timeline } from '@/components/sections/history/Timeline';
 import { GaleriaGrid } from '@/components/sections/history/GaleriaGrid';
-import { MapaZacatecas } from '@/components/sections/history/MapaZacatecas';
+import { LegadoSlideshow } from '@/components/sections/history/LegadoSlideshow';
 import Image from 'next/image';
 import { getContenidoCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
@@ -13,13 +13,80 @@ import path from 'path';
 export default async function Historia({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations('historia');
 
+  const hitoIds: string[] = [];
+  for (let i = 1; i <= 19; i++) {
+    hitoIds.push(`timeline.hito${i}.anio`);
+    hitoIds.push(`timeline.hito${i}.titulo`);
+    hitoIds.push(`timeline.hito${i}.desc`);
+    hitoIds.push(`timeline.hito${i}.imagen`);
+    hitoIds.push(`timeline.hito${i}.generacion`);
+  }
+
   const contenido = await getContenidoCached([
     'historia.fundadores.texto',
-    'historia.hero.imagen'
+    'historia.hero.imagen',
+    'historia.slideshow.titulo',
+    'historia.slide1.subtitulo',
+    'historia.slide1.pie',
+    'historia.slide1.texto',
+    'historia.slide1.imagen',
+    'historia.slide2.subtitulo',
+    'historia.slide2.pie',
+    'historia.slide2.texto',
+    'historia.slide2.imagen',
+    'historia.slide3.subtitulo',
+    'historia.slide3.pie',
+    'historia.slide3.texto',
+    'historia.slide3.imagen',
+    'timeline.titulo',
+    ...hitoIds
   ], locale);
 
   const fundadoresTexto = contenido['historia.fundadores.texto'];
   const dbHeroImage = contenido['historia.hero.imagen'];
+  const slideshowTitulo = contenido['historia.slideshow.titulo'] || 'Nuestro Legado';
+  const timelineTitulo = contenido['timeline.titulo'] || 'Línea de Tiempo GEC';
+
+  const hitos = [];
+  for (let i = 1; i <= 19; i++) {
+    const anio = contenido[`timeline.hito${i}.anio`] || '';
+    const titulo = contenido[`timeline.hito${i}.titulo`] || '';
+    const desc = contenido[`timeline.hito${i}.desc`] || '';
+    const imagen = contenido[`timeline.hito${i}.imagen`] || '';
+    const generacion = contenido[`timeline.hito${i}.generacion`] || '1';
+    
+    if (anio || titulo) {
+      hitos.push({
+        id: `hito${i}`,
+        anio,
+        titulo,
+        desc,
+        imagen,
+        generacion
+      });
+    }
+  }
+
+  const slides = [
+    {
+      subtitulo: contenido['historia.slide1.subtitulo'] || 'Primera Generación',
+      pie: contenido['historia.slide1.pie'] || 'Nacidos en Zacatecas',
+      texto: contenido['historia.slide1.texto'] || 'Hace más de 50 años, en las fértiles tierras de Zacatecas, nuestro fundador Don Ramiro Vizcaíno tomó las riendas de un proyecto que marcaría el camino de tres generaciones comprometidas a trabajar el campo.\n\nY la historia comenzó desde el municipio de Loreto.',
+      imagen: contenido['historia.slide1.imagen'] || '/images/zacatecas/_DSC3592.jpg'
+    },
+    {
+      subtitulo: contenido['historia.slide2.subtitulo'] || 'Segunda Generación',
+      pie: contenido['historia.slide2.pie'] || 'Crecidos en México',
+      texto: contenido['historia.slide2.texto'] || 'La segunda generación llevó la operación fuera de Zacatecas, a expandir nuestras operaciones y puntos de venta por el país. Entrando a cadenas de retail y realizando nuestras primeras exportaciones.',
+      imagen: contenido['historia.slide2.imagen'] || '/images/sedis/sedis1.jpg'
+    },
+    {
+      subtitulo: contenido['historia.slide3.subtitulo'] || 'Tercera Generación',
+      pie: contenido['historia.slide3.pie'] || 'Listos para el Mundo',
+      texto: contenido['historia.slide3.texto'] || 'En la actualidad, la tercera generación ha incursionado en un proceso de institucionalización; instaurando procesos, estructuración sólida, nuevas unidades de negocio y mayor responsabilidad social.\n\nPara seguir llevando una probadita de México al mundo entero.',
+      imagen: contenido['historia.slide3.imagen'] || '/images/features/quienes.jpg'
+    }
+  ];
 
   // Fotos de Zacatecas
   let fotosZacatecas: string[] = [];
@@ -60,42 +127,11 @@ export default async function Historia({ params: { locale } }: { params: { local
         textRight={true}
       />
 
-      {/* Nacidos en Zacatecas — texto izquierda + mapa animado derecha */}
-      <section className="w-full bg-brand-white py-16 md:py-24 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 md:gap-16 items-center">
-          {/* Texto */}
-          <div className="w-full md:w-1/2 order-2 md:order-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-green block mb-3">
-              {t('origen_titulo')}
-            </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
-              {t('nacidos_titulo')}
-            </h2>
-            <div className="w-[60px] h-[3px] bg-brand-green mb-6" />
-            <p className="font-body text-brand-navy/80 text-lg leading-relaxed">
-              {t('nacidos_texto')}
-            </p>
-          </div>
-
-          {/* Mapa animado */}
-          <div className="w-full md:w-1/2 order-1 md:order-2">
-            <MapaZacatecas />
-          </div>
-        </div>
-      </section>
+      {/* Legado Slideshow — 3 partes cambiantes */}
+      <LegadoSlideshow titulo={slideshowTitulo} slides={slides} />
 
       {/* Timeline */}
-      <section className="w-full bg-[#F8FAF9] py-16 md:py-20 px-4 sm:px-6 border-t border-brand-gray/20">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
-              {t('timeline_titulo')}
-            </h2>
-            <div className="w-[60px] h-[3px] bg-brand-green mx-auto" />
-          </div>
-          <Timeline />
-        </div>
-      </section>
+      <Timeline hitos={hitos} titulo={timelineTitulo} />
 
       {/* Fundadores */}
       <section className="w-full bg-brand-navy py-16 md:py-20 px-4 sm:px-6 border-y-4 border-brand-green">

@@ -188,6 +188,19 @@ async function main() {
     // HISTORIA
     { id: 'historia.origen.titulo', seccion: 'historia', campo: 'Título — sección origen', valor_es: 'El Origen', valor_en: 'Our Origins', valor_de: 'Unsere Ursprünge' },
     { id: 'historia.origen.texto', seccion: 'historia', campo: 'Texto narrativo de origen', valor_es: 'Hace más de 50 años, en las áridas pero fértiles tierras de Loreto Zacatecas, nuestro fundador Don Ramiro Vizcaíno tomó las riendas de un proyecto que marcaría el camino de tres generaciones. Desde entonces, hemos crecido expandiendo nuestros horizontes a mercados en todo México y Estados Unidos, marcando el camino para las siguientes generaciones.', valor_en: 'More than 50 years ago, in the arid but fertile lands of Loreto Zacatecas, our founder Don Ramiro Vizcaíno took the reins of a project that would mark the path of three generations. Since then, we have grown by expanding our horizons to markets throughout Mexico and the United States, paving the way for the next generations.', valor_de: 'Vor mehr als 50 Jahren, in den kargen, aber fruchtbaren Böden von Loreto Zacatecas, übernahm unser Gründer Don Ramiro Vizcaíno die Zügel eines Projekts, das den Weg dreier Generationen prägen sollte. Seitdem sind wir gewachsen und haben unsere Horizonte auf Märkte in ganz Mexiko und den USA ausgedehnt.' },
+    { id: 'historia.slideshow.titulo', seccion: 'historia', campo: 'Título de la presentación', valor_es: 'Nuestro Legado', valor_en: 'Our Legacy', valor_de: 'Unser Erbe' },
+    { id: 'historia.slide1.subtitulo', seccion: 'historia', campo: 'Slide 1: Subtítulo', valor_es: 'Primera Generación', valor_en: 'First Generation', valor_de: 'Erste Generation' },
+    { id: 'historia.slide1.pie', seccion: 'historia', campo: 'Slide 1: Pie de imagen', valor_es: 'Nacidos en Zacatecas', valor_en: 'Born in Zacatecas', valor_de: 'Geboren in Zacatecas' },
+    { id: 'historia.slide1.texto', seccion: 'historia', campo: 'Slide 1: Texto', valor_es: 'Hace más de 50 años, en las fértiles tierras de Zacatecas, nuestro fundador Don Ramiro Vizcaíno tomó las riendas de un proyecto que marcaría el camino de tres generaciones comprometidas a trabajar el campo.\n\nY la historia comenzó desde el municipio de Loreto.', valor_en: 'More than 50 years ago, in the fertile lands of Zacatecas, our founder Don Ramiro Vizcaíno took the reins of a project that would mark the path of three generations committed to working the fields.\n\nAnd the story began in the municipality of Loreto.', valor_de: 'Vor mehr als 50 Jahren übernahm unser Gründer Don Ramiro Vizcaíno in den fruchtbaren Böden von Zacatecas die Zügel eines Projekts, das den Weg dreier Generationen prägen sollte, die sich der Arbeit auf den Feldern verschrieben haben.\n\nUnd die Geschichte begann in der Gemeinde Loreto.' },
+    { id: 'historia.slide1.imagen', seccion: 'historia', campo: 'Slide 1: Imagen', valor_es: '/images/zacatecas/_DSC3592.jpg', valor_en: '/images/zacatecas/_DSC3592.jpg', valor_de: '/images/zacatecas/_DSC3592.jpg' },
+    { id: 'historia.slide2.subtitulo', seccion: 'historia', campo: 'Slide 2: Subtítulo', valor_es: 'Segunda Generación', valor_en: 'Second Generation', valor_de: 'Zweite Generation' },
+    { id: 'historia.slide2.pie', seccion: 'historia', campo: 'Slide 2: Pie de imagen', valor_es: 'Crecidos en México', valor_en: 'Grown in Mexico', valor_de: 'Aufgewachsen in Mexiko' },
+    { id: 'historia.slide2.texto', seccion: 'historia', campo: 'Slide 2: Texto', valor_es: 'La segunda generación llevó la operation fuera de Zacatecas, a expandir nuestras operaciones y puntos de venta por el país. Entrando a cadenas de retail y realizando nuestras primeras exportaciones.', valor_en: 'The second generation took the operation outside Zacatecas, expanding our operations and points of sale throughout the country. Entering retail chains and making our first exports.', valor_de: 'Die zweite Generation führte den Betrieb über Zacatecas hinaus und weitete unsere Aktivitäten und Verkaufsstellen im ganzen Land aus. Eintritt in Einzelhandelsketten und Durchführung unserer ersten Exporte.' },
+    { id: 'historia.slide2.imagen', seccion: 'historia', campo: 'Slide 2: Imagen', valor_es: '/images/sedis/sedis1.jpg', valor_en: '/images/sedis/sedis1.jpg', valor_de: '/images/sedis/sedis1.jpg' },
+    { id: 'historia.slide3.subtitulo', seccion: 'historia', campo: 'Slide 3: Subtítulo', valor_es: 'Tercera Generación', valor_en: 'Third Generation', valor_de: 'Dritte Generation' },
+    { id: 'historia.slide3.pie', seccion: 'historia', campo: 'Slide 3: Pie de imagen', valor_es: 'Listos para el Mundo', valor_en: 'Ready for the World', valor_de: 'Bereit für die Welt' },
+    { id: 'historia.slide3.texto', seccion: 'historia', campo: 'Slide 3: Texto', valor_es: 'En la actualidad, la tercera generación ha incursionado en un proceso de institucionalización; instaurando procesos, estructuración sólida, nuevas unidades de negocio y mayor responsabilidad social.\n\nPara seguir llevando una probadita de México al mundo entero.', valor_en: 'Today, the third generation has entered a process of institutionalization; establishing processes, solid structuring, new business units and greater social responsibility.\n\nTo continue bringing a taste of Mexico to the entire world.', valor_de: 'Heute hat die dritte Generation einen Prozess der Institutionalisierung eingeleitet; Etablierung von Prozessen, solide Strukturierung, neue Geschäftsbereiche und stärkere soziale Verantwortung.\n\nUm weiterhin ein Stück Mexiko in die ganze Welt zu tragen.' },
+    { id: 'historia.slide3.imagen', seccion: 'historia', campo: 'Slide 3: Imagen', valor_es: '/images/features/quienes.jpg', valor_en: '/images/features/quienes.jpg', valor_de: '/images/features/quienes.jpg' },
     { id: 'historia.fundadores.texto', seccion: 'historia', campo: 'Texto sobre los fundadores', valor_es: 'Su legado es el cimiento de lo que hoy es Grupo Exportador del Campo', valor_en: 'Their legacy is the foundation of what Grupo Exportador del Campo is today.', valor_de: 'Ihr Vermächtnis ist das Fundament dessen, was Grupo Exportador del Campo heute ist.' },
     
     // HOLDING
@@ -207,6 +220,144 @@ async function main() {
     { id: 'quienes.hero.imagen', seccion: 'quienes', campo: 'Hero Imagen', valor_es: '/images/quienes/franja-inicio.jpg', valor_en: '/images/quienes/franja-inicio.jpg', valor_de: '/images/quienes/franja-inicio.jpg' },
     { id: 'historia.hero.imagen', seccion: 'historia', campo: 'Hero Imagen', valor_es: '/images/historia/franja-inicio.jpg', valor_en: '/images/historia/franja-inicio.jpg', valor_de: '/images/historia/franja-inicio.jpg' },
     { id: 'holding.hero.imagen', seccion: 'holding', campo: 'Hero Imagen', valor_es: '/images/features/holding.jpg', valor_en: '/images/features/holding.jpg', valor_de: '/images/features/holding.jpg' },
+    { id: 'contacto.hero.imagen', seccion: 'contacto', campo: 'Hero Imagen', valor_es: '/images/features/contacto.jpg', valor_en: '/images/features/contacto.jpg', valor_de: '/images/features/contacto.jpg' },
+
+    // TIMELINE SECTION
+    { id: 'timeline.titulo', seccion: 'timeline', campo: 'Título de la línea de tiempo', valor_es: 'Línea de Tiempo GEC', valor_en: 'GEC Timeline', valor_de: 'GEC Zeitleiste' },
+    
+    // Slide 1
+    { id: 'timeline.hito1.anio', seccion: 'timeline', campo: 'Hito 1: Año', valor_es: '1965', valor_en: '1965', valor_de: '1965' },
+    { id: 'timeline.hito1.titulo', seccion: 'timeline', campo: 'Hito 1: Título', valor_es: 'Los primeros kilómetros', valor_en: 'The first kilometers', valor_de: 'Die ersten Kilometer' },
+    { id: 'timeline.hito1.desc', seccion: 'timeline', campo: 'Hito 1: Descripción', valor_es: 'Don Ramiro Vizcaíno inicia operaciones de transporte de carga para agricultores de la región, junto con Dña Zeferina Torres. Donde conocen gran parte de la república y del negocio del campo.', valor_en: 'Don Ramiro Vizcaíno starts cargo transport operations for farmers in the region, together with Mrs. Zeferina Torres. Where they know a large part of the country and the field business.', valor_de: 'Don Ramiro Vizcaíno beginnt zusammen mit Frau Zeferina Torres mit Frachttransporten für Landwirte in der Region. Wo sie einen großen Teil des Landes und des landwirtschaftlichen Sektors kennenlernen.' },
+    { id: 'timeline.hito1.imagen', seccion: 'timeline', campo: 'Hito 1: Imagen', valor_es: '/images/timeline/1965.png', valor_en: '/images/timeline/1965.png', valor_de: '/images/timeline/1965.png' },
+    { id: 'timeline.hito1.generacion', seccion: 'timeline', campo: 'Hito 1: Generación (1, 2, 3 o futuro)', valor_es: '1', valor_en: '1', valor_de: '1' },
+
+    // Slide 2
+    { id: 'timeline.hito2.anio', seccion: 'timeline', campo: 'Hito 2: Año', valor_es: '1969', valor_en: '1969', valor_de: '1969' },
+    { id: 'timeline.hito2.titulo', seccion: 'timeline', campo: 'Hito 2: Título', valor_es: 'Primer punto de venta en el mercado municipal', valor_en: 'First point of sale in the municipal market', valor_de: 'Erste Verkaufsstelle auf dem städtischen Markt' },
+    { id: 'timeline.hito2.desc', seccion: 'timeline', campo: 'Hito 2: Descripción', valor_es: 'Apertura del primer punto de venta en el mercado municipal, marcando el inicio de la comercialización directa de hortalizas.', valor_en: 'Opening of the first point of sale in the municipal market, marking the beginning of direct commercialization of vegetables.', valor_de: 'Eröffnung der ersten Verkaufsstelle auf dem städtischen Markt, die den Beginn der direkten Vermarktung von Gemüse markiert.' },
+    { id: 'timeline.hito2.imagen', seccion: 'timeline', campo: 'Hito 2: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito2.generacion', seccion: 'timeline', campo: 'Hito 2: Generación (1, 2, 3 o futuro)', valor_es: '1', valor_en: '1', valor_de: '1' },
+
+    // Slide 3
+    { id: 'timeline.hito3.anio', seccion: 'timeline', campo: 'Hito 3: Año', valor_es: '1972', valor_en: '1972', valor_de: '1972' },
+    { id: 'timeline.hito3.titulo', seccion: 'timeline', campo: 'Hito 3: Título', valor_es: 'Incursión en el negocio ganadero', valor_en: 'Incursion into the livestock business', valor_de: 'Einstieg in das Viehgeschäft' },
+    { id: 'timeline.hito3.desc', seccion: 'timeline', campo: 'Hito 3: Descripción', valor_es: 'Incursión en el negocio ganadero, ampliando las actividades productivas que engloba el campo.', valor_en: 'Incursion into the livestock business, expanding the productive activities that encompass the field.', valor_de: 'Einstieg in das Viehgeschäft zur Erweiterung der produktiven Aktivitäten, die das Land umfasst.' },
+    { id: 'timeline.hito3.imagen', seccion: 'timeline', campo: 'Hito 3: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito3.generacion', seccion: 'timeline', campo: 'Hito 3: Generación (1, 2, 3 o futuro)', valor_es: '1', valor_en: '1', valor_de: '1' },
+
+    // Slide 4
+    { id: 'timeline.hito4.anio', seccion: 'timeline', campo: 'Hito 4: Año', valor_es: '1985', valor_en: '1985', valor_de: '1985' },
+    { id: 'timeline.hito4.titulo', seccion: 'timeline', campo: 'Hito 4: Título', valor_es: 'Inicio distribución mayorista', valor_en: 'Wholesale distribution starts', valor_de: 'Beginn des Großhandelsvertriebs' },
+    { id: 'timeline.hito4.desc', seccion: 'timeline', campo: 'Hito 4: Descripción', valor_es: 'Inicio de operaciones de mayoreo en norte, centro y sur del país. Se expande el alcance comercial con la primera flotilla de transporte.', valor_en: 'Start of wholesale operations in the north, center and south of the country. Commercial reach expands with the first transport fleet.', valor_de: 'Start des Großhandelsbetriebs im Norden, Zentrum und Süden des Landes. Die kommerzielle Reichweite wird mit der ersten Transportflotte erweitert.' },
+    { id: 'timeline.hito4.imagen', seccion: 'timeline', campo: 'Hito 4: Imagen', valor_es: '/images/timeline/1985.png', valor_en: '/images/timeline/1985.png', valor_de: '/images/timeline/1985.png' },
+    { id: 'timeline.hito4.generacion', seccion: 'timeline', campo: 'Hito 4: Generación (1, 2, 3 o futuro)', valor_es: '1', valor_en: '1', valor_de: '1' },
+
+    // Slide 5
+    { id: 'timeline.hito5.anio', seccion: 'timeline', campo: 'Hito 5: Año', valor_es: '1990', valor_en: '1990', valor_de: '1990' },
+    { id: 'timeline.hito5.titulo', seccion: 'timeline', campo: 'Hito 5: Título', valor_es: 'Primera exportación de hortalizas', valor_en: 'First vegetable export', valor_de: 'Erster Gemüseexport' },
+    { id: 'timeline.hito5.desc', seccion: 'timeline', campo: 'Hito 5: Descripción', valor_es: 'Primera exportación de repollo, iniciando la proyección internacional de la empresa.', valor_en: 'First cabbage export, initiating the international projection of the company.', valor_de: 'Erster Kohlexport, der die internationale Ausrichtung des Unternehmens einleitet.' },
+    { id: 'timeline.hito5.imagen', seccion: 'timeline', campo: 'Hito 5: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito5.generacion', seccion: 'timeline', campo: 'Hito 5: Generación (1, 2, 3 o futuro)', valor_es: '1', valor_en: '1', valor_de: '1' },
+
+    // Slide 6
+    { id: 'timeline.hito6.anio', seccion: 'timeline', campo: 'Hito 6: Año', valor_es: '1992', valor_en: '1992', valor_de: '1992' },
+    { id: 'timeline.hito6.titulo', seccion: 'timeline', campo: 'Hito 6: Título', valor_es: 'Fundación de Vizcaíno Fruits', valor_en: 'Foundation of Vizcaíno Fruits', valor_de: 'Gründung von Vizcaíno Fruits' },
+    { id: 'timeline.hito6.desc', seccion: 'timeline', campo: 'Hito 6: Descripción', valor_es: 'La imagen de la empresa se consolida con su primer logotipo y marca comercial formal. Compuesta por el apellido del fundador y el eslogan “Simplemente… lo Mejor en Hortalizas”', valor_en: 'The company image is consolidated with its first logo and formal trademark. Composed of the founder surname and the slogan “Simply… the Best in Vegetables”', valor_de: 'Das Image des Unternehmens festigt sich mit seinem ersten Logo und der formellen Marke. Bestehend aus dem Nachnamen des Gründers und dem Slogan „Simply… the Best in Vegetables“' },
+    { id: 'timeline.hito6.imagen', seccion: 'timeline', campo: 'Hito 6: Imagen', valor_es: '/images/timeline/1992.png', valor_en: '/images/timeline/1992.png', valor_de: '/images/timeline/1992.png' },
+    { id: 'timeline.hito6.generacion', seccion: 'timeline', campo: 'Hito 6: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 7
+    { id: 'timeline.hito7.anio', seccion: 'timeline', campo: 'Hito 7: Año', valor_es: '1993', valor_en: '1993', valor_de: '1993' },
+    { id: 'timeline.hito7.titulo', seccion: 'timeline', campo: 'Hito 7: Título', valor_es: 'Expansión a Guadalajara', valor_en: 'Expansion to Guadalajara', valor_de: 'Expansion nach Guadalajara' },
+    { id: 'timeline.hito7.desc', seccion: 'timeline', campo: 'Hito 7: Descripción', valor_es: 'Apertura del punto de venta en Guadalajara, consolidando presencia en mercados del occidente de México.', valor_en: 'Opening of the point of sale in Guadalajara, consolidating presence in western Mexico markets.', valor_de: 'Eröffnung der Verkaufsstelle in Guadalajara zur Festigung der Präsenz auf den Märkten Westmexikos.' },
+    { id: 'timeline.hito7.imagen', seccion: 'timeline', campo: 'Hito 7: Imagen', valor_es: '/images/timeline/1993.png', valor_en: '/images/timeline/1993.png', valor_de: '/images/timeline/1993.png' },
+    { id: 'timeline.hito7.generacion', seccion: 'timeline', campo: 'Hito 7: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 8
+    { id: 'timeline.hito8.anio', seccion: 'timeline', campo: 'Hito 8: Año', valor_es: '1995', valor_en: '1995', valor_de: '1995' },
+    { id: 'timeline.hito8.titulo', seccion: 'timeline', campo: 'Hito 8: Título', valor_es: 'Planta enfriadora', valor_en: 'Cooling plant', valor_de: 'Kühlanlage' },
+    { id: 'timeline.hito8.desc', seccion: 'timeline', campo: 'Hito 8: Descripción', valor_es: 'Se inaugura la primera planta enfriadora en Zacatecas, permitiendo un mayor control sobre la cadena y calidad de nuestros productos.', valor_en: 'The first cooling plant is inaugurated in Zacatecas, allowing greater control over the chain and quality of our products.', valor_de: 'Die erste Kühlanlage in Zacatecas wird eingeweiht, was eine größere Kontrolle über die Kette und die Qualität unserer Produkte ermöglicht.' },
+    { id: 'timeline.hito8.imagen', seccion: 'timeline', campo: 'Hito 8: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito8.generacion', seccion: 'timeline', campo: 'Hito 8: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 9
+    { id: 'timeline.hito9.anio', seccion: 'timeline', campo: 'Hito 9: Año', valor_es: '1998', valor_en: '1998', valor_de: '1998' },
+    { id: 'timeline.hito9.titulo', seccion: 'timeline', campo: 'Hito 9: Título', valor_es: 'Adquisición primer rancho de producción', valor_en: 'Acquisition of the first production ranch', valor_de: 'Erwerb der ersten Produktionsranch' },
+    { id: 'timeline.hito9.desc', seccion: 'timeline', campo: 'Hito 9: Descripción', valor_es: 'Compra del primer rancho agrícola, consolidando el control directo sobre la producción.', valor_en: 'Purchase of the first agricultural ranch, consolidating direct control over production.', valor_de: 'Kauf der ersten Landwirtschaftsranch zur Festigung der direkten Produktionskontrolle.' },
+    { id: 'timeline.hito9.imagen', seccion: 'timeline', campo: 'Hito 9: Imagen', valor_es: '/images/timeline/1998.png', valor_en: '/images/timeline/1998.png', valor_de: '/images/timeline/1998.png' },
+    { id: 'timeline.hito9.generacion', seccion: 'timeline', campo: 'Hito 9: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 10
+    { id: 'timeline.hito10.anio', seccion: 'timeline', campo: 'Hito 10: Año', valor_es: '2005', valor_en: '2005', valor_de: '2005' },
+    { id: 'timeline.hito10.titulo', seccion: 'timeline', campo: 'Hito 10: Título', valor_es: 'Expansión a Monterrey', valor_en: 'Expansion to Monterrey', valor_de: 'Expansion nach Monterrey' },
+    { id: 'timeline.hito10.desc', seccion: 'timeline', campo: 'Hito 10: Descripción', valor_es: 'Apertura del punto de venta en Monterrey, fortaleciendo la presencia en el norte del país y como puente directo a la exportación hacia Estados Unidos.', valor_en: 'Opening of the point of sale in Monterrey, strengthening the presence in the north of the country and as a direct bridge for exports to the United States.', valor_de: 'Eröffnung der Verkaufsstelle in Monterrey zur Stärkung der Präsenz im Norden des Landes und als direkte Brücke für Exporte in die USA.' },
+    { id: 'timeline.hito10.imagen', seccion: 'timeline', campo: 'Hito 10: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito10.generacion', seccion: 'timeline', campo: 'Hito 10: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 11
+    { id: 'timeline.hito11.anio', seccion: 'timeline', campo: 'Hito 11: Año', valor_es: '2006', valor_en: '2006', valor_de: '2006' },
+    { id: 'timeline.hito11.titulo', seccion: 'timeline', campo: 'Hito 11: Título', valor_es: 'Segunda planta enfriadora', valor_en: 'Second cooling plant', valor_de: 'Zweite Kühlanlage' },
+    { id: 'timeline.hito11.desc', seccion: 'timeline', campo: 'Hito 11: Descripción', valor_es: 'Inauguración de la segunda planta de preenfriamiento, duplicando la capacidad y convirtiéndonos en un referente operativo en Zacatecas.', valor_en: 'Inauguration of the second pre-cooling plant, doubling capacity and becoming an operational reference in Zacatecas.', valor_de: 'Einweihung der zweiten Vorkühlanlage, wodurch die Kapazität verdoppelt und eine operative Referenz in Zacatecas geschaffen wird.' },
+    { id: 'timeline.hito11.imagen', seccion: 'timeline', campo: 'Hito 11: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito11.generacion', seccion: 'timeline', campo: 'Hito 11: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 12
+    { id: 'timeline.hito12.anio', seccion: 'timeline', campo: 'Hito 12: Año', valor_es: '2011', valor_en: '2011', valor_de: '2011' },
+    { id: 'timeline.hito12.titulo', seccion: 'timeline', campo: 'Hito 12: Título', valor_es: 'Adquisición segundo rancho de producción', valor_en: 'Acquisition of the second production ranch', valor_de: 'Erwerb der zweiten Produktionsranch' },
+    { id: 'timeline.hito12.desc', seccion: 'timeline', campo: 'Hito 12: Descripción', valor_es: 'Adquisición del segundo rancho, ampliando la capacidad productiva de la empresa.', valor_en: 'Acquisition of the second ranch, expanding the company\'s productive capacity.', valor_de: 'Erwerb der zweiten Ranch zur Erweiterung der Produktionskapazität des Unternehmens.' },
+    { id: 'timeline.hito12.imagen', seccion: 'timeline', campo: 'Hito 12: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito12.generacion', seccion: 'timeline', campo: 'Hito 12: Generación (1, 2, 3 o futuro)', valor_es: '2', valor_en: '2', valor_de: '2' },
+
+    // Slide 13
+    { id: 'timeline.hito13.anio', seccion: 'timeline', campo: 'Hito 13: Año', valor_es: '2021', valor_en: '2021', valor_de: '2021' },
+    { id: 'timeline.hito13.titulo', seccion: 'timeline', campo: 'Hito 13: Título', valor_es: 'Constitución de Grupo Exportador del Campo', valor_en: 'Constitution of Grupo Exportador del Campo', valor_de: 'Gründung der Grupo Exportador del Campo' },
+    { id: 'timeline.hito13.desc', seccion: 'timeline', campo: 'Hito 13: Descripción', valor_es: 'Como resultado de la evolución, una reorganización de las actividades de la empresa culminó formalmente con el nacimiento de Grupo Exportador del Campo, marcando el inicio de una nueva etapa enfocada en la profesionalización, la expansión comercial y la proyección internacional.', valor_en: 'As a result of the evolution, a reorganization of the company\'s activities formally culminated in the birth of Grupo Exportador del Campo, marking the start of a new stage focused on professionalization, commercial expansion and international projection.', valor_de: 'Als Ergebnis der Evolution gipfelte eine Reorganisation der Unternehmensaktivitäten formell in der Gründung der Grupo Exportador del Campo, was den Beginn einer neuen Phase markiert, die auf Professionalisierung, kommerzielle Expansion und internationale Ausrichtung ausgerichtet ist.' },
+    { id: 'timeline.hito13.imagen', seccion: 'timeline', campo: 'Hito 13: Imagen', valor_es: '/images/timeline/2021.png', valor_en: '/images/timeline/2021.png', valor_de: '/images/timeline/2021.png' },
+    { id: 'timeline.hito13.generacion', seccion: 'timeline', campo: 'Hito 13: Generación (1, 2, 3 o futuro)', valor_es: '3', valor_en: '3', valor_de: '3' },
+
+    // Slide 14
+    { id: 'timeline.hito14.anio', seccion: 'timeline', campo: 'Hito 14: Año', valor_es: '2022', valor_en: '2022', valor_de: '2022' },
+    { id: 'timeline.hito14.titulo', seccion: 'timeline', campo: 'Hito 14: Título', valor_es: 'Primera exportación como GEC', valor_en: 'First GEC export', valor_de: 'Erster GEC-Export' },
+    { id: 'timeline.hito14.desc', seccion: 'timeline', campo: 'Hito 14: Descripción', valor_es: 'Se realiza la primera exportación bajo la razón social de Grupo Exportador del Campo, consolidando una nueva etapa de crecimiento y fortaleciendo nuestra presencia en mercados internacionales.', valor_en: 'The first export is made under the corporate name of Grupo Exportador del Campo, consolidating a new growth phase and strengthening our international markets presence.', valor_de: 'Der erste Export erfolgt unter der Firma Grupo Exportador del Campo, was eine neue Wachstumsphase festigt und unsere Präsenz auf internationalen Märkten stärkt.' },
+    { id: 'timeline.hito14.imagen', seccion: 'timeline', campo: 'Hito 14: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito14.generacion', seccion: 'timeline', campo: 'Hito 14: Generación (1, 2, 3 o futuro)', valor_es: '3', valor_en: '3', valor_de: '3' },
+
+    // Slide 15
+    { id: 'timeline.hito15.anio', seccion: 'timeline', campo: 'Hito 15: Año', valor_es: '2019', valor_en: '2019', valor_de: '2019' },
+    { id: 'timeline.hito15.titulo', seccion: 'timeline', campo: 'Hito 15: Título', valor_es: 'Unidad de Negocio CEDIS Monterrey', valor_en: 'CEDIS Monterrey Business Unit', valor_de: 'Geschäftsbereich CEDIS Monterrey' },
+    { id: 'timeline.hito15.desc', seccion: 'timeline', campo: 'Hito 15: Descripción', valor_es: 'Se inaugura el primer Centro de Distribución de la empresa, fortaleciendo la capacidad logística, el servicio a clientes y la conexión eficiente entre el campo y los principales mercados del país.', valor_en: 'The first Distribution Center is inaugurated, strengthening logistics capacity, customer service and efficient connection between the field and main country markets.', valor_de: 'Das erste Vertriebszentrum wird eingeweiht, was die logistische Kapazität, den Kundenservice und die effiziente Verbindung zwischen dem Feld und den Hauptmärkten des Landes stärkt.' },
+    { id: 'timeline.hito15.imagen', seccion: 'timeline', campo: 'Hito 15: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito15.generacion', seccion: 'timeline', campo: 'Hito 15: Generación (1, 2, 3 o futuro)', valor_es: '3', valor_en: '3', valor_de: '3' },
+
+    // Slide 16
+    { id: 'timeline.hito16.anio', seccion: 'timeline', campo: 'Hito 16: Año', valor_es: '2024', valor_en: '2024', valor_de: '2024' },
+    { id: 'timeline.hito16.titulo', seccion: 'timeline', campo: 'Hito 16: Título', valor_es: 'Unidad de Negocio: Plantas de preenfriamiento', valor_en: 'Business Unit: Pre-cooling plants', valor_de: 'Geschäftsbereich: Vorkühlanlagen' },
+    { id: 'timeline.hito16.desc', seccion: 'timeline', campo: 'Hito 16: Descripción', valor_es: 'La operación de preenfriamiento se consolida como una unidad de negocio estratégica dentro de GEC, fortaleciendo el control de la cadena de frío y garantizando la calidad de los productos desde su origen hasta su destino.', valor_en: 'Pre-cooling operation is consolidated as a strategic GEC business unit, strengthening cold chain control and guaranteeing products quality from origin to destination.', valor_de: 'Der Vorkühlbetrieb wird als strategischer Geschäftsbereich von GEC konsolidiert, was die Kontrolle der Kühlkette stärkt und die Produktqualität von der Herkunft bis zum Bestimmungsort garantiert.' },
+    { id: 'timeline.hito16.imagen', seccion: 'timeline', campo: 'Hito 16: Imagen', valor_es: '/images/timeline/FRIO.png', valor_en: '/images/timeline/FRIO.png', valor_de: '/images/timeline/FRIO.png' },
+    { id: 'timeline.hito16.generacion', seccion: 'timeline', campo: 'Hito 16: Generación (1, 2, 3 o futuro)', valor_es: '3', valor_en: '3', valor_de: '3' },
+
+    // Slide 17
+    { id: 'timeline.hito17.anio', seccion: 'timeline', campo: 'Hito 17: Año', valor_es: '2024', valor_en: '2024', valor_de: '2024' },
+    { id: 'timeline.hito17.titulo', seccion: 'timeline', campo: 'Hito 17: Título', valor_es: 'Unidad de Negocio: Ranchos de producción', valor_en: 'Business Unit: Production ranches', valor_de: 'Geschäftsbereich: Produktionsranches' },
+    { id: 'timeline.hito17.desc', seccion: 'timeline', campo: 'Hito 17: Descripción', valor_es: 'La integración de las unidades productivas bajo una misma visión operativa fortalece el control sobre el suministro agrícola, consolidando una estructura capaz de responder con mayor eficiencia, trazabilidad y consistencia a las necesidades del mercado', valor_en: 'Integration of productive units under a single operational vision strengthens control over agricultural supply, consolidating a structure capable of responding with greater efficiency, traceability and consistency to market needs', valor_de: 'Die Integration der Produktionseinheiten unter einer einheitlichen operativen Vision stärkt die Kontrolle über die landwirtschaftliche Versorgung und festigt eine Struktur, die mit größerer Effizienz, Rückverfolgbarkeit und Beständigkeit auf Marktbedürfnisse reagieren kann' },
+    { id: 'timeline.hito17.imagen', seccion: 'timeline', campo: 'Hito 17: Imagen', valor_es: '/images/timeline/RANCHO.png', valor_en: '/images/timeline/RANCHO.png', valor_de: '/images/timeline/RANCHO.png' },
+    { id: 'timeline.hito17.generacion', seccion: 'timeline', campo: 'Hito 17: Generación (1, 2, 3 o futuro)', valor_es: '3', valor_en: '3', valor_de: '3' },
+
+    // Slide 18
+    { id: 'timeline.hito18.anio', seccion: 'timeline', campo: 'Hito 18: Año', valor_es: '2026', valor_en: '2026', valor_de: '2026' },
+    { id: 'timeline.hito18.titulo', seccion: 'timeline', campo: 'Hito 18: Título', valor_es: 'Unidad de Negocio CEDIS Tijuana', valor_en: 'CEDIS Tijuana Business Unit', valor_de: 'Geschäftsbereich CEDIS Tijuana' },
+    { id: 'timeline.hito18.desc', seccion: 'timeline', campo: 'Hito 18: Descripción', valor_es: 'Mediante una alianza estratégica, se incorpora la operación de un Centro de Distribución en Tijuana como una nueva unidad de negocio, ampliando el alcance logístico de la empresa a la costa oeste.', valor_en: 'Through a strategic alliance, the operation of a Distribution Center in Tijuana is incorporated as a new business unit, expanding the company\'s logistics reach to the west coast.', valor_de: 'Im Rahmen einer strategischen Allianz wird der Betrieb eines Vertriebszentrums in Tijuana als neuer Geschäftsbereich integriert, was die logistische Reichweite des Unternehmens auf die Westküste ausdehnt.' },
+    { id: 'timeline.hito18.imagen', seccion: 'timeline', campo: 'Hito 18: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito18.generacion', seccion: 'timeline', campo: 'Hito 18: Generación (1, 2, 3 o futuro)', valor_es: '3', valor_en: '3', valor_de: '3' },
+
+    // Slide 19
+    { id: 'timeline.hito19.anio', seccion: 'timeline', campo: 'Hito 19: Año', valor_es: 'Futuro', valor_en: 'Future', valor_de: 'Zukunft' },
+    { id: 'timeline.hito19.titulo', seccion: 'timeline', campo: 'Hito 19: Título', valor_es: 'Y seguimos apuntando alto…', valor_en: 'And we keep aiming high...', valor_de: 'Und wir setzen uns weiterhin hohe Ziele...' },
+    { id: 'timeline.hito19.desc', seccion: 'timeline', campo: 'Hito 19: Descripción', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito19.imagen', seccion: 'timeline', campo: 'Hito 19: Imagen', valor_es: '', valor_en: '', valor_de: '' },
+    { id: 'timeline.hito19.generacion', seccion: 'timeline', campo: 'Hito 19: Generación (1, 2, 3 o futuro)', valor_es: 'futuro', valor_en: 'futuro', valor_de: 'futuro' },
+
     { id: 'contacto.hero.imagen', seccion: 'contacto', campo: 'Hero Imagen', valor_es: '/images/features/contacto.jpg', valor_en: '/images/features/contacto.jpg', valor_de: '/images/features/contacto.jpg' }
   ]
 
