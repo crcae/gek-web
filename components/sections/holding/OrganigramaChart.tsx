@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -16,6 +16,27 @@ type OrgNode = {
 export function OrganigramaChart() {
   const t = useTranslations('holding');
   
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const parentWidth = containerRef.current.parentElement?.offsetWidth || containerRef.current.offsetWidth;
+        if (parentWidth < 1200) {
+          setScale(parentWidth / 1200);
+        } else {
+          setScale(1);
+        }
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    // Call multiple times to ensure layout has computed
+    handleResize();
+    setTimeout(handleResize, 100);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const orgData: OrgNode[] = [
     {
       id: 'cedis',
@@ -69,8 +90,18 @@ export function OrganigramaChart() {
   return (
     <div className="w-full">
       {/* Desktop View */}
-      <div className="hidden lg:block overflow-x-auto w-full pb-8 scrollbar-hide">
-        <div style={{ width: '1200px', height: '600px', position: 'relative', margin: '0 auto' }}>
+      <div ref={containerRef} className="hidden lg:block w-full overflow-hidden pb-8">
+        <div 
+          style={{ 
+            width: '1200px', 
+            height: `${600 * scale}px`, 
+            position: 'relative', 
+            margin: '0 auto',
+            transform: `scale(${scale})`,
+            transformOrigin: 'top center',
+            transition: 'transform 0.1s ease-out'
+          }}
+        >
           <svg width="1200" height="600" className="absolute top-0 left-0">
             {/* Connections */}
             <g stroke="#9CA3AF" strokeWidth="1.5" fill="none">

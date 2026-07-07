@@ -18,6 +18,27 @@ export default async function Holding({ params: { locale } }: { params: { locale
   const contentIds = [
     'holding.intro',
     'holding.hero.imagen',
+    
+    'holding.marca1.nombre',
+    'holding.marca1.subtitulo',
+    'holding.marca1.texto',
+    'holding.marca1.pie',
+    'holding.marca1.imagen',
+    'holding.marca1.logo',
+    
+    'holding.marca2.nombre',
+    'holding.marca2.subtitulo',
+    'holding.marca2.texto',
+    'holding.marca2.pie',
+    'holding.marca2.imagen',
+    'holding.marca2.logo',
+    
+    'holding.marca3.nombre',
+    'holding.marca3.subtitulo',
+    'holding.marca3.texto',
+    'holding.marca3.pie',
+    'holding.marca3.imagen',
+    'holding.marca3.logo',
   ];
 
   const contenido = await getContenidoCached(contentIds, locale);
@@ -38,45 +59,48 @@ export default async function Holding({ params: { locale } }: { params: { locale
   const marcasData = [
     {
       id: 'fruits',
-      nombre: "Vizcaíno Fruits",
-      subtitulo: isEs ? "Origen agrícola con visión global" : "Agricultural origin with global vision",
-      texto: isEs 
+      nombre: contenido['holding.marca1.nombre'] || "Vizcaíno Fruits",
+      subtitulo: contenido['holding.marca1.subtitulo'] || (isEs ? "Origen agrícola con visión global" : "Agricultural origin with global vision"),
+      texto: contenido['holding.marca1.texto'] || (isEs 
         ? "Producimos y comercializamos hortalizas frescas y enfriadas respaldadas por décadas de experiencia agrícola, llevando la calidad del campo mexicano a mercados nacionales e internacionales."
-        : "We produce and commercialize fresh and cooled vegetables backed by decades of agricultural experience, bringing Mexican field quality to national and international markets.",
+        : "We produce and commercialize fresh and cooled vegetables backed by decades of agricultural experience, bringing Mexican field quality to national and international markets."),
       ctaText: isEs ? "Descubre nuestros productos" : "Discover our products",
       link: `/${locale}/holding/vizcaino-fruits`,
-      pie: isEs ? "Cultivamos" : "We cultivate",
-      logo: '/images/logos/VizcainoFruits_Logo.png',
+      pie: contenido['holding.marca1.pie'] || (isEs ? "Cultivamos" : "We cultivate"),
+      logo: contenido['holding.marca1.logo'] || '/images/logos/VizcainoFruits_Logo.png',
       bgClass: 'bg-[#1b4332]', // Dark green
-      colorClass: 'brand-green'
+      colorClass: 'brand-green',
+      bgImage: contenido['holding.marca1.imagen'] || '/images/holding/brands/fruits-bg.jpg'
     },
     {
       id: 'premium',
-      nombre: "Vizcaíno Premium",
-      subtitulo: isEs ? "Valor agregado para el campo y sus mercados" : "Value added for the field and its markets",
-      texto: isEs
+      nombre: contenido['holding.marca2.nombre'] || "Vizcaíno Premium",
+      subtitulo: contenido['holding.marca2.subtitulo'] || (isEs ? "Valor agregado para el campo y sus mercados" : "Value added for the field and its markets"),
+      texto: contenido['holding.marca2.texto'] || (isEs
         ? "Especialistas en chiles, cebollas y soluciones de empaque que elevan el valor de cada producto mediante selección, procesamiento y comercialización especializada."
-        : "Specialists in chiles, onions and packaging solutions that elevate each product value through specialized selection, processing and commercialization.",
+        : "Specialists in chiles, onions and packaging solutions that elevate each product value through specialized selection, processing and commercialization."),
       ctaText: isEs ? "Conoce nuestra especialidad" : "Explore our specialty",
       link: `/${locale}/holding/vizcaino-premium`,
-      pie: isEs ? "Transformamos" : "We transform",
-      logo: '/images/logos/VizcainoPremium_Logo_web.png',
+      pie: contenido['holding.marca2.pie'] || (isEs ? "Transformamos" : "We transform"),
+      logo: contenido['holding.marca2.logo'] || '/images/logos/VizcainoPremium_Logo_web.png',
       bgClass: 'bg-[#7f1d1d]', // Crimson red
-      colorClass: 'brand-red'
+      colorClass: 'brand-red',
+      bgImage: contenido['holding.marca2.imagen'] || '/images/holding/brands/premium-bg.jpg'
     },
     {
       id: 'services',
-      nombre: "Vizcaíno Services",
-      subtitulo: isEs ? "La infraestructura que impulsa al campo" : "The infrastructure that powers the field",
-      texto: isEs
+      nombre: contenido['holding.marca3.nombre'] || "Vizcaíno Services",
+      subtitulo: contenido['holding.marca3.subtitulo'] || (isEs ? "La infraestructura que impulsa al campo" : "The infrastructure that powers the field"),
+      texto: contenido['holding.marca3.texto'] || (isEs
         ? "Integramos servicios de logística, refrigeración, enmallado, almacenamiento y maquila para conectar productos frescos con sus destinos de forma eficiente y confiable."
-        : "We integrate logistics, pre-cooling, netting packaging, storage and maquila services to connect fresh produce with their destinations efficiently and reliably.",
+        : "We integrate logistics, pre-cooling, netting packaging, storage and maquila services to connect fresh produce with their destinations efficiently and reliably."),
       ctaText: isEs ? "Explora nuestros servicios" : "Explore our services",
       link: `/${locale}/holding/vizcaino-services`,
-      pie: isEs ? "Movemos" : "We move",
-      logo: '/images/logos/VizcainoServices_Logo_web.png',
+      pie: contenido['holding.marca3.pie'] || (isEs ? "Movemos" : "We move"),
+      logo: contenido['holding.marca3.logo'] || '/images/logos/VizcainoServices_Logo_web.png',
       bgClass: 'bg-[#0f4c5c]', // Deep blue
-      colorClass: 'brand-blue'
+      colorClass: 'brand-blue',
+      bgImage: contenido['holding.marca3.imagen'] || '/images/holding/brands/services-bg.jpg'
     }
   ];
 

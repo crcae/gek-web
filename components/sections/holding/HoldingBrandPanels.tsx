@@ -15,6 +15,7 @@ interface BrandPanelData {
   logo: string;
   bgClass: string;
   colorClass: string;
+  bgImage?: string;
 }
 
 interface HoldingBrandPanelsProps {
@@ -42,27 +43,40 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
           return (
             <div
               key={brand.id}
-              className={`relative h-[550px] transition-all duration-500 ease-in-out flex flex-col justify-between p-8 md:p-12 text-white overflow-hidden border-r border-white/10 last:border-r-0 ${brand.bgClass} ${widthClass}`}
+              className={`relative h-[580px] transition-all duration-500 ease-in-out flex flex-col justify-between p-8 md:p-10 text-white overflow-hidden border-r border-white/10 last:border-r-0 ${brand.bgClass} ${widthClass}`}
               onMouseEnter={() => setHoveredIdx(idx)}
               onMouseLeave={() => setHoveredIdx(null)}
             >
-              {/* Background watermark icon / overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/30 z-0" />
+              {/* Background Image with opacity overlay */}
+              {brand.bgImage && (
+                <div className="absolute inset-0 z-0 select-none pointer-events-none">
+                  <Image
+                    src={brand.bgImage}
+                    alt={brand.nombre}
+                    fill
+                    className={`object-cover transition-opacity duration-700 ${isHovered ? 'opacity-40' : 'opacity-20'}`}
+                    quality={75}
+                  />
+                </div>
+              )}
+
+              {/* Dark overlay for text readability */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/45 z-0" />
               
-              {/* Overlay highlight */}
-              <div className={`absolute inset-0 bg-brand-green/20 z-0 transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
+              {/* Green color bar transition overlay */}
+              <div className={`absolute inset-0 bg-brand-navy/20 z-0 transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
 
               <div className="relative z-10 flex flex-col h-full justify-between">
                 {/* Brand Logo / Header Area */}
                 <div className="flex flex-col items-start">
                   <div className="h-16 flex items-center justify-start mb-4">
                     {brand.logo ? (
-                      <div className="relative w-48 h-12">
+                      <div className="relative w-44 h-12 bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded shadow-sm border border-white/20">
                         <Image
                           src={brand.logo}
                           alt={brand.nombre}
                           fill
-                          className="object-contain object-left filter brightness-0 invert"
+                          className="object-contain p-2"
                         />
                       </div>
                     ) : (
@@ -80,20 +94,20 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                     {brand.subtitulo}
                   </h4>
                   
-                  {/* Text description with max-height transition based on hover state */}
+                  {/* Text description container with expanded max-height so it never cuts off */}
                   <div className={`transition-all duration-500 overflow-hidden ${
-                    isHovered ? 'max-h-[200px] opacity-100 mt-2' : 'max-h-0 opacity-0 lg:max-h-[60px] lg:opacity-70'
+                    isHovered ? 'max-h-[300px] opacity-100 mt-2' : 'max-h-0 opacity-0 lg:max-h-[90px] lg:opacity-75'
                   }`}>
-                    <p className="font-body text-sm md:text-base leading-relaxed text-gray-200">
+                    <p className="font-body text-xs md:text-sm leading-relaxed text-gray-100">
                       {brand.texto}
                     </p>
                   </div>
                   
-                  {/* CTA link visible always, with special styling on hover */}
+                  {/* CTA link always visible, highlights on hover */}
                   <div className="mt-6">
                     <Link
                       href={brand.link}
-                      className={`inline-flex items-center gap-2 font-display text-xs md:text-sm font-bold uppercase tracking-wider py-2.5 px-5 rounded-sm transition-all duration-300 ${
+                      className={`inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-sm transition-all duration-300 ${
                         isHovered 
                           ? 'bg-brand-green text-brand-navy shadow-lg scale-105' 
                           : 'bg-white/10 text-white hover:bg-white/20'
@@ -125,10 +139,23 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
         {marcasData.map((brand) => (
           <div
             key={brand.id}
-            className={`relative min-h-[300px] rounded-2xl overflow-hidden p-6 md:p-8 flex flex-col justify-between text-white ${brand.bgClass}`}
+            className={`relative min-h-[320px] rounded-2xl overflow-hidden p-6 md:p-8 flex flex-col justify-between text-white ${brand.bgClass}`}
           >
+            {/* Background Image */}
+            {brand.bgImage && (
+              <div className="absolute inset-0 z-0 select-none pointer-events-none">
+                <Image
+                  src={brand.bgImage}
+                  alt={brand.nombre}
+                  fill
+                  className="object-cover opacity-25"
+                  quality={70}
+                />
+              </div>
+            )}
+
             {/* Background watermark overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/45 z-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/50 z-0" />
 
             <div className="relative z-10 flex flex-col h-full justify-between gap-6">
               
@@ -136,12 +163,12 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
               <div className="flex items-center justify-between">
                 <div className="h-12 flex items-center">
                   {brand.logo ? (
-                    <div className="relative w-40 h-10">
+                    <div className="relative w-36 h-10 bg-white/95 px-3 py-1 rounded shadow-sm border border-white/20">
                       <Image
                         src={brand.logo}
                         alt={brand.nombre}
                         fill
-                        className="object-contain object-left filter brightness-0 invert"
+                        className="object-contain p-1"
                       />
                     </div>
                   ) : (
@@ -150,7 +177,7 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                     </span>
                   )}
                 </div>
-                <span className="font-display text-sm font-bold text-brand-green uppercase tracking-widest bg-brand-green/10 px-3 py-1 rounded-full">
+                <span className="font-display text-xs font-bold text-brand-green uppercase tracking-widest bg-brand-green/10 px-3 py-1 rounded-full">
                   {brand.pie}
                 </span>
               </div>
