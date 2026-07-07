@@ -9,46 +9,54 @@ import { FeatureImage } from './FeatureImage';
 export async function FeaturesSection({ locale }: { locale: string }) {
   const t = await getTranslations('features');
 
-  const imageSlots = [
+  const slots = [
     'features.quienes.imagen',
+    'features.quienes.label',
+    'features.quienes.desc',
     'features.historia.imagen',
+    'features.historia.label',
+    'features.historia.desc',
     'features.holding.imagen',
-    'features.contacto.imagen'
+    'features.holding.label',
+    'features.holding.desc',
+    'features.contacto.imagen',
+    'features.contacto.label',
+    'features.contacto.desc',
   ];
   
-  const content = await getContenidoCached(imageSlots, locale);
+  const content = await getContenidoCached(slots, locale);
 
   const features = [
-    {
+    { 
       id: 'quienes',
-      label: t('quienes_label'),
-      href: `/${locale}/quienes-somos`,
-      icon: Users,
-      desc: t('quienes_desc'),
+      label: content['features.quienes.label'] || 'Quiénes Somos',
+      href: `/${locale}/quienes-somos`, 
+      icon: Users, 
+      desc: content['features.quienes.desc'] || 'Velamos por el campo desde hace cincuenta años y seguimos apuntando alto',
       image: content['features.quienes.imagen'] || '/images/features/quienes.jpg'
     },
-    {
-      id: 'historia',
-      label: t('historia_label'),
-      href: `/${locale}/historia`,
-      icon: BookOpen,
-      desc: t('historia_desc'),
+    { 
+      id: 'historia', 
+      label: content['features.historia.label'] || 'Historia',
+      href: `/${locale}/historia`, 
+      icon: BookOpen, 
+      desc: content['features.historia.desc'] || 'Porque somos más que una operación, somos un legado',
       image: content['features.historia.imagen'] || '/images/features/historia.jpg'
     },
-    {
-      id: 'holding',
-      label: t('holding_label'),
-      href: `/${locale}/holding`,
-      icon: Building2,
-      desc: t('holding_desc'),
+    { 
+      id: 'holding', 
+      label: content['features.holding.label'] || 'Holding',
+      href: `/${locale}/holding`, 
+      icon: Building2, 
+      desc: content['features.holding.desc'] || t('holding_desc'),
       image: content['features.holding.imagen'] || '/images/features/holding.jpg'
     },
-    {
-      id: 'contacto',
-      label: t('contacto_label'),
-      href: `/${locale}/contacto`,
-      icon: Phone,
-      desc: t('contacto_desc'),
+    { 
+      id: 'contacto', 
+      label: content['features.contacto.label'] || 'Contacto',
+      href: `/${locale}/contacto`, 
+      icon: Phone, 
+      desc: content['features.contacto.desc'] || t('contacto_desc'),
       image: content['features.contacto.imagen'] || '/images/features/contacto.jpg'
     },
   ];
