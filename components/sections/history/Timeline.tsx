@@ -172,6 +172,27 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
       {/* Bottom Spheres (Light green) */}
       <div className="absolute bottom-[15%] left-[8%] w-80 h-80 rounded-full bg-brand-green/10 blur-3xl pointer-events-none" />
 
+      {/* WATERMARK ICONOS */}
+      {/* Upper white background section watermark (Colored Icon) */}
+      <div className="absolute top-[12%] right-[10%] w-[350px] h-[350px] opacity-50 pointer-events-none select-none z-0">
+        <Image
+          src="/images/iconos/icono.png"
+          alt="GEC Isotipo Watermark"
+          fill
+          className="object-contain"
+        />
+      </div>
+
+      {/* Lower dark background section watermark (Light Icon) */}
+      <div className="absolute bottom-[20%] left-[5%] w-[450px] h-[450px] opacity-50 pointer-events-none select-none z-0">
+        <Image
+          src="/images/iconos/icono.png"
+          alt="GEC Isotipo Watermark"
+          fill
+          className="object-contain"
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col lg:flex-row gap-8">
         
         {/* Left Side: Floating Generation Navigator */}
@@ -268,7 +289,7 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
           <div className="flex flex-col items-center justify-center mt-24 mb-12">
             <div className="relative w-16 h-16 opacity-35 hover:opacity-100 transition-opacity duration-300">
               <Image
-                src="/images/isotipo/isotipo-claro.png"
+                src="/images/iconos/icono.png"
                 alt="GEC Isotipo"
                 fill
                 className="object-contain"

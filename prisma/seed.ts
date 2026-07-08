@@ -381,7 +381,7 @@ async function main() {
   for (const c of contenidos) {
     await prisma.contenidoSitio.upsert({
       where: { id: c.id },
-      update: { valor_es: c.valor_es, valor_en: c.valor_en, valor_de: c.valor_de },
+      update: { campo: c.campo, seccion: c.seccion }, // Only update metadata, do not overwrite user-edited values
       create: { id: c.id, seccion: c.seccion, campo: c.campo, valor_es: c.valor_es, valor_en: c.valor_en, valor_de: c.valor_de },
     })
   }

@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { prisma } from '@/lib/db';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { IFPABadge } from './IFPABadge';
+import Image from 'next/image';
 
 export async function EventosSection() {
   const [eventos, imageExists, t] = await Promise.all([
@@ -17,7 +18,17 @@ export async function EventosSection() {
   ]);
 
   return (
-    <div className="mt-20 border-t border-white/10 pt-16">
+    <div className="mt-20 border-t border-white/10 pt-16 relative overflow-hidden">
+      {/* Background Watermark Icon */}
+      <div className="absolute right-[-80px] top-[10%] w-[300px] h-[300px] opacity-50 pointer-events-none select-none z-0">
+        <Image
+          src="/images/iconos/icono.png"
+          alt="GEC Watermark"
+          width={300}
+          height={300}
+          className="object-contain"
+        />
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
         {/* Left Side: Events List (8 cols) */}
@@ -96,8 +107,8 @@ export async function EventosSection() {
         <div className="lg:col-span-4 flex flex-col items-center justify-center text-center p-8 bg-white/5 border border-white/10 rounded-xl relative overflow-hidden">
           {/* Watermark decors inside the IFPA card */}
           <div 
-            className="absolute left-[-50px] bottom-[-50px] w-[180px] h-[180px] bg-no-repeat bg-contain pointer-events-none opacity-[0.03]"
-            style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
+            className="absolute left-[-50px] bottom-[-50px] w-[180px] h-[180px] bg-no-repeat bg-contain pointer-events-none opacity-50"
+            style={{ backgroundImage: 'url(/images/iconos/icono.png)' }}
           />
 
           <IFPABadge imageExists={imageExists} />

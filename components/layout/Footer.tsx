@@ -29,6 +29,17 @@ export function Footer({ locale }: { locale: string }) {
         style={{ backgroundImage: 'url(/images/camiones/truck2.png)' }}
       />
 
+      {/* Decorative GEC Logo Watermark bottom-right */}
+      <div className="absolute right-[-60px] bottom-[-60px] w-[350px] h-[350px] opacity-50 pointer-events-none select-none z-0">
+        <Image
+          src="/images/iconos/icono.png"
+          alt="GEC Isotipo Watermark"
+          width={350}
+          height={350}
+          className="object-contain object-bottom object-right"
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 pb-12 relative z-10 grid grid-cols-1 md:grid-cols-12 gap-10">
         
         {/* Left Column: Contact info style Logmex (5 cols) */}

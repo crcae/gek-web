@@ -113,8 +113,19 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       />
 
       {/* ── 1. Intro — texto + card CEO ── */}
-      <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-12 items-start">
+      <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
+        {/* Background Watermark/Isotipo */}
+        <div className="absolute left-[-60px] top-[10%] w-[350px] h-[350px] opacity-50 pointer-events-none select-none z-0">
+          <Image
+            src="/images/iconos/icono.png"
+            alt="GEC Isotipo Watermark"
+            width={350}
+            height={350}
+            className="object-contain"
+          />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-12 items-start">
           {/* Columna izquierda — texto */}
           <div className="w-full md:w-[55%]">
             <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">

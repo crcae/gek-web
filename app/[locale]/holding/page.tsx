@@ -11,28 +11,28 @@ import path from 'path';
 
 export default async function Holding({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations('holding');
-  
+
   const isEs = locale === 'es';
   const isDe = locale === 'de';
 
   const contentIds = [
     'holding.intro',
     'holding.hero.imagen',
-    
+
     'holding.marca1.nombre',
     'holding.marca1.subtitulo',
     'holding.marca1.texto',
     'holding.marca1.pie',
     'holding.marca1.imagen',
     'holding.marca1.logo',
-    
+
     'holding.marca2.nombre',
     'holding.marca2.subtitulo',
     'holding.marca2.texto',
     'holding.marca2.pie',
     'holding.marca2.imagen',
     'holding.marca2.logo',
-    
+
     'holding.marca3.nombre',
     'holding.marca3.subtitulo',
     'holding.marca3.texto',
@@ -44,7 +44,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
   const contenido = await getContenidoCached(contentIds, locale);
 
   const dbHeroImage = contenido['holding.hero.imagen'];
-  const intro = contenido['holding.intro'] || (isEs 
+  const intro = contenido['holding.intro'] || (isEs
     ? 'Grupo Exportador del Campo integra marcas y unidades de negocio especializadas que operan bajo una misma filosofía: calidad, trazabilidad y compromiso con el campo. Desde la producción agrícola hasta la transformación, logística y comercialización, cada división cumple una función estratégica dentro de un sistema diseñado para llevar productos frescos y soluciones agroalimentarias a mercados nacionales e internacionales.'
     : 'Grupo Exportador del Campo integrates specialized brands and business units operating under a single philosophy: quality, traceability, and field commitment. From agricultural production to processing, logistics, and marketing, each division plays a strategic role within a system designed to deliver fresh produce and food solutions to national and international markets.');
 
@@ -61,7 +61,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
       id: 'fruits',
       nombre: contenido['holding.marca1.nombre'] || "Vizcaíno Fruits",
       subtitulo: contenido['holding.marca1.subtitulo'] || (isEs ? "Origen agrícola con visión global" : "Agricultural origin with global vision"),
-      texto: contenido['holding.marca1.texto'] || (isEs 
+      texto: contenido['holding.marca1.texto'] || (isEs
         ? "Producimos y comercializamos hortalizas frescas y enfriadas respaldadas por décadas de experiencia agrícola, llevando la calidad del campo mexicano a mercados nacionales e internacionales."
         : "We produce and commercialize fresh and cooled vegetables backed by decades of agricultural experience, bringing Mexican field quality to national and international markets."),
       ctaText: isEs ? "Descubre nuestros productos" : "Discover our products",
@@ -143,18 +143,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
       </section>
 
       {/* Organigrama / Estructura Corporativa */}
-      <section className="w-full bg-white py-20 px-6 border-t border-brand-gray/10 relative overflow-hidden">
-        {/* Background Watermark/Isotipo */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] z-0">
-          <div className="relative w-[600px] h-[600px]">
-            <Image
-              src="/images/isotipo/isotipo-oscuro.png"
-              alt="GEC Isotipo Watermark"
-              fill
-              className="object-contain"
-            />
-          </div>
-        </div>
+      <section className="w-full bg-gray-50/50 py-20 px-6 border-t border-brand-gray/10 relative overflow-hidden">
 
         <div className="max-w-[1200px] mx-auto relative z-10">
           <AnimatedSection animation="fade-up" className="mb-16 text-center">
@@ -166,7 +155,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
             </h2>
             <AnimatedLine className="h-[3px] bg-brand-green mx-auto" />
           </AnimatedSection>
-          
+
           {hasEcImage ? (
             <div className="relative w-full aspect-[16/9] max-w-4xl mx-auto rounded-lg overflow-hidden border border-brand-gray/15 shadow-xl bg-white mb-12">
               <Image
@@ -177,9 +166,23 @@ export default async function Holding({ params: { locale } }: { params: { locale
               />
             </div>
           ) : (
-            <div className="bg-white/80 backdrop-blur border border-brand-gray/15 rounded-2xl p-6 shadow-xl relative">
-              <OrganigramaChart />
-              
+            <div className="bg-white border border-brand-gray/15 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+              {/* Background Watermark/Isotipo inside the card */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50 z-0">
+                <div className="relative w-[500px] h-[500px]">
+                  <Image
+                    src="/images/iconos/icono.png"
+                    alt="GEC Isotipo Watermark"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+
+              <div className="relative z-10">
+                <OrganigramaChart />
+              </div>
+
               {/* Decorative corners items */}
               <div className="absolute bottom-4 right-4 flex items-center gap-2 text-[10px] text-brand-navy/30 uppercase tracking-widest font-body">
                 <span>GEC Holding</span>
