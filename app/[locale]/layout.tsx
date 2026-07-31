@@ -63,8 +63,8 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientSessionProvider>
             <Topbar
-              correo={footerContenido['footer.correo'] ?? undefined}
-              telefono={footerContenido['footer.telefono'] ?? undefined}
+              correo={footerContenido['footer.correo']}
+              telefono={footerContenido['footer.telefono']}
             />
             <Navbar />
             <main className="flex-grow">

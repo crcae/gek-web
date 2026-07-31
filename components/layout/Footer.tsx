@@ -23,7 +23,7 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
 
 interface FooterProps {
   locale: string;
-  contenido?: Record<string, string | null>;
+  contenido?: Record<string, string>;
 }
 
 export function Footer({ locale, contenido = {} }: FooterProps) {
