@@ -7,8 +7,10 @@ import {
   Users, 
   Clock, 
   Building, 
-  MessageSquare 
+  MessageSquare,
+  Home 
 } from 'lucide-react';
+import { VisualEditable } from '@/components/admin/VisualEditable';
 
 // Inline SVG — avoids lucide-react barrel optimizer failing on 'Linkedin'
 const LinkedinIcon = ({ className }: { className?: string }) => (
@@ -19,15 +21,26 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function Footer({ locale }: { locale: string }) {
+interface FooterProps {
+  locale: string;
+  contenido?: Record<string, string>;
+}
+
+export function Footer({ locale, contenido = {} }: FooterProps) {
+  const quoteText = contenido['footer.quote'] || '"Porque aunque los tiempos cambien, somos y seremos GEC"';
+  const dirStiva = contenido['footer.direccion.stiva'] || 'Stiva No. 484 Parque Industrial Barragán, San Nicolás de los Garza N.L.';
+  const dirLoreto = contenido['footer.direccion.loreto'] || 'Loreto, Zacatecas';
+  const dirTijuana = contenido['footer.direccion.tijuana'] || 'Tijuana, Baja California';
+  const telVal = contenido['footer.telefono'] || '+52 81 2207 0314';
+  const mailVal = contenido['footer.correo'] || 'info@gecvt.com';
+  const copyVal = contenido['footer.copyright'] || '© 2026 Grupo Exportador del Campo. Todos los derechos reservados.';
+  const privVal = contenido['footer.privacidad'] || 'Aviso de Privacidad';
+  const termVal = contenido['footer.terminos'] || 'Términos y Condiciones';
+
   return (
     <footer className="w-full bg-[#0D1B24] border-t-[3px] border-brand-green pt-16 relative overflow-hidden">
       
-      {/* Decorative Truck Watermark bottom-right */}
-      <div 
-        className="absolute right-[-20px] bottom-[-20px] w-[240px] h-[150px] bg-no-repeat bg-contain bg-right pointer-events-none opacity-[0.15] z-0"
-        style={{ backgroundImage: 'url(/images/camiones/truck2.png)' }}
-      />
+      {/* Decorative Watermark bottom-right (removed truck placeholder) */}
 
       {/* Decorative GEC Logo Watermark bottom-right */}
       <div className="absolute right-[-60px] bottom-[-60px] w-[350px] h-[350px] opacity-50 pointer-events-none select-none z-0">
@@ -48,36 +61,48 @@ export function Footer({ locale }: { locale: string }) {
             <Image 
               src="/images/logos/GrupoExportador_Logo1.png" 
               alt="Grupo Exportador del Campo" 
-              width={160}
-              height={50}
-              className="w-[160px] h-auto object-contain brightness-0 invert" 
+              width={240}
+              height={75}
+              className="w-[240px] h-auto object-contain brightness-0 invert" 
             />
           </Link>
-          <p className="font-lora italic text-xs text-white/70 max-w-sm">
-            "Porque aunque los tiempos cambien, somos y seremos GEC"
-          </p>
+          <VisualEditable id="footer.quote" label="Cita del Footer">
+            <p className="font-lora italic text-xs text-white/70 max-w-sm">
+              {quoteText}
+            </p>
+          </VisualEditable>
           <div className="h-[2px] w-12 bg-brand-green" />
           
           <div className="space-y-3.5 text-white/80 text-sm font-body">
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-              <span>Stiva No. 484 Parque Industrial Barragán, San Nicolás de los Garza N.L.</span>
+              <VisualEditable id="footer.direccion.stiva" label="Dirección Parque Industrial">
+                <span>{dirStiva}</span>
+              </VisualEditable>
             </div>
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-              <span>Loreto, Zacatecas</span>
+              <VisualEditable id="footer.direccion.loreto" label="Dirección Loreto">
+                <span>{dirLoreto}</span>
+              </VisualEditable>
             </div>
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-              <span>Tijuana, Baja California</span>
+              <VisualEditable id="footer.direccion.tijuana" label="Dirección Tijuana">
+                <span>{dirTijuana}</span>
+              </VisualEditable>
             </div>
             <div className="flex items-center gap-3">
               <Phone className="w-5 h-5 text-brand-green shrink-0" />
-              <a href="tel:+528122070314" className="hover:text-brand-green transition-colors">+52 81 2207 0314</a>
+              <VisualEditable id="footer.telefono" label="Teléfono de Contacto">
+                <a href={`tel:${telVal.replace(/\s+/g, '')}`} className="hover:text-brand-green transition-colors">{telVal}</a>
+              </VisualEditable>
             </div>
             <div className="flex items-center gap-3">
               <Mail className="w-5 h-5 text-brand-green shrink-0" />
-              <a href="mailto:info@gecvt.com" className="hover:text-brand-green transition-colors">info@gecvt.com</a>
+              <VisualEditable id="footer.correo" label="Correo Electrónico">
+                <a href={`mailto:${mailVal}`} className="hover:text-brand-green transition-colors">{mailVal}</a>
+              </VisualEditable>
             </div>
           </div>
 
@@ -90,10 +115,10 @@ export function Footer({ locale }: { locale: string }) {
               className="w-10 h-10 rounded-full bg-brand-green flex items-center justify-center text-white hover:scale-110 transition-transform shadow-md"
               title="LinkedIn"
             >
-            <LinkedinIcon className="w-4 h-4" />
+              <LinkedinIcon className="w-4 h-4" />
             </a>
             <a
-              href="mailto:info@gecvt.com"
+              href={`mailto:${mailVal}`}
               className="w-10 h-10 rounded-full bg-brand-green flex items-center justify-center text-white hover:scale-110 transition-transform shadow-md"
               title="Correo"
             >
@@ -103,60 +128,80 @@ export function Footer({ locale }: { locale: string }) {
         </div>
 
         {/* Central Columns: Navigation with icons (7 cols) */}
-        <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-6 align-top">
+        <div className="md:col-span-7 grid grid-cols-2 sm:grid-cols-5 gap-6 align-top">
           
-          {/* Col 1: Quiénes Somos */}
+          {/* Col 1: Inicio */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-brand-green font-display font-bold text-xs uppercase tracking-wider">
+              <Home className="w-4 h-4" />
+              <span>Inicio</span>
+            </div>
+            <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
+              <Link href={`/${locale}`} className="hover:text-brand-green transition-colors">Inicio</Link>
+              <Link href={`/${locale}#marcas`} className="hover:text-brand-green transition-colors">Marcas</Link>
+              <Link href={`/${locale}#clientes`} className="hover:text-brand-green transition-colors">Clientes</Link>
+              <Link href={`/${locale}#noticias`} className="hover:text-brand-green transition-colors">Noticias</Link>
+              <Link href={`/${locale}#eventos`} className="hover:text-brand-green transition-colors">Eventos</Link>
+            </div>
+          </div>
+
+          {/* Col 2: Quiénes Somos */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-brand-green font-display font-bold text-xs uppercase tracking-wider">
               <Users className="w-4 h-4" />
               <span>Identidad</span>
             </div>
             <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
-              <Link href={`/${locale}/quienes-somos#historia`} className="hover:text-brand-green transition-colors">Nuestra Historia</Link>
-              <Link href={`/${locale}/quienes-somos#mision`} className="hover:text-brand-green transition-colors">Misión y Visión</Link>
-              <Link href={`/${locale}/quienes-somos#valores`} className="hover:text-brand-green transition-colors">Valores</Link>
-              <Link href={`/${locale}/quienes-somos#divisiones`} className="hover:text-brand-green transition-colors">Divisiones</Link>
+              <Link href={`/${locale}/quienes-somos`} className="hover:text-brand-green transition-colors">Quiénes Somos</Link>
+              <Link href={`/${locale}/quienes-somos#grupo-exportador`} className="hover:text-brand-green transition-colors">GEC</Link>
+              <Link href={`/${locale}/quienes-somos#ecosistema`} className="hover:text-brand-green transition-colors">Ecosistema</Link>
+              <Link href={`/${locale}/quienes-somos#division-campo`} className="hover:text-brand-green transition-colors">Div. Campo</Link>
+              <Link href={`/${locale}/quienes-somos#division-cedis`} className="hover:text-brand-green transition-colors">Div. CEDIS</Link>
+              <Link href={`/${locale}/quienes-somos#capital-humano`} className="hover:text-brand-green transition-colors">Capital Humano</Link>
             </div>
           </div>
 
-          {/* Col 2: Historia */}
+          {/* Col 3: Historia */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-brand-green font-display font-bold text-xs uppercase tracking-wider">
               <Clock className="w-4 h-4" />
-              <span>Trayectoria</span>
+              <span>Historia</span>
             </div>
             <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
-              <Link href={`/${locale}/historia#fundacion`} className="hover:text-brand-green transition-colors">Fundación</Link>
-              <Link href={`/${locale}/historia`} className="hover:text-brand-green transition-colors">Hitos importantes</Link>
-              <Link href={`/${locale}/historia#fundadores`} className="hover:text-brand-green transition-colors">Fundadores</Link>
-              <Link href={`/${locale}/historia#galeria`} className="hover:text-brand-green transition-colors">Galería</Link>
+              <Link href={`/${locale}/historia`} className="hover:text-brand-green transition-colors">Historia</Link>
+              <Link href={`/${locale}/historia#linea-tiempo`} className="hover:text-brand-green transition-colors">Línea de Tiempo</Link>
+              <Link href={`/${locale}/historia#origen`} className="hover:text-brand-green transition-colors">Origen</Link>
             </div>
           </div>
 
-          {/* Col 3: Holding */}
+          {/* Col 4: Holding */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-brand-green font-display font-bold text-xs uppercase tracking-wider">
               <Building className="w-4 h-4" />
-              <span>Corporativo</span>
+              <span>Holding</span>
             </div>
             <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
-              <Link href={`/${locale}/holding#estructura`} className="hover:text-brand-green transition-colors">Estructura</Link>
-              <Link href={`/${locale}/holding#marcas`} className="hover:text-brand-green transition-colors">Vizcaíno Fruit's</Link>
-              <Link href={`/${locale}/holding#marcas`} className="hover:text-brand-green transition-colors">Vizcaíno Premium</Link>
-              <Link href={`/${locale}/holding#marcas`} className="hover:text-brand-green transition-colors">Vizcaíno Services</Link>
+              <Link href={`/${locale}/holding`} className="hover:text-brand-green transition-colors">Holding</Link>
+              <Link href={`/${locale}/holding#marcas-unidades`} className="hover:text-brand-green transition-colors">Marcas y Unidades</Link>
+              <Link href={`/${locale}/holding/vizcaino-fruits`} className="hover:text-brand-green transition-colors">Vizcaíno Fruits</Link>
+              <Link href={`/${locale}/holding/vizcaino-premium`} className="hover:text-brand-green transition-colors">Vizcaíno Premium</Link>
+              <Link href={`/${locale}/holding/vizcaino-services`} className="hover:text-brand-green transition-colors">Vizcaíno Services</Link>
+              <Link href={`/${locale}/holding#estructura-corporativa`} className="hover:text-brand-green transition-colors">Estructura</Link>
             </div>
           </div>
 
-          {/* Col 4: Contacto */}
+          {/* Col 5: Contacto */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 text-brand-green font-display font-bold text-xs uppercase tracking-wider">
               <MessageSquare className="w-4 h-4" />
               <span>Contacto</span>
             </div>
             <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
-              <Link href={`/${locale}/contacto`} className="hover:text-brand-green transition-colors">Cotización</Link>
-              <Link href={`/${locale}/contacto`} className="hover:text-brand-green transition-colors">Proveedores</Link>
-              <Link href={`/${locale}/contacto`} className="hover:text-brand-green transition-colors">Bolsa de trabajo</Link>
+              <Link href={`/${locale}/contacto`} className="hover:text-brand-green transition-colors">Contacto</Link>
+              <Link href={`/${locale}/contacto#cotizacion`} className="hover:text-brand-green transition-colors">Cotización</Link>
+              <Link href={`/${locale}/contacto?tipo=proveedor`} className="hover:text-brand-green transition-colors">Proveedores</Link>
+              <Link href={`/${locale}/contacto?tipo=bolsa`} className="hover:text-brand-green transition-colors">Bolsa de trabajo</Link>
+              <Link href={`/${locale}/contacto?tipo=alianza`} className="hover:text-brand-green transition-colors">Alianzas</Link>
             </div>
           </div>
 
@@ -166,11 +211,17 @@ export function Footer({ locale }: { locale: string }) {
       {/* Copyright Bar */}
       <div className="w-full bg-[#091218] py-6 px-6 mt-8 border-t border-white/5 relative z-10">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-body text-white/40 text-center">
-          <p>© 2026 Grupo Exportador del Campo. Todos los derechos reservados.</p>
+          <VisualEditable id="footer.copyright" label="Derechos de Autor (Copyright)">
+            <p>{copyVal}</p>
+          </VisualEditable>
           <div className="flex gap-4">
-            <Link href={`/${locale}/privacidad`} className="hover:text-white transition-colors">Aviso de Privacidad</Link>
+            <VisualEditable id="footer.privacidad" label="Enlace Aviso de Privacidad">
+              <Link href={`/${locale}/privacidad`} className="hover:text-white transition-colors">{privVal}</Link>
+            </VisualEditable>
             <span className="text-white/10">|</span>
-            <Link href={`/${locale}/terminos`} className="hover:text-white transition-colors">Términos y Condiciones</Link>
+            <VisualEditable id="footer.terminos" label="Enlace Términos y Condiciones">
+              <Link href={`/${locale}/terminos`} className="hover:text-white transition-colors">{termVal}</Link>
+            </VisualEditable>
           </div>
         </div>
       </div>

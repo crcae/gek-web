@@ -6,18 +6,30 @@ import { getContenidoCached } from '@/lib/queries/cache';
 import Image from 'next/image';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
+import { VisualEditable } from '@/components/admin/VisualEditable';
+import { Settings } from 'lucide-react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 import fs from 'fs';
 import path from 'path';
 
 export default async function Holding({ params: { locale } }: { params: { locale: string } }) {
+  const session = await getServerSession(authOptions);
   const t = await getTranslations('holding');
 
   const isEs = locale === 'es';
   const isDe = locale === 'de';
 
   const contentIds = [
-    'holding.intro',
+    'holding.hero.titulo',
+    'holding.hero.sub',
     'holding.hero.imagen',
+    'holding.intro',
+    
+    'holding.marcas.titulo',
+    'holding.estructura.titulo',
+    'holding.estructura.subtitulo',
+    'holding.estructura.imagen',
 
     'holding.marca1.nombre',
     'holding.marca1.subtitulo',
@@ -55,6 +67,13 @@ export default async function Holding({ params: { locale } }: { params: { locale
       ? 'Die verschiedenen Geschäftsbereiche und Marken, die uns repräsentieren. Verpflichtet einer zentralen Philosophie, die uns antreibt: Qualität.'
       : 'The different business units that make us up and brands that represent us. Committed to the same central philosophy that drives us: Quality.';
 
+  const heroTitulo = contenido['holding.hero.titulo'] || t('titulo_pagina');
+  const heroSubtitulo = contenido['holding.hero.sub'] || customSubtitle;
+
+  const marcasTitulo = contenido['holding.marcas.titulo'] || (isEs ? 'Marcas y Unidades de Negocio' : 'Brands & Business Units');
+  const estructuraTitulo = contenido['holding.estructura.titulo'] || (isEs ? 'Estructura Corporativa' : 'Corporate Structure');
+  const estructuraSubtitulo = contenido['holding.estructura.subtitulo'] || 'GEC HOLDING';
+
   // Build marcasData array for the expandable accordion
   const marcasData = [
     {
@@ -77,7 +96,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
       nombre: contenido['holding.marca2.nombre'] || "Vizcaíno Premium",
       subtitulo: contenido['holding.marca2.subtitulo'] || (isEs ? "Valor agregado para el campo y sus mercados" : "Value added for the field and its markets"),
       texto: contenido['holding.marca2.texto'] || (isEs
-        ? "Especialistas en chiles, cebollas y soluciones de empaque que elevan el valor de cada producto mediante selección, procesamiento y comercialización especializada."
+        ? "Especialistas en chiles, cebollas y soluciones de empaque que elevan el valor de cada product o mediante selección, procesamiento y comercialización especializada."
         : "Specialists in chiles, onions and packaging solutions that elevate each product value through specialized selection, processing and commercialization."),
       ctaText: isEs ? "Conoce nuestra especialidad" : "Explore our specialty",
       link: `/${locale}/holding/vizcaino-premium`,
@@ -106,34 +125,42 @@ export default async function Holding({ params: { locale } }: { params: { locale
 
   // Resolve corporate structure image path
   const ecPath = '/images/holding/estructura-corporativa.png';
-  const hasEcImage = fs.existsSync(path.join(process.cwd(), 'public', ecPath));
+  const imgEstructura = contenido['holding.estructura.imagen'] || ecPath;
+  const hasEcImage = imgEstructura && (imgEstructura.startsWith('http') || fs.existsSync(path.join(process.cwd(), 'public', imgEstructura)));
 
   return (
     <div className="flex flex-col min-h-screen bg-brand-white">
       {/* Banner Superior (Hero) */}
       <PageHero
-        title={t('titulo_pagina')}
-        subtitle={customSubtitle}
+        title={heroTitulo}
+        subtitle={heroSubtitulo}
         heroImage={dbHeroImage || '/images/features/holding.jpg'}
+        titleId="holding.hero.titulo"
+        subtitleId="holding.hero.sub"
+        heroImageId="holding.hero.imagen"
       />
 
       {/* Introducción Corporativa */}
       <section className="w-full bg-white py-16 md:py-20 px-6 border-b border-brand-gray/10">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="font-body text-brand-navy/80 text-lg md:text-xl leading-relaxed">
-            {intro}
-          </p>
+          <VisualEditable id="holding.intro" label="Introducción Corporativa">
+            <p className="font-body text-brand-navy/80 text-lg md:text-xl leading-relaxed">
+              {intro}
+            </p>
+          </VisualEditable>
         </div>
       </section>
 
       {/* Ecosistema de Marcas y Unidades de Negocio */}
-      <section className="w-full bg-[#F8FAF9] py-20 px-6">
+      <section id="marcas-unidades" className="w-full bg-[#F8FAF9] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center mb-16 text-center">
             <AnimatedSection animation="fade-up">
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
-                {isEs ? 'Marcas y Unidades de Negocio' : 'Brands & Business Units'}
-              </h2>
+              <VisualEditable id="holding.marcas.titulo" label="Título Sección Marcas">
+                <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
+                  {marcasTitulo}
+                </h2>
+              </VisualEditable>
             </AnimatedSection>
             <AnimatedLine className="h-[3px] bg-brand-green" />
           </div>
@@ -143,27 +170,45 @@ export default async function Holding({ params: { locale } }: { params: { locale
       </section>
 
       {/* Organigrama / Estructura Corporativa */}
-      <section className="w-full bg-gray-50/50 py-20 px-6 border-t border-brand-gray/10 relative overflow-hidden">
+      <section id="estructura-corporativa" className="w-full bg-gray-50/50 py-20 px-6 border-t border-brand-gray/10 relative overflow-hidden">
 
         <div className="max-w-[1200px] mx-auto relative z-10">
           <AnimatedSection animation="fade-up" className="mb-16 text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-brand-green mb-3 block">
-              GEC HOLDING
-            </span>
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
-              {isEs ? 'Estructura Corporativa' : 'Corporate Structure'}
-            </h2>
+            <VisualEditable id="holding.estructura.subtitulo" label="Eyebrow Estructura Corporativa">
+              <span className="text-xs font-bold uppercase tracking-widest text-brand-green mb-3 block">
+                {estructuraSubtitulo}
+              </span>
+            </VisualEditable>
+            <VisualEditable id="holding.estructura.titulo" label="Título Estructura Corporativa">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-brand-navy mb-4">
+                {estructuraTitulo}
+              </h2>
+            </VisualEditable>
             <AnimatedLine className="h-[3px] bg-brand-green mx-auto" />
           </AnimatedSection>
 
           {hasEcImage ? (
             <div className="relative w-full aspect-[16/9] max-w-4xl mx-auto rounded-lg overflow-hidden border border-brand-gray/15 shadow-xl bg-white mb-12">
               <Image
-                src={ecPath}
+                src={imgEstructura}
                 alt="Estructura Corporativa GEC"
                 fill
                 className="object-contain p-4"
+                unoptimized
               />
+              {session && (
+                <div className="absolute top-3 right-3 z-35">
+                  <VisualEditable id="holding.estructura.imagen" label="Imagen de Estructura Corporativa" type="image">
+                    <button
+                      type="button"
+                      className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Settings className="w-3.5 h-3.5" />
+                      Cambiar Imagen
+                    </button>
+                  </VisualEditable>
+                </div>
+              )}
             </div>
           ) : (
             <div className="bg-white border border-brand-gray/15 rounded-2xl p-6 shadow-xl relative overflow-hidden">

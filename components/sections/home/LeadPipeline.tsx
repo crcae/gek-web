@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import {
   Check,
   ArrowRight,
@@ -33,10 +34,27 @@ type LeadFormData = {
   comentarios: string;
 };
 
-export function LeadPipeline() {
+function LeadPipelineContent({ showContactInfo = false }: { showContactInfo?: boolean }) {
   const t = useTranslations('pipeline');
   const [step, setStep] = useState(1);
   const [tipo, setTipo] = useState<Step1Type | null>(null);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const queryTipo = searchParams.get('tipo');
+    if (queryTipo && ['cotizacion', 'exportacion', 'distribucion', 'alianza', 'proveedor', 'atencion', 'bolsa'].includes(queryTipo)) {
+      const tipoVal = queryTipo as Step1Type;
+      setTipo(tipoVal);
+      if (tipoVal === 'bolsa') {
+        setStep(5);
+      } else if (tipoVal === 'proveedor') {
+        setStep(2);
+      } else if (tipoVal === 'alianza') {
+        setStep(2);
+      }
+    }
+  }, [searchParams]);
 
   // Step 2A - Products selection (Client flow) — stored as IDs
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
@@ -207,7 +225,7 @@ export function LeadPipeline() {
   const showExportAlert = selectedMarkets.some(m => ['canada', 'otros'].includes(m));
 
   return (
-    <section id="contacto-pipeline" className="w-full bg-brand-white py-20 px-4 sm:px-6 relative overflow-hidden">
+    <section id="cotizacion" className="w-full bg-brand-white py-20 px-4 sm:px-6 relative overflow-hidden">
       <div
         className="absolute left-[-150px] bottom-[-150px] w-[400px] h-[400px] bg-no-repeat bg-contain pointer-events-none opacity-[0.04] z-0"
         style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
@@ -256,10 +274,32 @@ export function LeadPipeline() {
             </div>
           </div>
 
-          <div className="hidden md:block pt-8 border-t border-white/10">
-            <span className="text-xs text-brand-green font-medium block mb-1">{t('tiempo_estimado')}</span>
-            <span className="text-xs text-white/40 font-body block">{t('completado_rt')}</span>
-          </div>
+          {showContactInfo ? (
+            <div className="pt-8 border-t border-white/10 flex flex-col gap-4 text-xs font-body">
+              {/* Phone */}
+              <div className="flex items-center gap-2">
+                <span className="text-brand-green font-bold uppercase tracking-wider block">Tel:</span>
+                <a href="tel:+528122070314" className="text-white/80 hover:text-white transition-colors">+52 81 2207 0314</a>
+              </div>
+              {/* Email */}
+              <div className="flex items-center gap-2">
+                <span className="text-brand-green font-bold uppercase tracking-wider block">Email:</span>
+                <a href="mailto:info@gecvt.com" className="text-white/80 hover:text-white transition-colors">info@gecvt.com</a>
+              </div>
+              {/* Address */}
+              <div className="flex flex-col gap-1">
+                <span className="text-brand-green font-bold uppercase tracking-wider block">Dirección:</span>
+                <span className="text-white/60 leading-relaxed">
+                  Stiva No. 484 Parque Industrial Barragán San Nicolás de los Garza N.L.
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="hidden md:block pt-8 border-t border-white/10">
+              <span className="text-xs text-brand-green font-medium block mb-1">{t('tiempo_estimado')}</span>
+              <span className="text-xs text-white/40 font-body block">{t('completado_rt')}</span>
+            </div>
+          )}
         </div>
 
         {/* Right Side: Step Content Pane */}
@@ -658,5 +698,13 @@ export function LeadPipeline() {
         </div>
       </div>
     </section>
+  );
+}
+
+export function LeadPipeline(props: { showContactInfo?: boolean }) {
+  return (
+    <Suspense fallback={<div className="min-h-[400px] flex items-center justify-center">Cargando...</div>}>
+      <LeadPipelineContent {...props} />
+    </Suspense>
   );
 }

@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { useTranslations } from 'next-intl';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
-import { EventosSection } from './EventosSection';
 
 const LinkedinIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -10,18 +9,30 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+import { VisualEditable } from '@/components/admin/VisualEditable';
+
 interface Noticia {
   id: string;
   linkedinEmbedUrl: string;
 }
 
-export function NewsSection({ noticias, locale }: { noticias: Noticia[], locale: string }) {
+export function NewsSection({
+  noticias,
+  locale,
+  titulo,
+  tituloId = 'home.noticias_titulo',
+}: {
+  noticias: Noticia[];
+  locale: string;
+  titulo?: string;
+  tituloId?: string;
+}) {
   const t = useTranslations('home');
 
   const hasNews = noticias && noticias.length > 0;
 
   return (
-    <section className="relative w-full bg-[#2C3E4B] py-20 px-6 overflow-hidden">
+    <section id="noticias" className="relative w-full bg-[#2C3E4B] py-20 px-6 overflow-hidden">
       {/* Isotipo Watermark in Navy background */}
       <div 
         className="absolute left-[-120px] top-[-120px] w-[380px] h-[380px] bg-no-repeat bg-contain pointer-events-none opacity-[0.06]"
@@ -31,9 +42,11 @@ export function NewsSection({ noticias, locale }: { noticias: Noticia[], locale:
       <div className="max-w-7xl mx-auto relative z-10 text-white">
         <div className="flex flex-col items-center mb-12">
           <AnimatedSection animation="fade-up">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 text-center">
-              {t('noticias_titulo')}
-            </h2>
+            <VisualEditable id={tituloId} label="Título Últimas Noticias">
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+                {titulo || t('noticias_titulo')}
+              </h2>
+            </VisualEditable>
           </AnimatedSection>
           <AnimatedLine className="h-[2px] bg-brand-green" />
         </div>
@@ -93,11 +106,6 @@ export function NewsSection({ noticias, locale }: { noticias: Noticia[], locale:
             </div>
           </AnimatedSection>
         )}
-
-        {/* Dynamic Events Sub-section — own Suspense to avoid re-suspending the parent */}
-        <Suspense fallback={<div className="mt-20 border-t border-white/10 pt-16 h-48 opacity-20 animate-pulse" />}>
-          <EventosSection />
-        </Suspense>
 
       </div>
     </section>

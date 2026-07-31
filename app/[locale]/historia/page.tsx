@@ -1,10 +1,8 @@
 import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { Timeline } from '@/components/sections/history/Timeline';
-import { GaleriaGrid } from '@/components/sections/history/GaleriaGrid';
 import { LegadoSlideshow } from '@/components/sections/history/LegadoSlideshow';
 import { FundadoresSection } from '@/components/sections/history/FundadoresSection';
-import Image from 'next/image';
 import { getContenidoCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -24,33 +22,46 @@ export default async function Historia({ params: { locale } }: { params: { local
   }
 
   const contenido = await getContenidoCached([
+    'historia.hero.titulo',
+    'historia.hero.sub',
+    'historia.hero.imagen',
+    
     'historia.fundadores.titulo',
     'historia.fundadores.subtitulo',
     'historia.fundadores.texto',
+    'historia.fundadores.caption',
     'historia.fundadores.imagen',
     'historia.fundadores2.imagen',
-    'historia.hero.imagen',
+    
     'historia.slideshow.titulo',
     'historia.slide1.subtitulo',
     'historia.slide1.pie',
     'historia.slide1.texto',
     'historia.slide1.imagen',
+    
     'historia.slide2.subtitulo',
     'historia.slide2.pie',
     'historia.slide2.texto',
     'historia.slide2.imagen',
+    
     'historia.slide3.subtitulo',
     'historia.slide3.pie',
     'historia.slide3.texto',
     'historia.slide3.imagen',
+    
     'timeline.titulo',
     ...hitoIds
   ], locale);
 
+  const heroTitulo = contenido['historia.hero.titulo'] || t('titulo_pagina');
+  const heroSubtitulo = contenido['historia.hero.sub'] || t('subtitulo_pagina');
+  const dbHeroImage = contenido['historia.hero.imagen'];
+
   const fundadoresTitulo = contenido['historia.fundadores.titulo'] || 'Fundadores';
   const fundadoresSubtitulo = contenido['historia.fundadores.subtitulo'] || 'Tres generaciones después';
   const fundadoresTexto = contenido['historia.fundadores.texto'];
-  const dbHeroImage = contenido['historia.hero.imagen'];
+  const fundadoresCaption = contenido['historia.fundadores.caption'] || 'Sr. Ramiro Vizcaíno y Sra. Zeferina Torres';
+  
   const slideshowTitulo = contenido['historia.slideshow.titulo'] || 'Nuestro Legado';
   const timelineTitulo = contenido['timeline.titulo'] || 'Línea de Tiempo GEC';
 
@@ -95,17 +106,6 @@ export default async function Historia({ params: { locale } }: { params: { local
     }
   ];
 
-  // Fotos de Zacatecas
-  let fotosZacatecas: string[] = [];
-  try {
-    const carpetaZacatecas = path.join(process.cwd(), 'public/images/zacatecas');
-    if (fs.existsSync(carpetaZacatecas)) {
-      fotosZacatecas = fs.readdirSync(carpetaZacatecas)
-        .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
-        .map(f => `/images/zacatecas/${f}`);
-    }
-  } catch {}
-
   // Fotos de Fundadores
   let fotosFundadores: string[] = [];
   try {
@@ -117,7 +117,6 @@ export default async function Historia({ params: { locale } }: { params: { local
     }
   } catch {}
 
-  const galeriaImages = fotosZacatecas.slice(0, 12);
   const fundadoresImg = fotosFundadores[0] || '/images/zacatecas/_DSC3592.jpg';
 
   // Franja hero
@@ -128,10 +127,13 @@ export default async function Historia({ params: { locale } }: { params: { local
     <div className="flex flex-col min-h-screen">
       {/* Hero — texto abajo-izquierda */}
       <PageHero
-        title={t('titulo_pagina')}
-        subtitle={t('subtitulo_pagina')}
+        title={heroTitulo}
+        subtitle={heroSubtitulo}
         heroImage={franjaImage}
         textRight={true}
+        titleId="historia.hero.titulo"
+        subtitleId="historia.hero.sub"
+        heroImageId="historia.hero.imagen"
       />
 
       {/* Legado Slideshow — 3 partes cambiantes */}
@@ -147,22 +149,8 @@ export default async function Historia({ params: { locale } }: { params: { local
         texto={fundadoresTexto || 'Lo que comenzó como un proyecto familiar dedicado al transporte y comercialización agrícola, hoy integra producción, preenfriamiento, distribución y exportación. Cada paso de este camino tiene su origen en los valores y la visión de quienes iniciaron esta historia.'}
         imagenPrincipal={contenido['historia.fundadores.imagen'] || fundadoresImg}
         imagenHover={contenido['historia.fundadores2.imagen'] || fundadoresImg}
+        captionText={fundadoresCaption}
       />
-
-      {/* Galería */}
-      {galeriaImages.length > 0 && (
-        <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col items-center mb-12 text-center">
-              <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-                {t('galeria_titulo')}
-              </h2>
-              <div className="w-[60px] h-[3px] bg-brand-green" />
-            </div>
-            <GaleriaGrid images={galeriaImages} />
-          </div>
-        </section>
-      )}
     </div>
   );
 }

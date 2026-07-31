@@ -5,8 +5,9 @@ import { EcosistemaGEC } from '@/components/sections/about/EcosistemaGEC';
 import { EcosisteGEC } from '@/components/sections/about/EcosisteGEC';
 import { CedisProcesos } from '@/components/sections/about/CedisProcesos';
 import { CapitalHumano } from '@/components/sections/about/CapitalHumano';
-import { User, Truck } from 'lucide-react';
+import { User, Settings } from 'lucide-react';
 import Image from 'next/image';
+import { VisualEditable } from '@/components/admin/VisualEditable';
 import { getContenidoCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -19,54 +20,124 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const idsValores = ['honestidad', 'compromiso', 'humildad', 'profesionalismo', 'lealtad', 'transparencia'];
 
   const contenido = await getContenidoCached([
+    'quienes.hero.titulo',
+    'quienes.hero.sub',
     'quienes.intro',
+    'quienes.intro.titulo',
+    'quienes.intro.slogan',
     'quienes.mision',
     'quienes.vision',
-    'quienes.divisiones.titulo',
-    'quienes.divisiones.subtitulo',
-    'quienes.division.campo',
-    'quienes.division.sedis',
+    
+    'quienes.esencia.eyebrow',
+    'quienes.esencia.titulo',
+    'quienes.esencia.subtitulo',
+    
+    'quienes.ecosistema.mision.titulo',
+    'quienes.ecosistema.vision.titulo',
+    'quienes.ecosistema.valores.titulo',
+    'quienes.ecosistema.filosofia.label',
+
+    'quienes.capital.eyebrow',
+    'quienes.capital.titulo',
+    'quienes.capital.quote',
+    'quienes.capital.stat1.numero', 'quienes.capital.stat1.label',
+    'quienes.capital.stat2.numero', 'quienes.capital.stat2.label',
+    'quienes.capital.stat3.numero', 'quienes.capital.stat3.label',
+    'quienes.capital.stat4.numero', 'quienes.capital.stat4.label',
+    
+    'quienes.campo.titulo',
+    'quienes.campo.subtitulo',
+    'quienes.cedis.titulo',
+    'quienes.cedis.subtitulo',
+    
+    // Fichas campo
+    'quienes.campo.paso1.titulo', 'quienes.campo.paso1.desc', 'quienes.campo.paso1.sub1', 'quienes.campo.paso1.sub2', 'quienes.campo.paso1.sub3', 'quienes.campo.paso1.sub4',
+    'quienes.campo.paso2.titulo', 'quienes.campo.paso2.desc', 'quienes.campo.paso2.sub1', 'quienes.campo.paso2.sub2', 'quienes.campo.paso2.sub3', 'quienes.campo.paso2.sub4',
+    'quienes.campo.paso3.titulo', 'quienes.campo.paso3.desc', 'quienes.campo.paso3.sub1', 'quienes.campo.paso3.sub2', 'quienes.campo.paso3.sub3', 'quienes.campo.paso3.sub4',
+    'quienes.campo.paso4.titulo', 'quienes.campo.paso4.desc', 'quienes.campo.paso4.sub1', 'quienes.campo.paso4.sub2', 'quienes.campo.paso4.sub3', 'quienes.campo.paso4.sub4',
+
+    // Fichas cedis
+    'quienes.cedis.paso1.titulo', 'quienes.cedis.paso1.desc',
+    'quienes.cedis.paso2.titulo', 'quienes.cedis.paso2.desc',
+    'quienes.cedis.paso3.titulo', 'quienes.cedis.paso3.desc',
+    'quienes.cedis.paso4.titulo', 'quienes.cedis.paso4.desc',
+
+    // Primus
+    'quienes.primus.eyebrow',
+    'quienes.primus.titulo',
+    'quienes.primus.desc',
+    'quienes.primus.imagen',
+
+    // Ecosistema GEC
+    'quienes.ecosistema.gec.eyebrow',
+    'quienes.ecosistema.gec.titulo',
+    'quienes.ecosistema.gec.slogan',
+    'quienes.ecosistema.gec.pilar1.titulo', 'quienes.ecosistema.gec.pilar1.subtitulo', 'quienes.ecosistema.gec.pilar1.desc',
+    'quienes.ecosistema.gec.pilar2.titulo', 'quienes.ecosistema.gec.pilar2.subtitulo', 'quienes.ecosistema.gec.pilar2.desc',
+    'quienes.ecosistema.gec.pilar3.titulo', 'quienes.ecosistema.gec.pilar3.subtitulo', 'quienes.ecosistema.gec.pilar3.desc',
+    'quienes.ecosistema.gec.pilar4.titulo', 'quienes.ecosistema.gec.pilar4.subtitulo', 'quienes.ecosistema.gec.pilar4.desc',
+
     // imágenes gestionadas desde admin
     'quienes.hero.imagen',
     'quienes.franja.imagen',
+    'quienes.ceo.eyebrow',
+    'quienes.ceo.frase',
+    'quienes.ceo.desc',
     'quienes.ceo.imagen',
     'quienes.ecosistema.mision.imagen',
     'quienes.ecosistema.vision.imagen',
     'quienes.ecosistema.valores.imagen',
+    
+    // Imágenes de pasos
+    'quienes.campo.paso1.imagen',
+    'quienes.campo.paso2.imagen',
+    'quienes.campo.paso3.imagen',
+    'quienes.campo.paso4.imagen',
+    
     'quienes.cedis.ficha1.imagen',
     'quienes.cedis.ficha2.imagen',
     'quienes.cedis.ficha3.imagen',
     'quienes.cedis.ficha4.imagen',
-    'quienes.division.campo.imagen',
-    'quienes.division.sedis.imagen',
+
+    // Capital fotos
+    'quienes.capital.foto1',
+    'quienes.capital.foto2',
+    'quienes.capital.foto3',
+    'quienes.capital.foto4',
+
     ...idsValores.map(id => `quienes.valor.${id}`)
   ], locale);
 
+  const heroTitulo = contenido['quienes.hero.titulo'] || t('titulo_pagina');
+  const heroSubtitulo = contenido['quienes.hero.sub'] || t('subtitulo_pagina');
   const intro = contenido['quienes.intro'];
+  const introTitulo = contenido['quienes.intro.titulo'] || 'Grupo Exportador del Campo';
+  const introSlogan = contenido['quienes.intro.slogan'] || (t('slogan') + ' GEC');
+  
   const mision = contenido['quienes.mision'] || t('mision_titulo');
   const vision = contenido['quienes.vision'] || t('vision_titulo');
-  const divisionesTitulo = contenido['quienes.divisiones.titulo'];
-  const divisionesSubtitulo = contenido['quienes.divisiones.subtitulo'];
-  const divisionCampoDesc = contenido['quienes.division.campo'];
-  const divisionSedisDesc = contenido['quienes.division.sedis'];
+  
+  const esenciaEyebrow = contenido['quienes.esencia.eyebrow'] || 'NUESTRA ESENCIA';
+  const esenciaTitulo = contenido['quienes.esencia.titulo'] || 'Ecosistema de Pensamiento GEC';
+  const esenciaSubtitulo = contenido['quienes.esencia.subtitulo'] || 'Los principios que guían cada decisión, desde el campo hasta el cliente.';
 
-  // Imágenes desde admin (Vercel Blob URL o vacío)
-  const imgFranja    = contenido['quienes.franja.imagen'] || null;
-  const imgCeo       = contenido['quienes.ceo.imagen'] || null;
-  const imgHero      = contenido['quienes.hero.imagen'] || null;
-  const ecoImagenes = {
-    'quienes.ecosistema.mision.imagen': contenido['quienes.ecosistema.mision.imagen'] || '',
-    'quienes.ecosistema.vision.imagen': contenido['quienes.ecosistema.vision.imagen'] || '',
-    'quienes.ecosistema.valores.imagen': contenido['quienes.ecosistema.valores.imagen'] || '',
-  };
-  const cedisImagenes: [string, string, string, string] = [
-    contenido['quienes.cedis.ficha1.imagen'] || '',
-    contenido['quienes.cedis.ficha2.imagen'] || '',
-    contenido['quienes.cedis.ficha3.imagen'] || '',
-    contenido['quienes.cedis.ficha4.imagen'] || '',
-  ];
-  const imgDivCampo  = contenido['quienes.division.campo.imagen'] || null;
-  const imgDivSedis  = contenido['quienes.division.sedis.imagen'] || null;
+  const misionPanelTitulo = contenido['quienes.ecosistema.mision.titulo'] || 'Nuestra razón de ser';
+  const visionPanelTitulo = contenido['quienes.ecosistema.vision.titulo'] || 'Seguimos apuntando alto';
+  const valoresPanelTitulo = contenido['quienes.ecosistema.valores.titulo'] || 'Filosofía GEC';
+  const filosofiaGecText = contenido['quienes.ecosistema.filosofia.label'] || 'FILOSOFÍA GEC';
+
+  const ceoEyebrow = contenido['quienes.ceo.eyebrow'] || t('ceo_eyebrow');
+  const ceoFrase = contenido['quienes.ceo.frase'] || t('ceo_frase');
+  const ceoDesc = contenido['quienes.ceo.desc'] || t('ceo_desc');
+
+  const capEyebrow = contenido['quienes.capital.eyebrow'] || t('cap_eyebrow');
+  const capTitulo = contenido['quienes.capital.titulo'] || t('cap_titulo');
+  const capQuote = contenido['quienes.capital.quote'] || t('cap_quote');
+
+  const campoTitulo = contenido['quienes.campo.titulo'] || t('proc_titulo');
+  const campoSubtitulo = contenido['quienes.campo.subtitulo'] || t('proc_sub');
+  const cedisTitulo = contenido['quienes.cedis.titulo'] || t('cedis_titulo');
+  const cedisSubtitulo = contenido['quienes.cedis.subtitulo'] || t('cedis_sub');
 
   // Fotos
   const readImages = (folder: string): string[] => {
@@ -82,8 +153,38 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
 
   const fotosZacatecas = readImages('zacatecas').slice(0, 10);
   const fotosSedis = readImages('sedis').slice(0, 10);
-  const primeraFotoZacatecas = fotosZacatecas[0] ?? null;
-  const primeraFotoSedis = fotosSedis[0] ?? null;
+
+  // Imágenes desde admin (Vercel Blob URL o vacío)
+  const imgFranja    = contenido['quienes.franja.imagen'] || null;
+  const imgCeo       = contenido['quienes.ceo.imagen'] || null;
+  const imgHero      = contenido['quienes.hero.imagen'] || null;
+  
+  const ecoImagenes = {
+    'quienes.ecosistema.mision.imagen': contenido['quienes.ecosistema.mision.imagen'] || '',
+    'quienes.ecosistema.vision.imagen': contenido['quienes.ecosistema.vision.imagen'] || '',
+    'quienes.ecosistema.valores.imagen': contenido['quienes.ecosistema.valores.imagen'] || '',
+  };
+
+  const campoImagenes: string[] = [
+    contenido['quienes.campo.paso1.imagen'] || fotosZacatecas[0] || '',
+    contenido['quienes.campo.paso2.imagen'] || fotosZacatecas[1] || '',
+    contenido['quienes.campo.paso3.imagen'] || fotosZacatecas[2] || '',
+    contenido['quienes.campo.paso4.imagen'] || fotosZacatecas[3] || '',
+  ];
+
+  const cedisImagenes: [string, string, string, string] = [
+    contenido['quienes.cedis.ficha1.imagen'] || fotosSedis[0] || '',
+    contenido['quienes.cedis.ficha2.imagen'] || fotosSedis[1] || '',
+    contenido['quienes.cedis.ficha3.imagen'] || fotosSedis[2] || '',
+    contenido['quienes.cedis.ficha4.imagen'] || fotosSedis[3] || '',
+  ];
+
+  const capFotos: string[] = [
+    contenido['quienes.capital.foto1'] || fotosZacatecas[0] || '',
+    contenido['quienes.capital.foto2'] || fotosZacatecas[1] || '',
+    contenido['quienes.capital.foto3'] || fotosZacatecas[2] || '',
+    contenido['quienes.capital.foto4'] || fotosZacatecas[3] || '',
+  ];
 
   // CEO — DB primero, filesystem como fallback
   const ceoLocalPath = join(process.cwd(), 'public/images/quienes/ceo.jpg');
@@ -93,34 +194,136 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const franjaLocalPath = join(process.cwd(), 'public/images/quienes/franja-inicio.jpg');
   const franjaImage = imgHero || imgFranja || (existsSync(franjaLocalPath) ? '/images/quienes/franja-inicio.jpg' : null);
 
-  // Camión decorativo
-  const truckPath = join(process.cwd(), 'public/images/camiones/truck1.png');
-  const truckExists = existsSync(truckPath);
-
-  // Primus logo
+  // Primus GFS
   const primusLogoPath = [
     '/images/logos/PrimusGFS_Logo_web.png',
     '/images/logos/primus-cert.png',
   ].find(p => existsSync(join(process.cwd(), 'public', p)));
+  const imgPrimus = contenido['quienes.primus.imagen'] || primusLogoPath || '';
+  const primusEyebrow = contenido['quienes.primus.eyebrow'] || t('primus_eyebrow');
+  const primusTitulo = contenido['quienes.primus.titulo'] || t('primus_titulo');
+  const primusDesc = contenido['quienes.primus.desc'] || t('primus_desc');
+
+  // Ecosistema GEC
+  const ecoGecEyebrow = contenido['quienes.ecosistema.gec.eyebrow'] || t('eco_eyebrow');
+  const ecoGecTitulo = contenido['quienes.ecosistema.gec.titulo'] || t('eco_titulo');
+  const ecoGecSlogan = contenido['quienes.ecosistema.gec.slogan'] || (t('slogan') + ' GEC');
+  const ecoGecPilares = [
+    {
+      id: 'campo',
+      titulo: contenido['quienes.ecosistema.gec.pilar1.titulo'] || t('eco_pilar1_titulo'),
+      subtitulo: contenido['quienes.ecosistema.gec.pilar1.subtitulo'] || t('eco_pilar1_sub'),
+      desc: contenido['quienes.ecosistema.gec.pilar1.desc'] || t('eco_pilar1_desc'),
+      color: 'bg-brand-green',
+    },
+    {
+      id: 'logistica',
+      titulo: contenido['quienes.ecosistema.gec.pilar2.titulo'] || t('eco_pilar2_titulo'),
+      subtitulo: contenido['quienes.ecosistema.gec.pilar2.subtitulo'] || t('eco_pilar2_sub'),
+      desc: contenido['quienes.ecosistema.gec.pilar2.desc'] || t('eco_pilar2_desc'),
+      color: 'bg-brand-navy',
+    },
+    {
+      id: 'calidad',
+      titulo: contenido['quienes.ecosistema.gec.pilar3.titulo'] || t('eco_pilar3_titulo'),
+      subtitulo: contenido['quienes.ecosistema.gec.pilar3.subtitulo'] || t('eco_pilar3_sub'),
+      desc: contenido['quienes.ecosistema.gec.pilar3.desc'] || t('eco_pilar3_desc'),
+      color: 'bg-[#1a5c3a]',
+    },
+    {
+      id: 'gente',
+      titulo: contenido['quienes.ecosistema.gec.pilar4.titulo'] || t('eco_pilar4_titulo'),
+      subtitulo: contenido['quienes.ecosistema.gec.pilar4.subtitulo'] || t('eco_pilar4_sub'),
+      desc: contenido['quienes.ecosistema.gec.pilar4.desc'] || t('eco_pilar4_desc'),
+      color: 'bg-[#2d3e50]',
+    },
+  ];
+
+  // Campo Step details from DB or fallbacks
+  const campoStepData = [
+    {
+      titulo: contenido['quienes.campo.paso1.titulo'] || '',
+      desc: contenido['quienes.campo.paso1.desc'] || '',
+      subprocesos: [
+        contenido['quienes.campo.paso1.sub1'] || '',
+        contenido['quienes.campo.paso1.sub2'] || '',
+        contenido['quienes.campo.paso1.sub3'] || '',
+        contenido['quienes.campo.paso1.sub4'] || '',
+      ]
+    },
+    {
+      titulo: contenido['quienes.campo.paso2.titulo'] || '',
+      desc: contenido['quienes.campo.paso2.desc'] || '',
+      subprocesos: [
+        contenido['quienes.campo.paso2.sub1'] || '',
+        contenido['quienes.campo.paso2.sub2'] || '',
+        contenido['quienes.campo.paso2.sub3'] || '',
+        contenido['quienes.campo.paso2.sub4'] || '',
+      ]
+    },
+    {
+      titulo: contenido['quienes.campo.paso3.titulo'] || '',
+      desc: contenido['quienes.campo.paso3.desc'] || '',
+      subprocesos: [
+        contenido['quienes.campo.paso3.sub1'] || '',
+        contenido['quienes.campo.paso3.sub2'] || '',
+        contenido['quienes.campo.paso3.sub3'] || '',
+        contenido['quienes.campo.paso3.sub4'] || '',
+      ]
+    },
+    {
+      titulo: contenido['quienes.campo.paso4.titulo'] || '',
+      desc: contenido['quienes.campo.paso4.desc'] || '',
+      subprocesos: [
+        contenido['quienes.campo.paso4.sub1'] || '',
+        contenido['quienes.campo.paso4.sub2'] || '',
+        contenido['quienes.campo.paso4.sub3'] || '',
+        contenido['quienes.campo.paso4.sub4'] || '',
+      ]
+    }
+  ];
+
+  // CEDIS Step details from DB or fallbacks
+  const cedisStepData = [
+    {
+      titulo: contenido['quienes.cedis.paso1.titulo'] || '',
+      desc: contenido['quienes.cedis.paso1.desc'] || '',
+    },
+    {
+      titulo: contenido['quienes.cedis.paso2.titulo'] || '',
+      desc: contenido['quienes.cedis.paso2.desc'] || '',
+    },
+    {
+      titulo: contenido['quienes.cedis.paso3.titulo'] || '',
+      desc: contenido['quienes.cedis.paso3.desc'] || '',
+    },
+    {
+      titulo: contenido['quienes.cedis.paso4.titulo'] || '',
+      desc: contenido['quienes.cedis.paso4.desc'] || '',
+    },
+  ];
 
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero */}
       <PageHero
-        title={t('titulo_pagina')}
-        subtitle={t('subtitulo_pagina')}
+        title={heroTitulo}
+        subtitle={heroSubtitulo}
         heroImage={franjaImage}
+        titleId="quienes.hero.titulo"
+        subtitleId="quienes.hero.sub"
+        heroImageId="quienes.hero.imagen"
       />
 
       {/* ── 1. Intro — texto + card CEO ── */}
-      <section className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
+      <section id="grupo-exportador" className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
         {/* Background Watermark/Isotipo */}
-        <div className="absolute left-[-60px] top-[10%] w-[350px] h-[350px] opacity-50 pointer-events-none select-none z-0">
+        <div className="absolute left-[-160px] bottom-[-140px] w-[580px] h-[580px] opacity-[0.35] pointer-events-none select-none z-0">
           <Image
             src="/images/iconos/icono.png"
             alt="GEC Isotipo Watermark"
-            width={350}
-            height={350}
+            width={580}
+            height={580}
             className="object-contain"
           />
         </div>
@@ -128,18 +331,28 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-12 items-start">
           {/* Columna izquierda — texto */}
           <div className="w-full md:w-[55%]">
-            <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
-              Grupo Exportador del Campo
-            </h2>
+            <VisualEditable id="quienes.intro.titulo" label="Título de Introducción">
+              <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
+                {introTitulo}
+              </h2>
+            </VisualEditable>
             <div className="w-[60px] h-[3px] bg-brand-green mb-6" />
-            <p
-              className="rich-text font-body text-brand-navy/80 text-lg leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: intro || t('intro_titulo') }}
-            />
-            <div className="mt-8 pt-6 border-t border-brand-green/20">
-              <p className="font-display text-2xl md:text-3xl text-brand-green font-semibold tracking-wide">
-                {t('slogan')} <span className="text-brand-navy">GEC</span>
-              </p>
+            <VisualEditable id="quienes.intro" label="Párrafo de Introducción">
+              <p
+                className="rich-text font-body text-brand-navy/80 text-lg leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: intro || t('intro_titulo') }}
+              />
+            </VisualEditable>
+            <div className="mt-8 pt-4 flex flex-col items-start gap-3">
+              <VisualEditable id="quienes.intro.slogan" label="Slogan GEC">
+                <p className="font-display text-3xl md:text-5xl text-brand-navy font-black tracking-wide leading-none">
+                  {introSlogan}
+                </p>
+              </VisualEditable>
+              <div className="w-[80px] h-[3px] bg-brand-green mt-1" />
+              <div className="w-10 h-10 rounded-full border-2 border-brand-green/20 flex items-center justify-center mt-3">
+                <div className="w-2.5 h-2.5 rounded-full bg-brand-green" />
+              </div>
             </div>
           </div>
 
@@ -148,16 +361,30 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <div className="relative h-72 md:h-96">
                 {ceoSrc ? (
-                  <Image
-                    src={ceoSrc}
-                    alt="Joaquín Vizcaíno — Director General"
-                    fill
-                    className="object-cover object-top"
-                    style={{
-                      maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-                    }}
-                  />
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={ceoSrc}
+                      alt="Joaquín Vizcaíno — Director General"
+                      fill
+                      className="object-cover object-top"
+                      style={{
+                        maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                      }}
+                    />
+                    {/* Cambiar Foto CEO button */}
+                    <div className="absolute top-3 right-3 z-35">
+                      <VisualEditable id="quienes.ceo.imagen" label="Foto de Joaquín Vizcaíno (CEO)" type="image">
+                        <button
+                          type="button"
+                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                        >
+                          <Settings className="w-3.5 h-3.5" />
+                          Cambiar Foto
+                        </button>
+                      </VisualEditable>
+                    </div>
+                  </div>
                 ) : (
                   <div className="w-full h-full bg-brand-navy/40 flex items-center justify-center">
                     <User className="w-16 h-16 text-brand-green/40" />
@@ -166,15 +393,21 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-navy" />
               </div>
               <div className="bg-brand-navy px-6 py-5">
-                <p className="text-brand-green text-xs font-medium uppercase tracking-widest mb-2">
-                  {t('ceo_eyebrow')}
-                </p>
-                <h3 className="font-display text-white text-2xl font-bold leading-tight mb-3">
-                  &ldquo;{t('ceo_frase')}&rdquo;
-                </h3>
-                <p className="text-white/70 text-sm font-body leading-relaxed">
-                  {t('ceo_desc')}
-                </p>
+                <VisualEditable id="quienes.ceo.eyebrow" label="Eyebrow del CEO">
+                  <p className="text-brand-green text-xs font-medium uppercase tracking-widest mb-2">
+                    {ceoEyebrow}
+                  </p>
+                </VisualEditable>
+                <VisualEditable id="quienes.ceo.frase" label="Frase del CEO">
+                  <h3 className="font-display text-white text-2xl font-bold leading-tight mb-3">
+                    &ldquo;{ceoFrase}&rdquo;
+                  </h3>
+                </VisualEditable>
+                <VisualEditable id="quienes.ceo.desc" label="Descripción del CEO">
+                  <p className="text-white/70 text-sm font-body leading-relaxed">
+                    {ceoDesc}
+                  </p>
+                </VisualEditable>
               </div>
             </div>
           </div>
@@ -182,144 +415,123 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       </section>
 
       {/* ── 2. Ecosistema de Pensamiento — Misión / Visión / Valores ── */}
-      <EcosisteGEC imagenes={ecoImagenes} />
+      <EcosisteGEC
+        imagenes={ecoImagenes}
+        misionDesc={mision}
+        visionDesc={vision}
+        valores={idsValores.map(id => ({
+          id,
+          label: contenido[`quienes.valor.${id}`] || t(`valor_${id}`)
+        }))}
+        esenciaEyebrow={esenciaEyebrow}
+        esenciaTitulo={esenciaTitulo}
+        esenciaSubtitulo={esenciaSubtitulo}
+        misionTitulo={misionPanelTitulo}
+        visionTitulo={visionPanelTitulo}
+        valoresTitulo={valoresPanelTitulo}
+        filosofiaGecText={filosofiaGecText}
+      />
 
       {/* ── 3. Fichas interactivas — Procesos Campo ── */}
-      <ProcesosField />
+      <ProcesosField
+        imagenes={campoImagenes}
+        titulo={campoTitulo}
+        subtitulo={campoSubtitulo}
+        stepData={campoStepData}
+      />
 
-      {/* ── 4. Capital Humano ── */}
-      <CapitalHumano locale={locale} />
-
-      {/* ── 5. Procesos CEDIS ── */}
-      <CedisProcesos imagenes={cedisImagenes} />
-
-      {/* ── 6. Primus GFS badge ── */}
-      {primusLogoPath && (
-        <section className="w-full bg-white py-10 px-4 sm:px-6 border-y border-brand-gray/20">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center gap-6 justify-center">
-            <Image
-              src={primusLogoPath}
-              alt="Primus GFS Certification"
-              width={160}
-              height={65}
-              style={{ objectFit: 'contain' }}
-            />
+      {/* ── 4. Primus GFS badge (en medio de ambos procesos) ── */}
+      {imgPrimus && (
+        <section className="w-full bg-white py-12 px-4 sm:px-6 border-y border-brand-gray/25 relative">
+          <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-6 justify-center text-center sm:text-left">
+            <div className="bg-white p-3 rounded-xl shadow-md shrink-0 border border-brand-gray/10 relative">
+              <Image
+                src={imgPrimus}
+                alt="Primus GFS Certification"
+                width={140}
+                height={55}
+                style={{ objectFit: 'contain' }}
+              />
+              <div className="absolute top-1 right-1">
+                <VisualEditable id="quienes.primus.imagen" label="Logo Primus GFS" type="image">
+                  <button type="button" className="bg-brand-navy/80 hover:bg-brand-green text-white p-1 rounded-full shadow border border-brand-green/20 cursor-pointer">
+                    <Settings className="w-3 h-3" />
+                  </button>
+                </VisualEditable>
+              </div>
+            </div>
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-brand-green block mb-0.5">
-                {t('primus_eyebrow')}
-              </span>
-              <p className="font-display text-lg font-bold text-brand-navy">{t('primus_titulo')}</p>
-              <p className="font-body text-sm text-brand-navy/60">{t('primus_desc')}</p>
+              <VisualEditable id="quienes.primus.eyebrow" label="Primus - Eyebrow">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block mb-1">
+                  {primusEyebrow}
+                </span>
+              </VisualEditable>
+              <VisualEditable id="quienes.primus.titulo" label="Primus - Título">
+                <p className="font-display text-xl font-bold text-brand-navy mb-1.5">{primusTitulo}</p>
+              </VisualEditable>
+              <VisualEditable id="quienes.primus.desc" label="Primus - Descripción">
+                <p className="font-body text-sm text-brand-navy/65 leading-relaxed max-w-xl">{primusDesc}</p>
+              </VisualEditable>
             </div>
           </div>
         </section>
       )}
 
+      {/* ── 5. Procesos CEDIS (arriba de Capital Humano) ── */}
+      <CedisProcesos
+        imagenes={cedisImagenes}
+        titulo={cedisTitulo}
+        subtitulo={cedisSubtitulo}
+        stepData={cedisStepData}
+      />
+
+      {/* ── 6. Capital Humano ── */}
+      <CapitalHumano
+        numeros={[
+          {
+            val: contenido['quienes.capital.stat1.numero'] || '+200',
+            valId: 'quienes.capital.stat1.numero',
+            label: contenido['quienes.capital.stat1.label'] || t('cap_colaboradores'),
+            labelId: 'quienes.capital.stat1.label',
+          },
+          {
+            val: contenido['quienes.capital.stat2.numero'] || 'Décadas',
+            valId: 'quienes.capital.stat2.numero',
+            label: contenido['quienes.capital.stat2.label'] || t('cap_historia'),
+            labelId: 'quienes.capital.stat2.label',
+          },
+          {
+            val: contenido['quienes.capital.stat3.numero'] || 'Múltiples',
+            valId: 'quienes.capital.stat3.numero',
+            label: contenido['quienes.capital.stat3.label'] || t('cap_generaciones'),
+            labelId: 'quienes.capital.stat3.label',
+          },
+          {
+            val: contenido['quienes.capital.stat4.numero'] || 'Coordinado',
+            valId: 'quienes.capital.stat4.numero',
+            label: contenido['quienes.capital.stat4.label'] || t('cap_compromiso'),
+            labelId: 'quienes.capital.stat4.label',
+          },
+        ]}
+        fotos={capFotos}
+        translations={{
+          eyebrowId: 'quienes.capital.eyebrow',
+          eyebrow: capEyebrow,
+          tituloId: 'quienes.capital.titulo',
+          titulo: capTitulo,
+          quoteId: 'quienes.capital.quote',
+          quote: capQuote,
+          foto: t('cap_foto')
+        }}
+      />
+
       {/* ── 7. Ecosistema GEC — Paneles expansibles ── */}
-      <EcosistemaGEC />
-
-      {/* ── 8. Divisiones — con camión decorativo ── */}
-      <section className="w-full bg-[#F8FAF9] py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
-        <div
-          className="absolute right-[-20px] bottom-0 w-[300px] h-[180px] bg-no-repeat bg-contain bg-right-bottom pointer-events-none opacity-[0.06]"
-          style={{ backgroundImage: 'url(/images/camiones/truck2.png)' }}
-        />
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-green block mb-3">
-              {t('div_eyebrow')}
-            </span>
-            <h2 className="font-display text-4xl md:text-5xl text-brand-navy font-bold leading-tight mb-6">
-              {divisionesTitulo ? (
-                <span dangerouslySetInnerHTML={{ __html: divisionesTitulo }} />
-              ) : (
-                <>{t('div_titulo_fallback').split(' ').slice(0, -1).join(' ')}{' '}
-                  <span className="text-brand-green">{t('div_titulo_fallback').split(' ').slice(-1)}</span>
-                </>
-              )}
-            </h2>
-            <p className="font-body text-lg text-brand-navy/70">
-              {divisionesSubtitulo || t('div_sub_fallback')}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* División Campo */}
-            <div className="rounded-2xl overflow-hidden shadow-md border border-brand-gray/10">
-              <div className="relative w-full h-[260px]">
-                {(imgDivCampo || primeraFotoZacatecas) ? (
-                  <Image
-                    src={imgDivCampo || primeraFotoZacatecas!}
-                    alt="División Campo"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 600px"
-                    unoptimized={!!imgDivCampo}
-                  />
-                ) : (
-                  <div className="w-full h-full bg-brand-green/10 flex items-center justify-center">
-                    <Truck className="w-12 h-12 text-brand-green/20" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 to-transparent" />
-                <span className="absolute bottom-4 left-5 font-display text-white font-bold text-xl">
-                  {t('div_campo_label')}
-                </span>
-              </div>
-              <div className="p-7 bg-white">
-                <div className="w-8 h-[2px] bg-brand-green mb-4" />
-                <p className="font-body text-sm text-brand-navy/80 leading-relaxed">
-                  {divisionCampoDesc || t('div_campo_desc_fallback')}
-                </p>
-              </div>
-            </div>
-
-            {/* División Sedis */}
-            <div className="rounded-2xl overflow-hidden shadow-md border border-brand-gray/10">
-              <div className="relative w-full h-[260px]">
-                {(imgDivSedis || primeraFotoSedis) ? (
-                  <Image
-                    src={imgDivSedis || primeraFotoSedis!}
-                    alt="División Sedis"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 600px"
-                    unoptimized={!!imgDivSedis}
-                  />
-                ) : (
-                  <div className="w-full h-full bg-brand-navy/10 flex items-center justify-center">
-                    <Truck className="w-12 h-12 text-brand-navy/20" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 to-transparent" />
-                <span className="absolute bottom-4 left-5 font-display text-white font-bold text-xl">
-                  {t('div_sedis_label')}
-                </span>
-              </div>
-              <div className="p-7 bg-white">
-                <div className="w-8 h-[2px] bg-brand-green mb-4" />
-                <p className="font-body text-sm text-brand-navy/80 leading-relaxed">
-                  {divisionSedisDesc || t('div_sedis_desc_fallback')}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Camión decorativo grande */}
-          {truckExists && (
-            <div className="mt-12 flex justify-center overflow-hidden">
-              <Image
-                src="/images/camiones/truck1.png"
-                alt="Flota Grupo Exportador del Campo"
-                width={800}
-                height={320}
-                className="object-contain w-full max-w-3xl opacity-85 hover:opacity-100 transition-opacity duration-300"
-              />
-            </div>
-          )}
-        </div>
-      </section>
+      <EcosistemaGEC
+        eyebrow={ecoGecEyebrow}
+        titulo={ecoGecTitulo}
+        slogan={ecoGecSlogan}
+        pilares={ecoGecPilares}
+      />
     </div>
   );
 }

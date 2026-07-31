@@ -2,16 +2,17 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
-import { ImageIcon, Upload, Loader2 } from 'lucide-react';
+import { ImageIcon, Film, Upload, Loader2 } from 'lucide-react';
 
 interface Props {
   label: string;
   valorActual: string;
   onChange: (ruta: string) => void;
+  type?: 'image' | 'video';
 }
 
-export function ImageSelectorField({ label, valorActual, onChange }: Props) {
-  const [imgError, setImgError] = useState(false);
+export function ImageSelectorField({ label, valorActual, onChange, type = 'image' }: Props) {
+  const [mediaError, setMediaError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
@@ -25,7 +26,7 @@ export function ImageSelectorField({ label, valorActual, onChange }: Props) {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('seccion', 'features');
+    formData.append('seccion', 'media');
     formData.append('nombre', file.name);
 
     try {
@@ -40,43 +41,58 @@ export function ImageSelectorField({ label, valorActual, onChange }: Props) {
       }
 
       const data = await res.json();
-      setImgError(false);
+      setMediaError(false);
       onChange(data.url);
     } catch (err: any) {
-      setUploadError(err.message || 'Error al subir la imagen');
+      setUploadError(err.message || 'Error al subir el archivo');
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = '';
     }
   };
 
+  const isVideo = type === 'video';
+
   return (
     <div className="space-y-3">
       {/* Preview */}
-      {valorActual && !imgError ? (
+      {valorActual && !mediaError ? (
         <div className="relative w-full h-40 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
-          <Image
-            src={valorActual}
-            alt="Preview"
-            fill
-            className="object-cover"
-            onError={() => setImgError(true)}
-            sizes="600px"
-            unoptimized
-          />
-          <div className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded font-mono max-w-[90%] truncate">
+          {isVideo ? (
+            <video
+              src={valorActual}
+              controls
+              className="w-full h-full object-contain bg-black"
+              onError={() => setMediaError(true)}
+            />
+          ) : (
+            <Image
+              src={valorActual}
+              alt="Preview"
+              fill
+              className="object-cover"
+              onError={() => setMediaError(true)}
+              sizes="600px"
+              unoptimized
+            />
+          )}
+          <div className="absolute bottom-2 left-2 bg-black/60 text-white text-xs px-2 py-1 rounded font-mono max-w-[90%] truncate z-10">
             {valorActual}
           </div>
         </div>
       ) : valorActual ? (
         <div className="w-full h-40 rounded-lg bg-gray-100 border border-dashed border-gray-300 flex flex-col items-center justify-center gap-2">
-          <ImageIcon className="w-8 h-8 text-gray-300" />
+          {isVideo ? (
+            <Film className="w-8 h-8 text-gray-300" />
+          ) : (
+            <ImageIcon className="w-8 h-8 text-gray-300" />
+          )}
           <p className="text-xs text-gray-400 font-mono truncate max-w-full px-4">{valorActual}</p>
-          <p className="text-xs text-red-400">Imagen no encontrada</p>
+          <p className="text-xs text-red-400">Archivo no encontrado o inválido</p>
         </div>
       ) : (
         <div className="w-full h-24 rounded-lg bg-gray-50 border border-dashed border-gray-200 flex items-center justify-center">
-          <p className="text-xs text-gray-400">Sin imagen asignada</p>
+          <p className="text-xs text-gray-400">Sin archivo asignado</p>
         </div>
       )}
 
@@ -85,7 +101,7 @@ export function ImageSelectorField({ label, valorActual, onChange }: Props) {
         <input
           type="text"
           value={valorActual}
-          onChange={(e) => { setImgError(false); onChange(e.target.value); }}
+          onChange={(e) => { setMediaError(false); onChange(e.target.value); }}
           placeholder="/images/... o URL"
           className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm font-mono focus:ring-1 focus:ring-[#4DB26B] focus:outline-none bg-white text-gray-700"
         />
@@ -105,7 +121,7 @@ export function ImageSelectorField({ label, valorActual, onChange }: Props) {
         <input
           ref={fileRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept={isVideo ? 'video/mp4,video/webm' : 'image/jpeg,image/png,image/webp,image/gif,image/svg+xml'}
           className="hidden"
           onChange={handleUpload}
         />

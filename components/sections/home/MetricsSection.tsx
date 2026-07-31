@@ -2,13 +2,14 @@ import { getContenidoCached } from '@/lib/queries/cache';
 import { getTranslations } from 'next-intl/server';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { CountUp } from '@/components/ui/CountUp';
+import { VisualEditable } from '@/components/admin/VisualEditable';
 
 export async function MetricsSection({ locale }: { locale: string }) {
   const ids = [
-    'home.metrica1.label', 'home.metrica1.descripcion',
-    'home.metrica2.label', 'home.metrica2.descripcion',
-    'home.metrica3.label', 'home.metrica3.descripcion',
-    'home.metrica4.label', 'home.metrica4.descripcion'
+    'home.metrica1.numero', 'home.metrica1.label', 'home.metrica1.descripcion',
+    'home.metrica2.numero', 'home.metrica2.label', 'home.metrica2.descripcion',
+    'home.metrica3.numero', 'home.metrica3.label', 'home.metrica3.descripcion',
+    'home.metrica4.numero', 'home.metrica4.label', 'home.metrica4.descripcion'
   ];
 
   const [contenido, t] = await Promise.all([
@@ -16,40 +17,75 @@ export async function MetricsSection({ locale }: { locale: string }) {
     getTranslations('metricas'),
   ]);
 
+  const m1Num = contenido['home.metrica1.numero'];
   const m1Lab = contenido['home.metrica1.label'];
   const m1Desc = contenido['home.metrica1.descripcion'];
+
+  const m2Num = contenido['home.metrica2.numero'];
   const m2Lab = contenido['home.metrica2.label'];
   const m2Desc = contenido['home.metrica2.descripcion'];
+
+  const m3Num = contenido['home.metrica3.numero'];
   const m3Lab = contenido['home.metrica3.label'];
   const m3Desc = contenido['home.metrica3.descripcion'];
+
+  const m4Num = contenido['home.metrica4.numero'];
   const m4Lab = contenido['home.metrica4.label'];
   const m4Desc = contenido['home.metrica4.descripcion'];
+
+  const parseNum = (val: string | null, fallback: number) => {
+    if (!val) return fallback;
+    const clean = val.replace(/[^0-9]/g, '');
+    const parsed = parseInt(clean, 10);
+    return isNaN(parsed) ? fallback : parsed;
+  };
+
+  const getPrefix = (val: string | null, defaultPrefix: string) => {
+    if (!val) return defaultPrefix;
+    return val.startsWith('+') ? '+' : '';
+  };
 
   // Staggered items definition matching exact requested details
   const metrics = [
     {
-      component: <CountUp end={50} prefix="+" />,
+      numId: 'home.metrica1.numero',
+      numVal: parseNum(m1Num, 50),
+      numPrefix: getPrefix(m1Num, '+'),
+      labId: 'home.metrica1.label',
       label: m1Lab ?? t('anos_label', { defaultMessage: 'Años de experiencia' }),
+      descId: 'home.metrica1.descripcion',
       desc: m1Desc ?? 'En producción y comercialización del campo.',
-      delay: 1, // 0ms (delay mapping: 1 -> 0ms or similar)
+      delay: 1,
     },
     {
-      component: <CountUp end={30000} separator="," prefix="+" />,
+      numId: 'home.metrica2.numero',
+      numVal: parseNum(m2Num, 30000),
+      numPrefix: getPrefix(m2Num, '+'),
+      labId: 'home.metrica2.label',
       label: m2Lab ?? t('toneladas_label', { defaultMessage: 'Toneladas exportadas al año' }),
+      descId: 'home.metrica2.descripcion',
       desc: m2Desc ?? 'En mercados alrededor del mundo',
-      delay: 2, // 200ms
+      delay: 2,
     },
     {
-      component: <CountUp end={200} prefix="+" />,
+      numId: 'home.metrica3.numero',
+      numVal: parseNum(m3Num, 200),
+      numPrefix: getPrefix(m3Num, '+'),
+      labId: 'home.metrica3.label',
       label: m3Lab ?? t('colaboradores_label', { defaultMessage: 'Colaboradores' }),
+      descId: 'home.metrica3.descripcion',
       desc: m3Desc ?? 'Repartidos en nuestras unidades de negocio.',
-      delay: 3, // 400ms
+      delay: 3,
     },
     {
-      component: <CountUp end={400} prefix="+" />,
+      numId: 'home.metrica4.numero',
+      numVal: parseNum(m4Num, 400),
+      numPrefix: getPrefix(m4Num, '+'),
+      labId: 'home.metrica4.label',
       label: m4Lab ?? t('hectareas_label', { defaultMessage: 'Hectáreas de superficie' }),
+      descId: 'home.metrica4.descripcion',
       desc: m4Desc ?? 'Listas para la producción bajo normativas de inocuidad',
-      delay: 4, // 600ms
+      delay: 4,
     },
   ];
 
@@ -70,16 +106,24 @@ export async function MetricsSection({ locale }: { locale: string }) {
               delay={metric.delay as 1 | 2 | 3 | 4}
               className="flex flex-col items-center justify-center px-4"
             >
-              <span className="font-display text-4xl sm:text-5xl font-bold text-brand-green mb-4">
-                {metric.component}
-              </span>
-              <span className="font-body font-bold text-white text-xl mb-2">
-                {metric.label}
-              </span>
+              <VisualEditable id={metric.numId} label={`Métrica ${idx + 1} - Número`}>
+                <span className="font-display text-4xl sm:text-5xl font-bold text-brand-green mb-4 block">
+                  <CountUp end={metric.numVal} prefix={metric.numPrefix} separator="," />
+                </span>
+              </VisualEditable>
+
+              <VisualEditable id={metric.labId} label={`Métrica ${idx + 1} - Etiqueta`}>
+                <span className="font-body font-bold text-white text-xl mb-2 block">
+                  {metric.label}
+                </span>
+              </VisualEditable>
+
               {metric.desc && (
-                <p className="font-body text-white/75 text-sm font-normal max-w-[280px]">
-                  {metric.desc}
-                </p>
+                <VisualEditable id={metric.descId} label={`Métrica ${idx + 1} - Descripción`}>
+                  <p className="font-body text-white/75 text-sm font-normal max-w-[280px]">
+                    {metric.desc}
+                  </p>
+                </VisualEditable>
               )}
             </AnimatedSection>
           ))}

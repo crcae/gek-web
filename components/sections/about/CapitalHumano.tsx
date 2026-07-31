@@ -1,119 +1,313 @@
-import Image from 'next/image';
-import { getTranslations } from 'next-intl/server';
-import { getContenidoCached } from '@/lib/queries/cache';
-import fs from 'fs';
-import path from 'path';
+'use client';
 
-interface Props {
-  locale: string;
+import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
+import { Settings } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { VisualEditable } from '@/components/admin/VisualEditable';
+
+interface Numeros {
+  val: string;
+  valId?: string;
+  label: string;
+  labelId?: string;
 }
 
-export async function CapitalHumano({ locale }: Props) {
-  const ids = [
-    'quienes.capital.stat1.numero', 'quienes.capital.stat1.label',
-    'quienes.capital.stat2.numero', 'quienes.capital.stat2.label',
-    'quienes.capital.stat3.numero', 'quienes.capital.stat3.label',
-    'quienes.capital.stat4.numero', 'quienes.capital.stat4.label'
-  ];
+interface Props {
+  numeros: Numeros[];
+  fotos: string[];
+  translations: {
+    eyebrowId?: string;
+    eyebrow: string;
+    tituloId?: string;
+    titulo: string;
+    quoteId?: string;
+    quote: string;
+    foto: string;
+  };
+}
 
-  const [contenido, t] = await Promise.all([
-    getContenidoCached(ids, locale),
-    getTranslations('quienes'),
-  ]);
+function Counter({ value, trigger }: { value: string; trigger: boolean }) {
+  const [count, setCount] = useState(0);
+  const parsed = parseInt(value.replace(/[^0-9]/g, ''), 10);
+  const suffix = value.replace(/[0-9]/g, '');
 
-  let fotos: string[] = [];
-  try {
-    const folder = path.join(process.cwd(), 'public/images/zacatecas');
-    if (fs.existsSync(folder)) {
-      fotos = fs.readdirSync(folder)
-        .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
-        .map(f => `/images/zacatecas/${f}`);
-    }
-  } catch {}
+  useEffect(() => {
+    if (!trigger || isNaN(parsed)) return;
+    let start = 0;
+    const duration = 1200;
+    const steps = 30;
+    const stepTime = duration / steps;
+    const increment = Math.ceil(parsed / steps);
 
-  const numeros = [
-    {
-      val: contenido['quienes.capital.stat1.numero'] || '+200',
-      label: contenido['quienes.capital.stat1.label'] || t('cap_colaboradores')
-    },
-    {
-      val: contenido['quienes.capital.stat2.numero'] || 'Décadas',
-      label: contenido['quienes.capital.stat2.label'] || t('cap_historia')
-    },
-    {
-      val: contenido['quienes.capital.stat3.numero'] || 'Múltiples',
-      label: contenido['quienes.capital.stat3.label'] || t('cap_generaciones')
-    },
-    {
-      val: contenido['quienes.capital.stat4.numero'] || 'Coordinado',
-      label: contenido['quienes.capital.stat4.label'] || t('cap_compromiso')
-    },
-  ];
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= parsed) {
+        setCount(parsed);
+        clearInterval(timer);
+      } else {
+        setCount(start);
+      }
+    }, stepTime);
+
+    return () => clearInterval(timer);
+  }, [parsed, trigger]);
+
+  if (isNaN(parsed)) return <span>{value}</span>;
+  return <span>{suffix.includes('+') ? `+${count}` : `${count}${suffix}`}</span>;
+}
+
+export function CapitalHumano({ numeros, fotos, translations }: Props) {
+  const { data: session } = useSession();
+  const [inView, setInView] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  // Monitor scroll for parallax mosaic offset
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+      
+      const scrolled = viewHeight - rect.top;
+      if (scrolled > 0 && rect.bottom > 0) {
+        setScrollY(scrolled);
+      }
+
+      if (rect.top < viewHeight * 0.8) {
+        setInView(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section className="w-full bg-brand-green py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
+    <section 
+      id="capital-humano"
+      ref={sectionRef} 
+      className="w-full bg-white py-20 px-4 sm:px-6 relative overflow-hidden border-b border-brand-gray/10"
+    >
+      {/* Background soft Isotipo Watermark */}
       <div
-        className="absolute right-[-80px] bottom-[-80px] w-[320px] h-[320px] bg-no-repeat bg-contain pointer-events-none opacity-[0.08]"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
+        className="absolute left-[-60px] bottom-[-60px] w-[350px] h-[350px] bg-no-repeat bg-contain pointer-events-none opacity-[0.02] select-none"
+        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-12">
-          <span className="text-xs font-bold uppercase tracking-wider text-white/70 block mb-3">
-            {t('cap_eyebrow')}
-          </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-white mb-4">
-            {t('cap_titulo')}
-          </h2>
-          <div className="w-[60px] h-[3px] bg-white/40 mx-auto" />
-        </div>
+      <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        {/* Left Column: Heading and Stats (col-span-5) */}
+        <div className="lg:col-span-5 flex flex-col justify-center">
+          <VisualEditable id={translations.eyebrowId || 'quienes.capital.eyebrow'} label="Eyebrow de Capital Humano">
+            <span className="text-xs font-bold uppercase tracking-widest text-brand-green mb-3 block">
+              {translations.eyebrow}
+            </span>
+          </VisualEditable>
+          
+          <VisualEditable id={translations.tituloId || 'quienes.capital.titulo'} label="Título de Capital Humano">
+            <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-navy mb-6 leading-tight">
+              {translations.titulo}
+            </h2>
+          </VisualEditable>
+          <div className="w-[60px] h-[3.5px] bg-brand-green mb-8" />
+          
+          <VisualEditable id={translations.quoteId || 'quienes.capital.quote'} label="Cita de Capital Humano">
+            <blockquote className="border-l-4 border-brand-green pl-4 font-body italic text-brand-navy/70 text-sm md:text-base leading-relaxed mb-10 max-w-xl">
+              &ldquo;{translations.quote}&rdquo;
+            </blockquote>
+          </VisualEditable>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          {numeros.map((n) => (
-            <div key={n.label} className="text-center">
-              <div className="font-display text-4xl md:text-5xl font-bold text-white mb-1">{n.val}</div>
-              <div className="font-body text-sm text-white/70 uppercase tracking-wider">{n.label}</div>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 gap-6 md:gap-8">
+            {/* Stat 1 */}
+            <div className="flex flex-col">
+              <VisualEditable id={numeros[0]?.valId || ''} label="Métrica 1 (Número)">
+                <span className="font-display text-3xl md:text-4xl font-extrabold text-brand-navy leading-none">
+                  <Counter value={numeros[0]?.val} trigger={inView} />
+                </span>
+              </VisualEditable>
+              <VisualEditable id={numeros[0]?.labelId || ''} label="Métrica 1 (Etiqueta)">
+                <span className="font-body text-xs md:text-sm text-brand-navy/60 mt-2 font-medium">
+                  {numeros[0]?.label}
+                </span>
+              </VisualEditable>
             </div>
-          ))}
+
+            {/* Stat 2 */}
+            <div className="flex flex-col">
+              <VisualEditable id={numeros[1]?.valId || ''} label="Métrica 2 (Número)">
+                <span className="font-display text-3xl md:text-4xl font-extrabold text-brand-navy leading-none">
+                  <Counter value={numeros[1]?.val} trigger={inView} />
+                </span>
+              </VisualEditable>
+              <VisualEditable id={numeros[1]?.labelId || ''} label="Métrica 2 (Etiqueta)">
+                <span className="font-body text-xs md:text-sm text-brand-navy/60 mt-2 font-medium">
+                  {numeros[1]?.label}
+                </span>
+              </VisualEditable>
+            </div>
+
+            {/* Stat 3 */}
+            <div className="flex flex-col">
+              <VisualEditable id={numeros[2]?.valId || ''} label="Métrica 3 (Número)">
+                <span className="font-display text-3xl md:text-4xl font-extrabold text-brand-navy leading-none">
+                  <Counter value={numeros[2]?.val} trigger={inView} />
+                </span>
+              </VisualEditable>
+              <VisualEditable id={numeros[2]?.labelId || ''} label="Métrica 3 (Etiqueta)">
+                <span className="font-body text-xs md:text-sm text-brand-navy/60 mt-2 font-medium">
+                  {numeros[2]?.label}
+                </span>
+              </VisualEditable>
+            </div>
+
+            {/* Stat 4 */}
+            <div className="flex flex-col">
+              <VisualEditable id={numeros[3]?.valId || ''} label="Métrica 4 (Número)">
+                <span className="font-display text-3xl md:text-4xl font-extrabold text-brand-navy leading-none">
+                  <Counter value={numeros[3]?.val} trigger={inView} />
+                </span>
+              </VisualEditable>
+              <VisualEditable id={numeros[3]?.labelId || ''} label="Métrica 4 (Etiqueta)">
+                <span className="font-body text-xs md:text-sm text-brand-navy/60 mt-2 font-medium">
+                  {numeros[3]?.label}
+                </span>
+              </VisualEditable>
+            </div>
+          </div>
         </div>
 
-        {fotos.length >= 4 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {fotos.slice(0, 8).map((src, i) => (
-              <div
-                key={i}
-                className={`relative overflow-hidden rounded-lg ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}
-                style={{ aspectRatio: i === 0 ? '1/1' : '4/3' }}
-              >
-                <Image
-                  src={src}
-                  alt={t('cap_eyebrow')}
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                  quality={75}
-                />
-                <div className="absolute inset-0 bg-brand-navy/20" />
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="rounded-lg bg-white/10 border border-white/20 flex items-center justify-center"
-                style={{ aspectRatio: '4/3' }}
-              >
-                <span className="text-white/30 text-xs font-body">{t('cap_foto')} {i + 1}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Right Column: Parallax Mosaic (col-span-7) */}
+        <div className="lg:col-span-7 relative h-[450px] md:h-[550px] w-full flex items-center justify-center">
+          <div className="relative w-full h-full max-w-[550px]">
+            
+            {/* Parallax Image 1: Top Left */}
+            <div 
+              className="absolute left-4 top-4 w-[42%] aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-brand-green/30 transition-transform duration-300 ease-out z-20 group"
+              style={{ transform: `translateY(${scrollY * -0.03}px)` }}
+            >
+              {fotos[0] && (
+                <>
+                  <Image
+                    src={fotos[0]}
+                    alt="Equipo GEC 1"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="350px"
+                    priority
+                  />
+                  {session && (
+                    <div className="absolute top-2 right-2 z-30">
+                      <VisualEditable id="quienes.capital.foto1" label="Foto de Capital Humano 1" type="image">
+                        <button
+                          type="button"
+                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] font-bold px-2 py-1 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          <Settings className="w-3.5 h-3.5" />
+                        </button>
+                      </VisualEditable>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
 
-        <p className="text-center font-lora italic text-white/80 text-lg mt-10 max-w-2xl mx-auto">
-          &ldquo;{t('cap_quote')}&rdquo;
-        </p>
+            {/* Parallax Image 2: Top Right */}
+            <div 
+              className="absolute right-4 top-16 w-[42%] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-2 border-brand-navy/15 transition-transform duration-300 ease-out z-10 group"
+              style={{ transform: `translateY(${scrollY * 0.04}px)` }}
+            >
+              {fotos[1] && (
+                <>
+                  <Image
+                    src={fotos[1]}
+                    alt="Equipo GEC 2"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="350px"
+                  />
+                  {session && (
+                    <div className="absolute top-2 right-2 z-30">
+                      <VisualEditable id="quienes.capital.foto2" label="Foto de Capital Humano 2" type="image">
+                        <button
+                          type="button"
+                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] font-bold px-2 py-1 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          <Settings className="w-3.5 h-3.5" />
+                        </button>
+                      </VisualEditable>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Parallax Image 3: Bottom Left */}
+            <div 
+              className="absolute left-12 bottom-12 w-[42%] aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-2 border-brand-navy/15 transition-transform duration-300 ease-out z-10 group"
+              style={{ transform: `translateY(${scrollY * -0.05}px)` }}
+            >
+              {fotos[2] && (
+                <>
+                  <Image
+                    src={fotos[2]}
+                    alt="Equipo GEC 3"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="350px"
+                  />
+                  {session && (
+                    <div className="absolute top-2 right-2 z-30">
+                      <VisualEditable id="quienes.capital.foto3" label="Foto de Capital Humano 3" type="image">
+                        <button
+                          type="button"
+                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] font-bold px-2 py-1 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          <Settings className="w-3.5 h-3.5" />
+                        </button>
+                      </VisualEditable>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Parallax Image 4: Bottom Right */}
+            <div 
+              className="absolute right-8 bottom-4 w-[42%] aspect-square rounded-2xl overflow-hidden shadow-2xl border-2 border-brand-green/30 transition-transform duration-300 ease-out z-20 group"
+              style={{ transform: `translateY(${scrollY * 0.02}px)` }}
+            >
+              {fotos[3] && (
+                <>
+                  <Image
+                    src={fotos[3]}
+                    alt="Equipo GEC 4"
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="350px"
+                  />
+                  {session && (
+                    <div className="absolute top-2 right-2 z-30">
+                      <VisualEditable id="quienes.capital.foto4" label="Foto de Capital Humano 4" type="image">
+                        <button
+                          type="button"
+                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] font-bold px-2 py-1 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          <Settings className="w-3.5 h-3.5" />
+                        </button>
+                      </VisualEditable>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
   );

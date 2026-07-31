@@ -30,7 +30,7 @@ export function MobileDrawer({ isOpen, onClose, navLinks }: MobileDrawerProps) {
   const handleContactClick = (e: React.MouseEvent) => {
     onClose();
     // Scroll to contact if we are on the homepage, else navigate
-    const contactSection = document.getElementById('contacto-pipeline');
+    const contactSection = document.getElementById('cotizacion') || document.getElementById('contacto-pipeline');
     if (contactSection) {
       e.preventDefault();
       contactSection.scrollIntoView({ behavior: 'smooth' });

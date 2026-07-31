@@ -28,10 +28,11 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
     quienesSomos: {
       title: locale === 'en' ? 'About Us' : locale === 'de' ? 'Über uns' : 'Quiénes Somos',
       links: [
-        { label: locale === 'en' ? 'Our History' : locale === 'de' ? 'Unsere Geschichte' : 'Nuestra Historia', href: `/${locale}/quienes-somos#historia` },
-        { label: locale === 'en' ? 'Our Mission' : locale === 'de' ? 'Unsere Mission' : 'Nuestra Misión', href: `/${locale}/quienes-somos#mision` },
-        { label: locale === 'en' ? 'Values' : locale === 'de' ? 'Werte' : 'Valores', href: `/${locale}/quienes-somos#valores` },
-        { label: locale === 'en' ? 'Divisions' : locale === 'de' ? 'Divisionen' : 'Divisiones', href: `/${locale}/quienes-somos#divisiones` },
+        { label: locale === 'en' ? 'About Us' : locale === 'de' ? 'Über uns' : 'Quiénes Somos', href: `/${locale}/quienes-somos` },
+        { label: locale === 'en' ? 'Ecosystem' : locale === 'de' ? 'Ökosystem' : 'Ecosistema GEC', href: `/${locale}/quienes-somos#ecosistema` },
+        { label: locale === 'en' ? 'Field Division' : locale === 'de' ? 'Bereich Feld' : 'División Campo', href: `/${locale}/quienes-somos#division-campo` },
+        { label: locale === 'en' ? 'CEDIS Division' : locale === 'de' ? 'Bereich CEDIS' : 'División CEDIS', href: `/${locale}/quienes-somos#division-cedis` },
+        { label: locale === 'en' ? 'Human Capital' : locale === 'de' ? 'Humankapital' : 'Capital Humano', href: `/${locale}/quienes-somos#capital-humano` },
       ],
       desc: locale === 'en' 
         ? 'Grupo Exportador del Campo is dedicated to the production and export of fresh produce.' 
@@ -43,10 +44,9 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
     historia: {
       title: locale === 'en' ? 'History' : locale === 'de' ? 'Geschichte' : 'Historia',
       links: [
-        { label: locale === 'en' ? 'Foundation' : locale === 'de' ? 'Gründung' : 'Fundación', href: `/${locale}/historia#fundacion` },
-        { label: locale === 'en' ? 'First Precooler' : locale === 'de' ? 'Erster Vorkühler' : 'Primera Enfriadora', href: `/${locale}/historia#enfriadora` },
-        { label: locale === 'en' ? 'Expansion' : locale === 'de' ? 'Expansion' : 'Expansión', href: `/${locale}/historia#expansion` },
-        { label: locale === 'en' ? 'Milestones' : locale === 'de' ? 'Meilensteine' : 'Hitos importantes', href: `/${locale}/historia` },
+        { label: locale === 'en' ? 'History' : locale === 'de' ? 'Geschichte' : 'Historia', href: `/${locale}/historia` },
+        { label: locale === 'en' ? 'Timeline' : locale === 'de' ? 'Zeitlinie' : 'Línea de Tiempo', href: `/${locale}/historia#linea-tiempo` },
+        { label: locale === 'en' ? 'Origin' : locale === 'de' ? 'Herkunft' : 'Origen', href: `/${locale}/historia#origen` },
       ],
       desc: locale === 'en'
         ? 'Over 50 years of agricultural legacy connecting the fields to domestic and international markets.'
@@ -58,9 +58,12 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
     holding: {
       title: 'Holding',
       links: [
-        { label: locale === 'en' ? 'Corporate Structure' : locale === 'de' ? 'Unternehmensstruktur' : 'Estructura Corporativa', href: `/${locale}/holding#estructura` },
-        { label: locale === 'en' ? 'Brands' : locale === 'de' ? 'Marken' : 'Marcas', href: `/${locale}/holding#marcas` },
-        { label: locale === 'en' ? 'Business Units' : locale === 'de' ? 'Geschäftseinheiten' : 'Unidades de Negocio', href: `/${locale}/holding#unidades` },
+        { label: locale === 'en' ? 'Holding' : locale === 'de' ? 'Holding' : 'Holding', href: `/${locale}/holding` },
+        { label: locale === 'en' ? 'Brands & Units' : locale === 'de' ? 'Marken & Einheiten' : 'Marcas y Unidades', href: `/${locale}/holding#marcas-unidades` },
+        { label: 'Vizcaíno Fruits', href: `/${locale}/holding/vizcaino-fruits` },
+        { label: 'Vizcaíno Premium', href: `/${locale}/holding/vizcaino-premium` },
+        { label: 'Vizcaíno Services', href: `/${locale}/holding/vizcaino-services` },
+        { label: locale === 'en' ? 'Corporate Structure' : locale === 'de' ? 'Unternehmensstruktur' : 'Estructura Corporativa', href: `/${locale}/holding#estructura-corporativa` },
       ],
       desc: locale === 'en'
         ? 'Specialized corporate framework driving business synergy and operational efficiency.'
@@ -72,9 +75,11 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
     contacto: {
       title: locale === 'en' ? 'Contact' : locale === 'de' ? 'Kontakt' : 'Contacto',
       links: [
-        { label: locale === 'en' ? 'Get a Quote' : locale === 'de' ? 'Angebot anfordern' : 'Cotización', href: `/${locale}/contacto` },
-        { label: locale === 'en' ? 'Suppliers' : locale === 'de' ? 'Lieferanten' : 'Proveedores', href: `/${locale}/contacto` },
-        { label: locale === 'en' ? 'Job Board' : locale === 'de' ? 'Karriere' : 'Bolsa de trabajo', href: `/${locale}/contacto` },
+        { label: locale === 'en' ? 'Contact Us' : locale === 'de' ? 'Kontaktieren Sie uns' : 'Contacto', href: `/${locale}/contacto` },
+        { label: locale === 'en' ? 'Get a Quote' : locale === 'de' ? 'Angebot anfordern' : 'Cotización', href: `/${locale}/contacto#cotizacion` },
+        { label: locale === 'en' ? 'Suppliers' : locale === 'de' ? 'Lieferanten' : 'Proveedores', href: `/${locale}/contacto?tipo=proveedor` },
+        { label: locale === 'en' ? 'Job Board' : locale === 'de' ? 'Karriere' : 'Bolsa de trabajo', href: `/${locale}/contacto?tipo=bolsa` },
+        { label: locale === 'en' ? 'Strategic Alliances' : locale === 'de' ? 'Strategische Allianzen' : 'Alianzas', href: `/${locale}/contacto?tipo=alianza` },
       ],
       desc: locale === 'en'
         ? 'We are ready to connect your operations with the efficiency and quality of our harvest.'

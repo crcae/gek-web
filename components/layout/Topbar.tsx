@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Mail, Phone } from 'lucide-react';
+import { VisualEditable } from '@/components/admin/VisualEditable';
 
 // Inline SVG for LinkedIn (avoids lucide-react barrel optimizer issue)
 const LinkedinIcon = ({ className }: { className?: string }) => (
@@ -12,8 +13,16 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export function Topbar() {
+interface TopbarProps {
+  correo?: string;
+  telefono?: string;
+}
+
+export function Topbar({ correo, telefono }: TopbarProps) {
   const [exchangeRate, setExchangeRate] = useState<string | null>(null);
+
+  const mailVal = correo || 'info@gecvt.com';
+  const telVal = telefono || '+52 81 2207 0314';
 
   useEffect(() => {
     const fetchRate = async () => {
@@ -42,21 +51,25 @@ export function Topbar() {
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
         {/* Left side: Mail + Phone */}
         <div className="flex items-center gap-4">
-          <a
-            href="mailto:info@gecvt.com"
-            className="flex items-center hover:text-brand-green transition-colors"
-          >
-            <Mail className="w-[14px] h-[14px] mr-2" />
-            <span>info@gecvt.com</span>
-          </a>
+          <VisualEditable id="footer.correo" label="Correo de Contacto (Topbar)">
+            <a
+              href={`mailto:${mailVal}`}
+              className="flex items-center hover:text-brand-green transition-colors"
+            >
+              <Mail className="w-[14px] h-[14px] mr-2" />
+              <span>{mailVal}</span>
+            </a>
+          </VisualEditable>
           <span className="text-white/30">|</span>
-          <a
-            href="tel:+528122070314"
-            className="flex items-center hover:text-brand-green transition-colors"
-          >
-            <Phone className="w-[14px] h-[14px] mr-2" />
-            <span>+52 81 2207 0314</span>
-          </a>
+          <VisualEditable id="footer.telefono" label="Teléfono de Contacto (Topbar)">
+            <a
+              href={`tel:${telVal.replace(/\s+/g, '')}`}
+              className="flex items-center hover:text-brand-green transition-colors"
+            >
+              <Phone className="w-[14px] h-[14px] mr-2" />
+              <span>{telVal}</span>
+            </a>
+          </VisualEditable>
         </div>
 
         {/* Right side: exchange rate widget & LinkedIn */}
