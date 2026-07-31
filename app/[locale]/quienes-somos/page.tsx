@@ -1,4 +1,6 @@
 import { getTranslations } from 'next-intl/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { ProcesosField } from '@/components/sections/about/ProcesosField';
 import { EcosistemaGEC } from '@/components/sections/about/EcosistemaGEC';
@@ -16,6 +18,8 @@ import path from 'path';
 
 export default async function QuienesSomos({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations('quienes');
+  const session = await getServerSession(authOptions);
+  const isAdmin = !!session;
 
   const idsValores = ['honestidad', 'compromiso', 'humildad', 'profesionalismo', 'lealtad', 'transparencia'];
 
@@ -372,18 +376,20 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
                         WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
                       }}
                     />
-                    {/* Cambiar Foto CEO button */}
-                    <div className="absolute top-3 right-3 z-35">
-                      <VisualEditable id="quienes.ceo.imagen" label="Foto de Joaquín Vizcaíno (CEO)" type="image">
-                        <button
-                          type="button"
-                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                        >
-                          <Settings className="w-3.5 h-3.5" />
-                          Cambiar Foto
-                        </button>
-                      </VisualEditable>
-                    </div>
+                    {/* Cambiar Foto CEO button — solo admin */}
+                    {isAdmin && (
+                      <div className="absolute top-3 right-3 z-35">
+                        <VisualEditable id="quienes.ceo.imagen" label="Foto de Joaquín Vizcaíno (CEO)" type="image">
+                          <button
+                            type="button"
+                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                          >
+                            <Settings className="w-3.5 h-3.5" />
+                            Cambiar Foto
+                          </button>
+                        </VisualEditable>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="w-full h-full bg-brand-navy/40 flex items-center justify-center">
