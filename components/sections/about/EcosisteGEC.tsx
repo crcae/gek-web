@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { Heart, TrendingUp, Star, Settings } from 'lucide-react';
 import Image from 'next/image';
 import { VisualEditable } from '@/components/admin/VisualEditable';
@@ -33,6 +34,8 @@ export function EcosisteGEC({
   filosofiaGecText,
 }: EcosisteGECProps) {
   const [activo, setActivo] = useState<string | null>('mision');
+  const { data: session } = useSession();
+  const isAdmin = !!session;
 
   const paneles = [
     {
@@ -128,8 +131,8 @@ export function EcosisteGEC({
                   </div>
                 )}
 
-                {/* Edit background image button overlay when active */}
-                {estaActivo && imagen && (
+                {/* Edit background image button overlay when active — solo admin */}
+                {estaActivo && imagen && isAdmin && (
                   <div className="absolute top-4 right-4 z-20">
                     <VisualEditable id={panel.imagenKey} label={`Imagen ${panel.titulo}`} type="image">
                       <button

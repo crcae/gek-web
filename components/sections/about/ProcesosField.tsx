@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useSession } from 'next-auth/react';
 import { Sprout, Thermometer, Package, ChevronLeft, ChevronRight, Settings } from 'lucide-react';
 import Image from 'next/image';
 
@@ -31,6 +32,8 @@ export function ProcesosField({
   stepData,
 }: Props) {
   const t = useTranslations('quienes');
+  const { data: session } = useSession();
+  const isAdmin = !!session;
   const [currentStep, setCurrentStep] = useState(0);
 
   const defaultSteps = [
@@ -140,18 +143,20 @@ export function ProcesosField({
                       sizes="(max-width: 768px) 100vw, 600px"
                       unoptimized
                     />
-                    {/* Cambiar Imagen Button */}
-                    <div className="absolute top-3 right-3 z-30">
-                      <VisualEditable id={`quienes.campo.paso${currentStep + 1}.imagen`} label={`Imagen de Paso ${currentStep + 1}`} type="image">
-                        <button
-                          type="button"
-                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                        >
-                          <Settings className="w-3.5 h-3.5" />
-                          Cambiar Imagen
-                        </button>
-                      </VisualEditable>
-                    </div>
+                    {/* Cambiar Imagen Button — solo admin */}
+                    {isAdmin && (
+                      <div className="absolute top-3 right-3 z-30">
+                        <VisualEditable id={`quienes.campo.paso${currentStep + 1}.imagen`} label={`Imagen de Paso ${currentStep + 1}`} type="image">
+                          <button
+                            type="button"
+                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                          >
+                            <Settings className="w-3.5 h-3.5" />
+                            Cambiar Imagen
+                          </button>
+                        </VisualEditable>
+                      </div>
+                    )}
                   </>
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-brand-navy/95 text-white/50">
@@ -159,18 +164,20 @@ export function ProcesosField({
                     <p className="font-body text-xs text-white/40">
                       Próximamente imágenes del proceso
                     </p>
-                    {/* Upload Image Button */}
-                    <div className="absolute top-3 right-3 z-30">
-                      <VisualEditable id={`quienes.campo.paso${currentStep + 1}.imagen`} label={`Imagen de Paso ${currentStep + 1}`} type="image">
-                        <button
-                          type="button"
-                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                        >
-                          <Settings className="w-3.5 h-3.5" />
-                          Subir Imagen
-                        </button>
-                      </VisualEditable>
-                    </div>
+                    {/* Upload Image Button — solo admin */}
+                    {isAdmin && (
+                      <div className="absolute top-3 right-3 z-30">
+                        <VisualEditable id={`quienes.campo.paso${currentStep + 1}.imagen`} label={`Imagen de Paso ${currentStep + 1}`} type="image">
+                          <button
+                            type="button"
+                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
+                          >
+                            <Settings className="w-3.5 h-3.5" />
+                            Subir Imagen
+                          </button>
+                        </VisualEditable>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
