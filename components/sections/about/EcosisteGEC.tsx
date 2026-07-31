@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { Heart, TrendingUp, Star, Settings } from 'lucide-react';
+import { Heart, TrendingUp, Star } from 'lucide-react';
 import Image from 'next/image';
 import { VisualEditable } from '@/components/admin/VisualEditable';
+import { AdminImageButton } from '@/components/admin/AdminImageButton';
 
 interface EcosisteGECProps {
   imagenes: Record<string, string>;
@@ -131,18 +132,14 @@ export function EcosisteGEC({
                   </div>
                 )}
 
-                {/* Edit background image button overlay when active — solo admin */}
+                {/* Cambiar Imagen button overlay when active — solo admin */}
                 {estaActivo && imagen && isAdmin && (
                   <div className="absolute top-4 right-4 z-20">
-                    <VisualEditable id={panel.imagenKey} label={`Imagen ${panel.titulo}`} type="image">
-                      <button
-                        type="button"
-                        className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                      >
-                        <Settings className="w-3.5 h-3.5" />
-                        Cambiar Imagen
-                      </button>
-                    </VisualEditable>
+                    <AdminImageButton
+                      id={panel.imagenKey}
+                      label={`Imagen ${panel.titulo}`}
+                      buttonText="Cambiar Imagen"
+                    />
                   </div>
                 )}
 

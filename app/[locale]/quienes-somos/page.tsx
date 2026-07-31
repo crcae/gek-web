@@ -7,9 +7,10 @@ import { EcosistemaGEC } from '@/components/sections/about/EcosistemaGEC';
 import { EcosisteGEC } from '@/components/sections/about/EcosisteGEC';
 import { CedisProcesos } from '@/components/sections/about/CedisProcesos';
 import { CapitalHumano } from '@/components/sections/about/CapitalHumano';
-import { User, Settings } from 'lucide-react';
+import { User } from 'lucide-react';
 import Image from 'next/image';
 import { VisualEditable } from '@/components/admin/VisualEditable';
+import { AdminImageButton } from '@/components/admin/AdminImageButton';
 import { getContenidoCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -379,15 +380,11 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
                     {/* Cambiar Foto CEO button — solo admin */}
                     {isAdmin && (
                       <div className="absolute top-3 right-3 z-35">
-                        <VisualEditable id="quienes.ceo.imagen" label="Foto de Joaquín Vizcaíno (CEO)" type="image">
-                          <button
-                            type="button"
-                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                          >
-                            <Settings className="w-3.5 h-3.5" />
-                            Cambiar Foto
-                          </button>
-                        </VisualEditable>
+                        <AdminImageButton
+                          id="quienes.ceo.imagen"
+                          label="Foto de Joaquín Vizcaíno (CEO)"
+                          buttonText="Cambiar Foto"
+                        />
                       </div>
                     )}
                   </div>

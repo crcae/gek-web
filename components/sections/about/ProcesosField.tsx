@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useSession } from 'next-auth/react';
-import { Sprout, Thermometer, Package, ChevronLeft, ChevronRight, Settings } from 'lucide-react';
+import { Sprout, Thermometer, Package, ChevronLeft, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 
 import { VisualEditable } from '@/components/admin/VisualEditable';
+import { AdminImageButton } from '@/components/admin/AdminImageButton';
 
 interface StepItem {
   titulo: string;
@@ -146,15 +147,11 @@ export function ProcesosField({
                     {/* Cambiar Imagen Button — solo admin */}
                     {isAdmin && (
                       <div className="absolute top-3 right-3 z-30">
-                        <VisualEditable id={`quienes.campo.paso${currentStep + 1}.imagen`} label={`Imagen de Paso ${currentStep + 1}`} type="image">
-                          <button
-                            type="button"
-                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                          >
-                            <Settings className="w-3.5 h-3.5" />
-                            Cambiar Imagen
-                          </button>
-                        </VisualEditable>
+                        <AdminImageButton
+                          id={`quienes.campo.paso${currentStep + 1}.imagen`}
+                          label={`Imagen de Paso ${currentStep + 1}`}
+                          buttonText="Cambiar Imagen"
+                        />
                       </div>
                     )}
                   </>
@@ -164,18 +161,14 @@ export function ProcesosField({
                     <p className="font-body text-xs text-white/40">
                       Próximamente imágenes del proceso
                     </p>
-                    {/* Upload Image Button — solo admin */}
+                    {/* Subir Imagen Button — solo admin */}
                     {isAdmin && (
                       <div className="absolute top-3 right-3 z-30">
-                        <VisualEditable id={`quienes.campo.paso${currentStep + 1}.imagen`} label={`Imagen de Paso ${currentStep + 1}`} type="image">
-                          <button
-                            type="button"
-                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                          >
-                            <Settings className="w-3.5 h-3.5" />
-                            Subir Imagen
-                          </button>
-                        </VisualEditable>
+                        <AdminImageButton
+                          id={`quienes.campo.paso${currentStep + 1}.imagen`}
+                          label={`Imagen de Paso ${currentStep + 1}`}
+                          buttonText="Subir Imagen"
+                        />
                       </div>
                     )}
                   </div>
