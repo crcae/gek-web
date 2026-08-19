@@ -490,13 +490,13 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       <section className="w-full bg-[#F8FAF9] py-12 px-4 sm:px-6 border-b border-brand-gray/10">
         <div className="max-w-7xl mx-auto flex justify-center">
           <VisualEditable id="quienes.procesos.camion" label="Imagen Ilustrativa Camión (Procesos)" type="image" className="w-full">
-            <div className="relative w-full aspect-[21/9] max-h-[450px] rounded-2xl overflow-hidden shadow-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+            <div className="relative w-full aspect-[21/9] max-h-[450px] overflow-hidden flex items-center justify-center">
               {contenido['quienes.procesos.camion'] ? (
                 <Image
                   src={contenido['quienes.procesos.camion']}
                   alt="Ilustración Camión GEC"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   unoptimized
                 />
               ) : (

@@ -36,13 +36,13 @@ export default async function Contacto({ params: { locale } }: { params: { local
       <section className="w-full bg-white pb-16 pt-4 px-4 sm:px-6 relative overflow-hidden">
         <div className="max-w-7xl mx-auto flex justify-center">
           <VisualEditable id="contacto.trailer.imagen" label="Imagen Ilustrativa Tráiler (Contacto)" type="image" className="w-full">
-            <div className="relative w-full aspect-[21/9] max-h-[450px] rounded-2xl overflow-hidden shadow-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+            <div className="relative w-full aspect-[21/9] max-h-[450px] overflow-hidden flex items-center justify-center">
               {contenido['contacto.trailer.imagen'] ? (
                 <Image
                   src={contenido['contacto.trailer.imagen']}
                   alt="Ilustración Tráiler GEC"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   unoptimized
                 />
               ) : (
