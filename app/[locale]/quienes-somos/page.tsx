@@ -30,6 +30,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
     'quienes.intro',
     'quienes.intro.titulo',
     'quienes.intro.slogan',
+    'quienes.procesos.camion',
     'quienes.mision',
     'quienes.vision',
     
@@ -484,6 +485,31 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         subtitulo={cedisSubtitulo}
         stepData={cedisStepData}
       />
+
+      {/* ── Espacio para la imagen en alta del Camión (Editable) ── */}
+      <section className="w-full bg-[#F8FAF9] py-12 px-4 sm:px-6 border-b border-brand-gray/10">
+        <div className="max-w-7xl mx-auto flex justify-center">
+          <VisualEditable id="quienes.procesos.camion" label="Imagen Ilustrativa Camión (Procesos)" type="image" className="w-full">
+            <div className="relative w-full aspect-[21/9] max-h-[450px] rounded-2xl overflow-hidden shadow-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+              {contenido['quienes.procesos.camion'] ? (
+                <Image
+                  src={contenido['quienes.procesos.camion']}
+                  alt="Ilustración Camión GEC"
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              ) : (
+                <div className="text-center p-8 flex flex-col items-center gap-3">
+                  <span className="text-5xl">🚛</span>
+                  <p className="font-display text-lg font-semibold text-brand-navy">Espacio para Imagen: El Camión</p>
+                  <p className="font-body text-xs text-brand-navy/60">Haz clic en el lápiz de edición flotante para subir la imagen en alta del camión</p>
+                </div>
+              )}
+            </div>
+          </VisualEditable>
+        </div>
+      </section>
 
       {/* ── 6. Capital Humano ── */}
       <CapitalHumano
