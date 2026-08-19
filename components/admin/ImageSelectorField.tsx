@@ -8,7 +8,7 @@ interface Props {
   label: string;
   valorActual: string;
   onChange: (ruta: string) => void;
-  type?: 'image' | 'video';
+  type?: 'image' | 'video' | 'pdf';
 }
 
 export function ImageSelectorField({ label, valorActual, onChange, type = 'image' }: Props) {
@@ -52,13 +52,19 @@ export function ImageSelectorField({ label, valorActual, onChange, type = 'image
   };
 
   const isVideo = type === 'video';
+  const isPdf = type === 'pdf';
 
   return (
     <div className="space-y-3">
       {/* Preview */}
       {valorActual && !mediaError ? (
         <div className="relative w-full h-40 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
-          {isVideo ? (
+          {isPdf ? (
+            <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-gray-50">
+              <span className="text-4xl mb-2">📄</span>
+              <span className="text-xs text-gray-500 font-mono text-center max-w-[90%] truncate">{valorActual.split('/').pop()}</span>
+            </div>
+          ) : isVideo ? (
             <video
               src={valorActual}
               controls
@@ -82,7 +88,9 @@ export function ImageSelectorField({ label, valorActual, onChange, type = 'image
         </div>
       ) : valorActual ? (
         <div className="w-full h-40 rounded-lg bg-gray-100 border border-dashed border-gray-300 flex flex-col items-center justify-center gap-2">
-          {isVideo ? (
+          {isPdf ? (
+            <span className="text-3xl">📄</span>
+          ) : isVideo ? (
             <Film className="w-8 h-8 text-gray-300" />
           ) : (
             <ImageIcon className="w-8 h-8 text-gray-300" />
@@ -102,7 +110,7 @@ export function ImageSelectorField({ label, valorActual, onChange, type = 'image
           type="text"
           value={valorActual}
           onChange={(e) => { setMediaError(false); onChange(e.target.value); }}
-          placeholder="/images/... o URL"
+          placeholder={isPdf ? "/uploads/... o URL" : "/images/... o URL"}
           className="flex-1 border border-gray-200 rounded px-3 py-2 text-sm font-mono focus:ring-1 focus:ring-[#4DB26B] focus:outline-none bg-white text-gray-700"
         />
         <button
@@ -121,7 +129,7 @@ export function ImageSelectorField({ label, valorActual, onChange, type = 'image
         <input
           ref={fileRef}
           type="file"
-          accept={isVideo ? 'video/mp4,video/webm' : 'image/jpeg,image/png,image/webp,image/gif,image/svg+xml'}
+          accept={isPdf ? 'application/pdf' : isVideo ? 'video/mp4,video/webm' : 'image/jpeg,image/png,image/webp,image/gif,image/svg+xml'}
           className="hidden"
           onChange={handleUpload}
         />

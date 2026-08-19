@@ -71,12 +71,6 @@ export async function FeaturesSection({ locale }: { locale: string }) {
   return (
     <section id="features-section" className="w-full bg-brand-white py-20 px-6 relative overflow-hidden">
       
-      {/* Decorative Watermark */}
-      <div 
-        className="absolute left-[-150px] top-[-150px] w-[350px] h-[350px] bg-no-repeat bg-contain pointer-events-none opacity-[0.04]"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-center mb-12 text-center">
           <AnimatedSection animation="fade-up">
@@ -115,16 +109,10 @@ export async function FeaturesSection({ locale }: { locale: string }) {
                               className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
                             >
                               <Settings className="w-3.5 h-3.5" />
-                              Cambiar Imagen
                             </button>
                           </VisualEditable>
                         </div>
-                        {/* Watermark Isotipo over Navy placeholder background */}
-                        <div 
-                          className="absolute inset-0 flex items-center justify-center opacity-10 bg-no-repeat bg-center bg-contain pointer-events-none"
-                          style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)', backgroundSize: '60%' }}
-                        />
-                        <div className="absolute inset-0 bg-brand-navy/50 transition-colors duration-400 group-hover:bg-brand-navy/35" />
+                        <div className="absolute inset-0 bg-brand-navy/25 transition-colors duration-400 group-hover:bg-brand-navy/15" />
                       </div>
 
                       {/* Content Area */}
@@ -161,12 +149,7 @@ export async function FeaturesSection({ locale }: { locale: string }) {
                         <VisualEditable id={`features.${feature.id}.imagen`} label={`Imagen de ${feature.label}`} type="image">
                           <FeatureImage src={feature.image} alt={feature.label} />
                         </VisualEditable>
-                        {/* Watermark Isotipo over Navy placeholder background */}
-                        <div 
-                          className="absolute inset-0 flex items-center justify-center opacity-10 bg-no-repeat bg-center bg-contain pointer-events-none"
-                          style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)', backgroundSize: '60%' }}
-                        />
-                        <div className="absolute inset-0 bg-brand-navy/50 transition-colors duration-400 group-hover:bg-brand-navy/35" />
+                        <div className="absolute inset-0 bg-brand-navy/25 transition-colors duration-400 group-hover:bg-brand-navy/15" />
                       </div>
 
                       {/* Content Area */}

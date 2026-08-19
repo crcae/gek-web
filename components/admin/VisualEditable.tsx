@@ -9,7 +9,7 @@ import { ImageSelectorField } from './ImageSelectorField';
 interface VisualEditableProps {
   id: string;
   label: string;
-  type?: 'text' | 'image' | 'video';
+  type?: 'text' | 'image' | 'video' | 'pdf';
   children: React.ReactNode;
   className?: string;
 }
@@ -83,7 +83,7 @@ export function VisualEditable({ id, label, type = 'text', children, className =
     return <>{children}</>;
   }
 
-  const isMediaField = type === 'image' || type === 'video';
+  const isMediaField = type === 'image' || type === 'video' || type === 'pdf';
 
   return (
     <div
@@ -141,13 +141,13 @@ export function VisualEditable({ id, label, type = 'text', children, className =
                 <div className="space-y-6">
                   {/* Spanish Input */}
                   <div>
-                    <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Español (Requerido)</label>
+                    <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Archivo (Requerido)</label>
                     {isMediaField ? (
                       <ImageSelectorField
-                        label="Español"
+                        label="Archivo"
                         valorActual={form.valor_es}
-                        onChange={(v) => setForm({ ...form, valor_es: v })}
-                        type={type === 'video' ? 'video' : 'image'}
+                        onChange={(v) => setForm({ valor_es: v, valor_en: v, valor_de: v })}
+                        type={type === 'pdf' ? 'pdf' : type === 'video' ? 'video' : 'image'}
                       />
                     ) : (
                       <textarea

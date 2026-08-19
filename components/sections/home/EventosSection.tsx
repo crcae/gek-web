@@ -7,6 +7,8 @@ import { Calendar, MapPin, Building, ArrowUpRight, Plus, Trash2, Edit2, X, Setti
 import { useTranslations } from 'next-intl';
 import { VisualEditable } from '@/components/admin/VisualEditable';
 import { IFPABadge } from './IFPABadge';
+import { AnimatedSection } from '@/components/ui/AnimatedSection';
+import { AnimatedLine } from '@/components/ui/AnimatedLine';
 
 interface Evento {
   id: string;
@@ -176,26 +178,22 @@ export function EventosSection({
       <div className="max-w-5xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="mb-12 text-center">
-          <VisualEditable id={eyebrowId} label="Copete / Eyebrow (Agenda GEC)">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-green">
-              {eyebrow}
-            </span>
-          </VisualEditable>
-          
-          <VisualEditable id={tituloId} label="Título de la sección Eventos">
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-brand-navy mt-1">
-              {titulo}
-            </h3>
-          </VisualEditable>
-          <div className="w-[60px] h-[3.5px] bg-brand-green mx-auto mt-3" />
+        <div className="flex flex-col items-center mb-16 text-center">
+          <AnimatedSection animation="fade-up">
+            <VisualEditable id={tituloId} label="Título de la sección Eventos">
+              <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
+                {titulo || t('eventos_titulo')}
+              </h2>
+            </VisualEditable>
+          </AnimatedSection>
+          <AnimatedLine className="h-[3px] bg-brand-green" />
 
           {/* Floating Manage Events button */}
           {session && (
             <div className="mt-4 flex justify-center">
               <button
                 onClick={() => setModalOpen(true)}
-                className="flex items-center gap-2 bg-brand-navy hover:bg-brand-green text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg transition-all duration-200 border border-brand-green/30"
+                className="flex items-center gap-2 bg-brand-navy hover:bg-brand-green text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg transition-all duration-200 border border-brand-green/30 cursor-pointer"
               >
                 <Settings className="w-3.5 h-3.5" />
                 Administrar Eventos

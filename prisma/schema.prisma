@@ -34,9 +34,9 @@ model Division {
   descriptionEs   String?
   descriptionEn   String?
   descriptionDe   String?
-  unidadesNegocio UnidadNegocio[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  unidadesNegocio UnidadNegocio[]
 }
 
 model UnidadNegocio {
@@ -48,9 +48,9 @@ model UnidadNegocio {
   orden      Int      @default(0)
   activa     Boolean  @default(true)
   divisionId String
-  division   Division @relation(fields: [divisionId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  division   Division @relation(fields: [divisionId], references: [id])
 }
 
 model MensajeContacto {
@@ -96,18 +96,18 @@ model Evento {
 }
 
 model Lead {
-  id              String   @id @default(cuid())
-  tipo            String   // cliente|proveedor|bolsa|alianza|etc
-  productos       String?  // JSON array de selecciones
-  mercado         String?  // JSON array
-  volumen         String?
-  nombre          String
-  empresa         String?
-  email           String
-  whatsapp        String?
-  comentarios     String?
-  createdAt       DateTime @default(now())
-  leido           Boolean  @default(false)
+  id          String   @id @default(cuid())
+  tipo        String
+  productos   String?
+  mercado     String?
+  volumen     String?
+  nombre      String
+  empresa     String?
+  email       String
+  whatsapp    String?
+  comentarios String?
+  createdAt   DateTime @default(now())
+  leido       Boolean  @default(false)
 }
 
 model ClienteLogo {

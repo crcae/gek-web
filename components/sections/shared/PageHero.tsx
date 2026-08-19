@@ -11,6 +11,7 @@ interface PageHeroProps {
   titleId?: string;
   subtitleId?: string;
   heroImageId?: string;
+  compact?: boolean;
 }
 
 export function PageHero({
@@ -21,9 +22,10 @@ export function PageHero({
   titleId,
   subtitleId,
   heroImageId,
+  compact = false,
 }: PageHeroProps) {
   return (
-    <section className="relative w-full h-[220px] md:h-[280px] bg-[#0D1B24] overflow-hidden flex items-center border-b-4 border-brand-green">
+    <section className={`relative w-full ${compact ? 'h-[170px] md:h-[220px]' : 'h-[220px] md:h-[280px]'} bg-[#0D1B24] overflow-hidden flex items-center border-b-4 border-brand-green`}>
       
       {/* Background image on the right side - pointer-events-auto allows editing background hero image */}
       <div className="absolute right-0 top-0 bottom-0 w-full md:w-[60%] h-full z-0 select-none pointer-events-auto">
@@ -48,14 +50,8 @@ export function PageHero({
         )}
         
         {/* Navy blue overlay/shading */}
-        <div className="absolute inset-0 bg-[#0D1B24]/40 mix-blend-multiply md:mix-blend-normal md:bg-gradient-to-r md:from-[#0D1B24] md:via-[#0D1B24]/75 md:to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-[#0D1B24]/20 mix-blend-multiply md:mix-blend-normal md:bg-gradient-to-r md:from-[#0D1B24] md:via-[#0D1B24]/50 md:to-transparent pointer-events-none" />
       </div>
-
-      {/* Watermark Isotipo */}
-      <div
-        className="absolute left-[-20px] top-[-20px] w-[150px] h-[150px] bg-no-repeat bg-contain pointer-events-none opacity-[0.03] z-0"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
-      />
 
       {/* Content Container */}
       <div className="max-w-7xl mx-auto w-full px-6 relative z-10 pointer-events-none">

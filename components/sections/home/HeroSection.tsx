@@ -51,7 +51,7 @@ export function HeroSection({ eyebrow, tagline, subtitle, videoUrl }: { eyebrow:
       <div 
         className="absolute inset-0 z-10 pointer-events-none" 
         style={{
-          background: 'linear-gradient(to right, rgba(13,27,36,0.70) 0%, rgba(13,27,36,0.45) 60%, rgba(13,27,36,0.20) 100%)'
+          background: 'linear-gradient(to right, rgba(13,27,36,0.45) 0%, rgba(13,27,36,0.25) 60%, rgba(13,27,36,0.10) 100%)'
         }}
       />
 

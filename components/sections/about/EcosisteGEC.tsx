@@ -125,7 +125,7 @@ export function EcosisteGEC({
                         src={imagen}
                         alt={panel.titulo}
                         fill
-                        className="object-cover opacity-45 transition-transform duration-700"
+                        className="object-cover opacity-70 transition-transform duration-700"
                         quality={90}
                       />
                     </VisualEditable>
@@ -144,7 +144,7 @@ export function EcosisteGEC({
                 )}
 
                 {/* Shading Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/30 z-0" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-black/15 z-0" />
 
                 {/* Content */}
                 <div className="relative z-10 w-full flex flex-col md:flex-row md:items-center justify-between gap-6">

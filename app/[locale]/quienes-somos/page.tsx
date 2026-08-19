@@ -117,7 +117,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const heroSubtitulo = contenido['quienes.hero.sub'] || t('subtitulo_pagina');
   const intro = contenido['quienes.intro'];
   const introTitulo = contenido['quienes.intro.titulo'] || 'Grupo Exportador del Campo';
-  const introSlogan = contenido['quienes.intro.slogan'] || (t('slogan') + ' GEC');
+  const introSlogan = contenido['quienes.intro.slogan'] || t('slogan');
   
   const mision = contenido['quienes.mision'] || t('mision_titulo');
   const vision = contenido['quienes.vision'] || t('vision_titulo');
@@ -125,12 +125,12 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const esenciaEyebrow = contenido['quienes.esencia.eyebrow'] || 'NUESTRA ESENCIA';
   const esenciaTitulo = contenido['quienes.esencia.titulo'] || 'Ecosistema de Pensamiento GEC';
   const esenciaSubtitulo = contenido['quienes.esencia.subtitulo'] || 'Los principios que guían cada decisión, desde el campo hasta el cliente.';
-
-  const misionPanelTitulo = contenido['quienes.ecosistema.mision.titulo'] || 'Nuestra razón de ser';
-  const visionPanelTitulo = contenido['quienes.ecosistema.vision.titulo'] || 'Seguimos apuntando alto';
-  const valoresPanelTitulo = contenido['quienes.ecosistema.valores.titulo'] || 'Filosofía GEC';
+ 
+  const misionPanelTitulo = contenido['quienes.ecosistema.mision.titulo'] || t('mision_titulo');
+  const visionPanelTitulo = contenido['quienes.ecosistema.vision.titulo'] || t('vision_titulo');
+  const valoresPanelTitulo = contenido['quienes.ecosistema.valores.titulo'] || t('valores_titulo');
   const filosofiaGecText = contenido['quienes.ecosistema.filosofia.label'] || 'FILOSOFÍA GEC';
-
+ 
   const ceoEyebrow = contenido['quienes.ceo.eyebrow'] || t('ceo_eyebrow');
   const ceoFrase = contenido['quienes.ceo.frase'] || t('ceo_frase');
   const ceoDesc = contenido['quienes.ceo.desc'] || t('ceo_desc');
@@ -212,35 +212,28 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   // Ecosistema GEC
   const ecoGecEyebrow = contenido['quienes.ecosistema.gec.eyebrow'] || t('eco_eyebrow');
   const ecoGecTitulo = contenido['quienes.ecosistema.gec.titulo'] || t('eco_titulo');
-  const ecoGecSlogan = contenido['quienes.ecosistema.gec.slogan'] || (t('slogan') + ' GEC');
+  const ecoGecSlogan = contenido['quienes.ecosistema.gec.slogan'] || t('slogan');
   const ecoGecPilares = [
     {
-      id: 'campo',
+      id: 'pilar1',
       titulo: contenido['quienes.ecosistema.gec.pilar1.titulo'] || t('eco_pilar1_titulo'),
       subtitulo: contenido['quienes.ecosistema.gec.pilar1.subtitulo'] || t('eco_pilar1_sub'),
       desc: contenido['quienes.ecosistema.gec.pilar1.desc'] || t('eco_pilar1_desc'),
       color: 'bg-brand-green',
     },
     {
-      id: 'logistica',
+      id: 'pilar2',
       titulo: contenido['quienes.ecosistema.gec.pilar2.titulo'] || t('eco_pilar2_titulo'),
       subtitulo: contenido['quienes.ecosistema.gec.pilar2.subtitulo'] || t('eco_pilar2_sub'),
       desc: contenido['quienes.ecosistema.gec.pilar2.desc'] || t('eco_pilar2_desc'),
       color: 'bg-brand-navy',
     },
     {
-      id: 'calidad',
+      id: 'pilar3',
       titulo: contenido['quienes.ecosistema.gec.pilar3.titulo'] || t('eco_pilar3_titulo'),
       subtitulo: contenido['quienes.ecosistema.gec.pilar3.subtitulo'] || t('eco_pilar3_sub'),
       desc: contenido['quienes.ecosistema.gec.pilar3.desc'] || t('eco_pilar3_desc'),
       color: 'bg-[#1a5c3a]',
-    },
-    {
-      id: 'gente',
-      titulo: contenido['quienes.ecosistema.gec.pilar4.titulo'] || t('eco_pilar4_titulo'),
-      subtitulo: contenido['quienes.ecosistema.gec.pilar4.subtitulo'] || t('eco_pilar4_sub'),
-      desc: contenido['quienes.ecosistema.gec.pilar4.desc'] || t('eco_pilar4_desc'),
-      color: 'bg-[#2d3e50]',
     },
   ];
 
@@ -318,6 +311,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         titleId="quienes.hero.titulo"
         subtitleId="quienes.hero.sub"
         heroImageId="quienes.hero.imagen"
+        compact={true}
       />
 
       {/* ── 1. Intro — texto + card CEO ── */}
@@ -335,7 +329,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
 
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-12 items-start">
           {/* Columna izquierda — texto */}
-          <div className="w-full md:w-[55%]">
+          <div className="w-full md:w-[65%]">
             <VisualEditable id="quienes.intro.titulo" label="Título de Introducción">
               <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
                 {introTitulo}
@@ -362,7 +356,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
           </div>
 
           {/* Columna derecha — card CEO */}
-          <div className="w-full md:w-[45%] relative md:-mb-20 md:mt-6">
+          <div className="w-full md:w-[35%] relative md:-mb-20 md:mt-6">
             <div className="rounded-2xl overflow-hidden shadow-2xl">
               <div className="relative h-72 md:h-96">
                 {ceoSrc ? (
@@ -455,13 +449,16 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
                 height={55}
                 style={{ objectFit: 'contain' }}
               />
-              <div className="absolute top-1 right-1">
-                <VisualEditable id="quienes.primus.imagen" label="Logo Primus GFS" type="image">
-                  <button type="button" className="bg-brand-navy/80 hover:bg-brand-green text-white p-1 rounded-full shadow border border-brand-green/20 cursor-pointer">
-                    <Settings className="w-3 h-3" />
-                  </button>
-                </VisualEditable>
-              </div>
+              {isAdmin && (
+                <div className="absolute top-1 right-1">
+                  <AdminImageButton
+                    id="quienes.primus.imagen"
+                    label="Logo Primus GFS"
+                    buttonText=""
+                    className="p-1 rounded-full"
+                  />
+                </div>
+              )}
             </div>
             <div>
               <VisualEditable id="quienes.primus.eyebrow" label="Primus - Eyebrow">

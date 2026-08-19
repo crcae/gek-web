@@ -19,6 +19,7 @@ interface BrandPanelData {
   bgClass: string;
   colorClass: string;
   bgImage?: string;
+  folleto?: string;
 }
 
 interface HoldingBrandPanelsProps {
@@ -59,14 +60,14 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                     src={brand.bgImage}
                     alt={brand.nombre}
                     fill
-                    className={`object-cover transition-opacity duration-700 ${isHovered ? 'opacity-40' : 'opacity-10'}`}
+                    className={`object-cover transition-opacity duration-700 ${isHovered ? 'opacity-65' : 'opacity-20'}`}
                     quality={85}
                   />
                 </div>
               )}
 
               {/* Dark overlay for text readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/35 z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/35 to-black/15 z-0" />
               
               {/* Green color bar transition overlay */}
               <div className={`absolute inset-0 bg-brand-navy/30 z-0 transition-opacity duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`} />
@@ -90,6 +91,14 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                       <Settings className="w-3.5 h-3.5" /> Logo
                     </button>
                   </VisualEditable>
+                  <VisualEditable id={`holding.marca${brandNum}.folleto`} label={`Folleto PDF - Marca ${brandNum}`} type="pdf">
+                    <button
+                      type="button"
+                      className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] font-bold px-2 py-1 rounded shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <Settings className="w-3.5 h-3.5" /> Folleto (PDF)
+                    </button>
+                  </VisualEditable>
                 </div>
               )}
 
@@ -98,7 +107,7 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                 <div className="flex flex-col items-center lg:items-start w-full">
                   <div className="h-24 flex items-center justify-center lg:justify-start mb-4 w-full">
                     {brand.logo ? (
-                      <div className="relative w-56 h-20 transition-all duration-300">
+                      <div className="relative w-80 h-28 transition-all duration-300">
                         <Image
                           src={brand.logo}
                           alt={brand.nombre}
@@ -133,13 +142,16 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                   
                   {/* CTA link */}
                   <div className="mt-6">
-                    <Link
-                      href={brand.link}
-                      className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-sm transition-all duration-300 bg-brand-green text-brand-navy shadow-lg hover:bg-white"
+                    <a
+                      href={brand.folleto}
+                      download={`Folleto_${brand.nombre.replace(/\s+/g, '_')}.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-sm transition-all duration-300 bg-brand-green text-brand-navy shadow-lg hover:bg-white cursor-pointer"
                     >
                       {brand.ctaText}
-                      <span className="font-sans">→</span>
-                    </Link>
+                      <span className="font-sans">↓</span>
+                    </a>
                   </div>
                 </div>
 
@@ -176,14 +188,14 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                     src={brand.bgImage}
                     alt={brand.nombre}
                     fill
-                    className="object-cover opacity-15"
+                    className="object-cover opacity-30"
                     quality={75}
                   />
                 </div>
               )}
 
               {/* Background watermark overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/40 z-0" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/35 to-black/15 z-0" />
 
               {/* Settings button overlay for background image */}
               {session && (
@@ -204,6 +216,14 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                       <Settings className="w-3 h-3" /> Logo
                     </button>
                   </VisualEditable>
+                  <VisualEditable id={`holding.marca${brandNum}.folleto`} label={`Folleto PDF - Marca ${brandNum}`} type="pdf">
+                    <button
+                      type="button"
+                      className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] font-bold px-2 py-1 rounded shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <Settings className="w-3 h-3" /> Folleto
+                    </button>
+                  </VisualEditable>
                 </div>
               )}
 
@@ -213,7 +233,7 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
                 <div className="flex items-center justify-between">
                   <div className="h-16 flex items-center">
                     {brand.logo ? (
-                      <div className="relative w-44 h-16">
+                      <div className="relative w-56 h-20">
                         <Image
                           src={brand.logo}
                           alt={brand.nombre}
@@ -252,13 +272,16 @@ export function HoldingBrandPanels({ locale, marcasData }: HoldingBrandPanelsPro
 
                 {/* Bottom Row: CTA Link */}
                 <div className="flex items-center justify-between border-t border-white/10 pt-4 mt-2">
-                  <Link
-                    href={brand.link}
-                    className="inline-flex items-center gap-2 bg-brand-green text-brand-navy font-display text-xs font-bold uppercase tracking-wider py-2 px-4 rounded-sm hover:bg-white transition-colors"
+                  <a
+                    href={brand.folleto}
+                    download={`Folleto_${brand.nombre.replace(/\s+/g, '_')}.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-brand-green text-brand-navy font-display text-xs font-bold uppercase tracking-wider py-2 px-4 rounded-sm hover:bg-white transition-colors cursor-pointer"
                   >
                     {brand.ctaText}
-                    <span>→</span>
-                  </Link>
+                    <span>↓</span>
+                  </a>
                   <span className="text-[9px] uppercase tracking-widest text-white/40">
                     Grupo Exportador del Campo
                   </span>

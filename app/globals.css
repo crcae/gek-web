@@ -7,6 +7,9 @@
     background-color: theme('colors.brand.white');
     color: theme('colors.brand.navy');
   }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: theme('fontFamily.display');
+  }
 }
 
 /* ─── Rich text (dangerouslySetInnerHTML) ──────────────────────────── */

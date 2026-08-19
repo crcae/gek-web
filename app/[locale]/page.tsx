@@ -49,7 +49,7 @@ export default async function Home({ params: { locale } }: { params: { locale: s
 
       <BrandsSection locale={locale} />
 
-      {/* News (LinkedIn Feed) - Moved directly below Brands */}
+      {/* News (LinkedIn Feed) */}
       <Suspense
         fallback={
           <div className="h-96 bg-[#2C3E4B] flex items-center justify-center animate-pulse">
@@ -64,15 +64,6 @@ export default async function Home({ params: { locale } }: { params: { locale: s
         />
       </Suspense>
 
-      <FeaturesSection locale={locale} />
-
-      {/* Client logos infinite carousel — dynamic from DB, static fallback */}
-      <ClientesSection
-        logos={logos}
-        eyebrow={clientesEyebrow ?? tHome('clientes_eyebrow')}
-        titulo={clientesTitulo ?? tHome('clientes_titulo')}
-      />
-
       {/* Events */}
       <Suspense fallback={<div className="h-96 bg-white flex items-center justify-center animate-pulse">Cargando eventos...</div>}>
         <EventosSection
@@ -82,6 +73,16 @@ export default async function Home({ params: { locale } }: { params: { locale: s
           titulo={eventosTitulo ?? tHome('eventos_titulo')}
         />
       </Suspense>
+
+      {/* Client logos infinite carousel — dynamic from DB, static fallback */}
+      <ClientesSection
+        logos={logos}
+        eyebrow={clientesEyebrow ?? tHome('clientes_eyebrow')}
+        titulo={clientesTitulo ?? tHome('clientes_titulo')}
+      />
+
+      {/* FeaturesSection (Conoce más de nosotros) - Moved immediately before LeadPipeline */}
+      <FeaturesSection locale={locale} />
 
       {/* Lead Pipeline — multi-step contact form */}
       <LeadPipeline />

@@ -76,65 +76,61 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
   };
 
   const renderHitoCard = (hito: Hito, index: number) => {
-    const esIzquierda = index % 2 === 0;
-    const animation = esIzquierda ? 'slide-left' : 'slide-right';
+    const animation = 'slide-left';
     const isFuture = hito.generacion === 'futuro';
 
     return (
       <div key={hito.id} className="relative flex flex-col md:flex-row items-center mb-16 md:mb-24 last:mb-0">
-        {/* Desktop alternating layout */}
-        {/* Left Side */}
-        <div className="w-full md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
-          {esIzquierda && (
-            <AnimatedSection animation={animation}>
-              <div className="bg-white/95 backdrop-blur p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-brand-green/30 transition-all duration-300 group hover:-translate-y-1 text-left md:text-right flex flex-col md:items-end">
-                <VisualEditable id={`timeline.${hito.id}.anio`} label={`Hito ${hito.id.replace('hito', '')} - Año`}>
-                  <span className="inline-block bg-brand-green/10 text-brand-green font-bold text-xs px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider">
-                    {hito.anio}
-                  </span>
+        {/* Left Side (Content) */}
+        <div className="w-full md:w-[90%] md:pr-12 order-2 md:order-1 text-left">
+          <AnimatedSection animation={animation}>
+            <div className="bg-white/95 backdrop-blur p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-brand-green/30 transition-all duration-300 group hover:-translate-y-1 text-left flex flex-col items-start">
+              <VisualEditable id={`timeline.${hito.id}.anio`} label={`Hito ${hito.id.replace('hito', '')} - Año`}>
+                <span className="inline-block bg-brand-green/10 text-brand-green font-bold text-xs px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider">
+                  {hito.anio}
+                </span>
+              </VisualEditable>
+              <VisualEditable id={`timeline.${hito.id}.titulo`} label={`Hito ${hito.id.replace('hito', '')} - Título`}>
+                <h4 className="font-display text-lg md:text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-green transition-colors">
+                  {hito.titulo}
+                </h4>
+              </VisualEditable>
+              {hito.desc && (
+                <VisualEditable id={`timeline.${hito.id}.desc`} label={`Hito ${hito.id.replace('hito', '')} - Descripción`}>
+                  <p className="font-body text-brand-navy/70 text-sm leading-relaxed mb-4">
+                    {hito.desc}
+                  </p>
                 </VisualEditable>
-                <VisualEditable id={`timeline.${hito.id}.titulo`} label={`Hito ${hito.id.replace('hito', '')} - Título`}>
-                  <h4 className="font-display text-lg md:text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-green transition-colors">
-                    {hito.titulo}
-                  </h4>
-                </VisualEditable>
-                {hito.desc && (
-                  <VisualEditable id={`timeline.${hito.id}.desc`} label={`Hito ${hito.id.replace('hito', '')} - Descripción`}>
-                    <p className="font-body text-brand-navy/70 text-sm leading-relaxed mb-4">
-                      {hito.desc}
-                    </p>
-                  </VisualEditable>
-                )}
-                {hito.imagen && (
-                  <div className="relative w-full aspect-[16/10] max-w-sm rounded-lg overflow-hidden border border-gray-100 mt-2 shadow-sm">
-                    <Image
-                      src={hito.imagen}
-                      alt={hito.titulo}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 300px"
-                    />
-                    {session && (
-                      <div className="absolute top-2 right-2 z-35">
-                        <VisualEditable id={`timeline.${hito.id}.imagen`} label={`Hito ${hito.id.replace('hito', '')} - Imagen`} type="image">
-                          <button
-                            type="button"
-                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] p-1.5 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
-                          >
-                            <Settings className="w-3.5 h-3.5" />
-                          </button>
-                        </VisualEditable>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </AnimatedSection>
-          )}
+              )}
+              {hito.imagen && (
+                <div className="relative w-full aspect-[16/10] max-w-sm rounded-lg overflow-hidden border border-gray-100 mt-2 shadow-sm">
+                  <Image
+                    src={hito.imagen}
+                    alt={hito.titulo}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 300px"
+                  />
+                  {session && (
+                    <div className="absolute top-2 right-2 z-35">
+                      <VisualEditable id={`timeline.${hito.id}.imagen`} label={`Hito ${hito.id.replace('hito', '')} - Imagen`} type="image">
+                        <button
+                          type="button"
+                          className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] p-1.5 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
+                        >
+                          <Settings className="w-3.5 h-3.5" />
+                        </button>
+                      </VisualEditable>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </AnimatedSection>
         </div>
 
-        {/* Central timeline marker */}
-        <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 flex flex-col items-center z-10">
+        {/* Right Side Timeline marker */}
+        <div className="absolute right-4 md:left-[90%] md:-translate-x-1/2 top-0 bottom-0 flex flex-col items-center z-10">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-lg transition-all duration-300 ${
             isFuture ? 'bg-brand-green animate-bounce' : 'bg-brand-navy hover:scale-110'
           }`}>
@@ -144,56 +140,6 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
           <span className="mt-2 text-[10px] font-bold text-gray-400 bg-white px-2 py-0.5 rounded shadow-sm border border-gray-100 uppercase tracking-widest md:hidden">
             {hito.anio}
           </span>
-        </div>
-
-        {/* Right Side */}
-        <div className="w-full md:w-1/2 md:pl-12 order-3 md:order-2 pl-12 md:pl-12 text-left">
-          {!esIzquierda && (
-            <AnimatedSection animation={animation}>
-              <div className="bg-white/95 backdrop-blur p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-brand-green/30 transition-all duration-300 group hover:-translate-y-1 text-left flex flex-col items-start">
-                <VisualEditable id={`timeline.${hito.id}.anio`} label={`Hito ${hito.id.replace('hito', '')} - Año`}>
-                  <span className="inline-block bg-brand-green/10 text-brand-green font-bold text-xs px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider">
-                    {hito.anio}
-                  </span>
-                </VisualEditable>
-                <VisualEditable id={`timeline.${hito.id}.titulo`} label={`Hito ${hito.id.replace('hito', '')} - Título`}>
-                  <h4 className="font-display text-lg md:text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-green transition-colors">
-                    {hito.titulo}
-                  </h4>
-                </VisualEditable>
-                {hito.desc && (
-                  <VisualEditable id={`timeline.${hito.id}.desc`} label={`Hito ${hito.id.replace('hito', '')} - Descripción`}>
-                    <p className="font-body text-brand-navy/70 text-sm leading-relaxed mb-4">
-                      {hito.desc}
-                    </p>
-                  </VisualEditable>
-                )}
-                {hito.imagen && (
-                  <div className="relative w-full aspect-[16/10] max-w-sm rounded-lg overflow-hidden border border-gray-100 mt-2 shadow-sm">
-                    <Image
-                      src={hito.imagen}
-                      alt={hito.titulo}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 300px"
-                    />
-                    {session && (
-                      <div className="absolute top-2 right-2 z-35">
-                        <VisualEditable id={`timeline.${hito.id}.imagen`} label={`Hito ${hito.id.replace('hito', '')} - Imagen`} type="image">
-                          <button
-                            type="button"
-                            className="bg-brand-navy/90 hover:bg-brand-green text-white text-[9px] p-1.5 rounded-full shadow border border-brand-green/30 flex items-center gap-1 transition-colors cursor-pointer"
-                          >
-                            <Settings className="w-3.5 h-3.5" />
-                          </button>
-                        </VisualEditable>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </AnimatedSection>
-          )}
         </div>
       </div>
     );
@@ -221,8 +167,8 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
       <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Column 1 (Left): Sticky Vertical Generation Title on Desktop */}
-        <div className={`hidden lg:flex lg:col-span-2 lg:sticky lg:top-28 flex-col items-center select-none transition-colors duration-500 ${activeGen === '1' ? 'text-brand-navy' : 'text-white'}`}>
+        {/* Column 1 (Left): Sticky Generation Title on Desktop - Horizontal */}
+        <div className={`hidden lg:flex lg:col-span-2 lg:sticky lg:top-28 flex-col items-start select-none transition-colors duration-500 ${activeGen === '1' ? 'text-brand-navy' : 'text-white'}`}>
           <style dangerouslySetInnerHTML={{ __html: `
             @keyframes numSlideIn {
               0% { opacity: 0; transform: translateY(-10px); }
@@ -232,28 +178,12 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
               animation: numSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
             }
           `}} />
-          {/* Changing Number */}
-          <div 
-            key={activeGen}
-            className="font-display font-black text-6xl animate-num-slide leading-none mb-4 transition-colors duration-500"
-          >
-            {activeGen === '1' && '1ª'}
-            {activeGen === '2' && '2ª'}
-            {activeGen === '3' && '3ª'}
-          </div>
-
-          {/* Static Vertical Word "GENERACIÓN" */}
-          <div className="flex flex-col items-center font-display font-black text-3xl tracking-wider leading-none gap-2 transition-colors duration-500">
-            <span>G</span>
-            <span>E</span>
-            <span>N</span>
-            <span>E</span>
-            <span>R</span>
-            <span>A</span>
-            <span>C</span>
-            <span>I</span>
-            <span>Ó</span>
-            <span>N</span>
+          {/* Horizontal Text "1ª Generación" */}
+          <div className="flex flex-col items-start font-display font-black tracking-wider transition-colors duration-500">
+            <span key={activeGen} className="text-6xl animate-num-slide leading-none mb-2">
+              {activeGen}ª
+            </span>
+            <span className="text-xl uppercase tracking-widest">Generación</span>
           </div>
         </div>
 
@@ -273,7 +203,7 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
           <div className="relative pl-4 md:pl-0">
             {/* The vertical timeline track line */}
-            <div className="absolute left-4 md:left-1/2 top-4 bottom-12 w-[3px] -translate-x-[1.5px] bg-gradient-to-b from-brand-green via-brand-navy/40 to-brand-green rounded-full pointer-events-none" />
+            <div className="absolute right-4 md:left-[90%] top-4 bottom-12 w-[3px] -translate-x-[1.5px] bg-gradient-to-b from-brand-green via-brand-navy/40 to-brand-green rounded-full pointer-events-none" />
 
             {/* BLOCK 1: Primera Generación */}
             <div id="gen-block-1" data-gen="1" className="mb-20 scroll-mt-24">

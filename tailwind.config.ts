@@ -17,8 +17,8 @@ const config: Config = {
         }
       },
       fontFamily: {
-        display: ['var(--font-playfair-display)', 'serif'],
-        body: ['var(--font-lora)', 'serif'],
+        display: ['"Antonia"', 'var(--font-playfair-display)', 'serif'],
+        body: ['"Elsa"', '"Elza"', 'var(--font-lora)', 'serif'],
       },
     },
   },

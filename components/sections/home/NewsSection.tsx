@@ -60,12 +60,6 @@ export function NewsSection({
                 delay={(idx + 1) as 1 | 2 | 3}
               >
                 <div className="card-hover relative bg-white/5 rounded-lg overflow-hidden shadow-lg transition-all border border-white/10 flex flex-col h-full pt-4">
-                  {/* Badge LinkedIn */}
-                  <div className="absolute top-0 right-0 bg-[#0A66C2] text-white px-3 py-1 text-xs font-bold rounded-bl-lg z-10 flex items-center gap-1">
-                    <LinkedinIcon className="w-3 h-3" />
-                    LinkedIn
-                  </div>
-
                   {/* Iframe */}
                   <div className="w-full flex-grow relative bg-white/5 flex justify-center">
                     <iframe

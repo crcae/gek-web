@@ -39,9 +39,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Archivo muy grande (máx 5MB)' }, { status: 400 });
     }
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
     if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: 'Formato no permitido (JPG, PNG, WebP)' }, { status: 400 });
+      return NextResponse.json({ error: 'Formato no permitido (JPG, PNG, WebP, PDF)' }, { status: 400 });
     }
 
     // Generar nombre único

@@ -37,6 +37,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
     'holding.marca1.pie',
     'holding.marca1.imagen',
     'holding.marca1.logo',
+    'holding.marca1.folleto',
 
     'holding.marca2.nombre',
     'holding.marca2.subtitulo',
@@ -44,6 +45,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
     'holding.marca2.pie',
     'holding.marca2.imagen',
     'holding.marca2.logo',
+    'holding.marca2.folleto',
 
     'holding.marca3.nombre',
     'holding.marca3.subtitulo',
@@ -51,6 +53,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
     'holding.marca3.pie',
     'holding.marca3.imagen',
     'holding.marca3.logo',
+    'holding.marca3.folleto',
   ];
 
   const contenido = await getContenidoCached(contentIds, locale);
@@ -75,6 +78,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
   const estructuraSubtitulo = contenido['holding.estructura.subtitulo'] || 'GEC HOLDING';
 
   // Build marcasData array for the expandable accordion
+  const defaultPdf = '/images/identidad/MANUAL_DE_IDENTIDAD_-_GRUPO_EXPORTADOR_DEL_CAMPO.pdf';
   const marcasData = [
     {
       id: 'fruits',
@@ -83,13 +87,14 @@ export default async function Holding({ params: { locale } }: { params: { locale
       texto: contenido['holding.marca1.texto'] || (isEs
         ? "Producimos y comercializamos hortalizas frescas y enfriadas respaldadas por décadas de experiencia agrícola, llevando la calidad del campo mexicano a mercados nacionales e internacionales."
         : "We produce and commercialize fresh and cooled vegetables backed by decades of agricultural experience, bringing Mexican field quality to national and international markets."),
-      ctaText: isEs ? "Descubre nuestros productos" : "Discover our products",
+      ctaText: isEs ? "Descargar brochure" : isDe ? "Broschüre herunterladen" : "Download brochure",
       link: `/${locale}/holding/vizcaino-fruits`,
       pie: contenido['holding.marca1.pie'] || (isEs ? "Cultivamos" : "We cultivate"),
       logo: contenido['holding.marca1.logo'] || '/images/logos/VizcainoFruits_Logo.png',
       bgClass: 'bg-[#1b4332]', // Dark green
       colorClass: 'brand-green',
-      bgImage: contenido['holding.marca1.imagen'] || '/images/holding/brands/fruits-bg.jpg'
+      bgImage: contenido['holding.marca1.imagen'] || '/images/holding/brands/fruits-bg.jpg',
+      folleto: contenido['holding.marca1.folleto'] || defaultPdf
     },
     {
       id: 'premium',
@@ -98,13 +103,14 @@ export default async function Holding({ params: { locale } }: { params: { locale
       texto: contenido['holding.marca2.texto'] || (isEs
         ? "Especialistas en chiles, cebollas y soluciones de empaque que elevan el valor de cada product o mediante selección, procesamiento y comercialización especializada."
         : "Specialists in chiles, onions and packaging solutions that elevate each product value through specialized selection, processing and commercialization."),
-      ctaText: isEs ? "Conoce nuestra especialidad" : "Explore our specialty",
+      ctaText: isEs ? "Descargar brochure" : isDe ? "Broschüre herunterladen" : "Download brochure",
       link: `/${locale}/holding/vizcaino-premium`,
       pie: contenido['holding.marca2.pie'] || (isEs ? "Transformamos" : "We transform"),
       logo: contenido['holding.marca2.logo'] || '/images/logos/VizcainoPremium_Logo_web.png',
       bgClass: 'bg-[#7f1d1d]', // Crimson red
       colorClass: 'brand-red',
-      bgImage: contenido['holding.marca2.imagen'] || '/images/holding/brands/premium-bg.jpg'
+      bgImage: contenido['holding.marca2.imagen'] || '/images/holding/brands/premium-bg.jpg',
+      folleto: contenido['holding.marca2.folleto'] || defaultPdf
     },
     {
       id: 'services',
@@ -113,13 +119,14 @@ export default async function Holding({ params: { locale } }: { params: { locale
       texto: contenido['holding.marca3.texto'] || (isEs
         ? "Integramos servicios de logística, refrigeración, enmallado, almacenamiento y maquila para conectar productos frescos con sus destinos de forma eficiente y confiable."
         : "We integrate logistics, pre-cooling, netting packaging, storage and maquila services to connect fresh produce with their destinations efficiently and reliably."),
-      ctaText: isEs ? "Explora nuestros servicios" : "Explore our services",
+      ctaText: isEs ? "Descargar brochure" : isDe ? "Broschüre herunterladen" : "Download brochure",
       link: `/${locale}/holding/vizcaino-services`,
       pie: contenido['holding.marca3.pie'] || (isEs ? "Movemos" : "We move"),
       logo: contenido['holding.marca3.logo'] || '/images/logos/VizcainoServices_Logo_web.png',
       bgClass: 'bg-[#0f4c5c]', // Deep blue
       colorClass: 'brand-blue',
-      bgImage: contenido['holding.marca3.imagen'] || '/images/holding/brands/services-bg.jpg'
+      bgImage: contenido['holding.marca3.imagen'] || '/images/holding/brands/services-bg.jpg',
+      folleto: contenido['holding.marca3.folleto'] || defaultPdf
     }
   ];
 
@@ -140,16 +147,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
         heroImageId="holding.hero.imagen"
       />
 
-      {/* Introducción Corporativa */}
-      <section className="w-full bg-white py-16 md:py-20 px-6 border-b border-brand-gray/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <VisualEditable id="holding.intro" label="Introducción Corporativa">
-            <p className="font-body text-brand-navy/80 text-lg md:text-xl leading-relaxed">
-              {intro}
-            </p>
-          </VisualEditable>
-        </div>
-      </section>
+
 
       {/* Ecosistema de Marcas y Unidades de Negocio */}
       <section id="marcas-unidades" className="w-full bg-[#F8FAF9] py-20 px-6">

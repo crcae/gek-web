@@ -15,8 +15,8 @@
 - [ ] Envolver los bloques en `VisualEditable`.
 
 ## Fase 4: Historia and Holding
-- [ ] Migrar los textos del slideshow de origen y el organigrama.
-- [ ] Envolver los bloques en `VisualEditable`.
+- [x] Migrar los textos del slideshow de origen y el organigrama.
+- [x] Envolver los bloques en `VisualEditable`.
 
 ## Fase 5: Elementos Globales (Header/Footer)
 - [ ] Migrar la dirección, teléfono, correo y enlaces de navegación del Footer/Header.
