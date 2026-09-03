@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { VisualEditable } from '@/components/admin/VisualEditable';
 
@@ -15,8 +16,9 @@ interface Pilar {
 interface EcosistemaGECProps {
   eyebrow: string;
   titulo: string;
-  slogan: string;
+  slogan?: string;
   pilares: Pilar[];
+  camionUrl?: string;
 }
 
 export function EcosistemaGEC({
@@ -24,6 +26,7 @@ export function EcosistemaGEC({
   titulo,
   slogan,
   pilares = [],
+  camionUrl,
 }: EcosistemaGECProps) {
   const [openId, setOpenId] = useState<string | null>('campo');
 
@@ -88,15 +91,26 @@ export function EcosistemaGEC({
           })}
         </div>
 
-        {/* Slogan GEC */}
-        <div className="mt-16 text-center">
-          <div className="inline-block border-t-2 border-b-2 border-brand-green py-4 px-8">
-            <VisualEditable id="quienes.ecosistema.gec.slogan" label="Ecosistema GEC - Slogan Final">
-              <p className="font-display text-2xl md:text-3xl font-bold text-brand-navy">
-                {slogan}
-              </p>
-            </VisualEditable>
-          </div>
+        {/* Pie de página: Camión GEC */}
+        <div className="mt-14 flex flex-col items-center justify-center">
+          <VisualEditable id="quienes.procesos.camion" label="Imagen Ilustrativa Camión (Pie de Página)" type="image">
+            <div className="relative w-72 md:w-96 h-20 md:h-24 flex items-center justify-center">
+              {camionUrl ? (
+                <Image
+                  src={camionUrl}
+                  alt="Ilustración Camión GEC"
+                  fill
+                  className="object-contain"
+                  unoptimized
+                />
+              ) : (
+                <div className="text-center p-3 flex items-center gap-2 text-brand-navy/60 text-xs border border-dashed border-gray-300 rounded-lg">
+                  <span className="text-2xl">🚛</span>
+                  <span>Subir imagen del Camión GEC</span>
+                </div>
+              )}
+            </div>
+          </VisualEditable>
         </div>
       </div>
     </section>
