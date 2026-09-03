@@ -93,7 +93,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
       logo: contenido['holding.marca1.logo'] || '/images/logos/VizcainoFruits_Logo.png',
       bgClass: 'bg-[#1b4332]', // Dark green
       colorClass: 'brand-green',
-      bgImage: contenido['holding.marca1.imagen'] || '/images/holding/brands/fruits-bg.jpg',
+      bgImage: contenido['holding.marca1.imagen'] || '/images/features/quienes.jpg',
       folleto: contenido['holding.marca1.folleto'] || defaultPdf
     },
     {
@@ -109,7 +109,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
       logo: contenido['holding.marca2.logo'] || '/images/logos/VizcainoPremium_Logo_web.png',
       bgClass: 'bg-[#7f1d1d]', // Crimson red
       colorClass: 'brand-red',
-      bgImage: contenido['holding.marca2.imagen'] || '/images/holding/brands/premium-bg.jpg',
+      bgImage: contenido['holding.marca2.imagen'] || '/images/features/holding.jpg',
       folleto: contenido['holding.marca2.folleto'] || defaultPdf
     },
     {
@@ -125,7 +125,7 @@ export default async function Holding({ params: { locale } }: { params: { locale
       logo: contenido['holding.marca3.logo'] || '/images/logos/VizcainoServices_Logo_web.png',
       bgClass: 'bg-[#0f4c5c]', // Deep blue
       colorClass: 'brand-blue',
-      bgImage: contenido['holding.marca3.imagen'] || '/images/holding/brands/services-bg.jpg',
+      bgImage: contenido['holding.marca3.imagen'] || '/images/features/historia.jpg',
       folleto: contenido['holding.marca3.folleto'] || defaultPdf
     }
   ];

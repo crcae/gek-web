@@ -13,9 +13,24 @@ export const getContenidoCached = unstable_cache(
     ids.forEach(id => {
       const item = contenido.find(c => c.id === id);
       if (item) {
-        if (locale === 'en') result[id] = item.valor_en || item.valor_es || '';
-        else if (locale === 'de') result[id] = item.valor_de || item.valor_es || '';
-        else result[id] = item.valor_es || '';
+        const isMedia = id.includes('imagen') || id.includes('logo') || id.includes('foto') || id.includes('folleto') || id.includes('trailer') || id.includes('camion');
+        const esVal = item.valor_es || '';
+        const enVal = item.valor_en || '';
+        const deVal = item.valor_de || '';
+
+        if (isMedia) {
+          if (locale === 'en') {
+            result[id] = (enVal && enVal.startsWith('http')) ? enVal : (esVal || enVal || '');
+          } else if (locale === 'de') {
+            result[id] = (deVal && deVal.startsWith('http')) ? deVal : (esVal || deVal || '');
+          } else {
+            result[id] = esVal || enVal || '';
+          }
+        } else {
+          if (locale === 'en') result[id] = enVal || esVal || '';
+          else if (locale === 'de') result[id] = deVal || esVal || '';
+          else result[id] = esVal || '';
+        }
       } else {
         result[id] = '';
       }
