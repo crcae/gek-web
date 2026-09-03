@@ -175,7 +175,7 @@ export function EventosSection({
 
   return (
     <section id="eventos" className="w-full bg-white py-12 md:py-14 px-6 border-t border-brand-gray/10 relative overflow-hidden">
-      <div className="max-w-5xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
         <div className="flex flex-col items-center mb-8 md:mb-10 text-center">
@@ -205,7 +205,7 @@ export function EventosSection({
         {activeEvents.length === 0 ? (
           <p className="text-brand-navy/60 text-sm font-body text-center py-4 mb-4">{t('eventos_vacio')}</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center mb-8">
             {activeEvents.map((evt) => (
               <div 
                 key={evt.id} 
