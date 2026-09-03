@@ -79,9 +79,6 @@ export function NewsSection({
         ) : (
           <AnimatedSection animation="fade-in" delay={2}>
             <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-xl border border-white/10 max-w-3xl mx-auto text-center">
-              <div className="w-16 h-16 bg-[#0A66C2]/20 text-white rounded-full flex items-center justify-center mb-6 border border-[#0A66C2]/40">
-                <LinkedinIcon className="w-8 h-8" />
-              </div>
               <h3 className="font-display text-2xl font-bold text-white mb-3">
                 {t('noticias_titulo')}
               </h3>

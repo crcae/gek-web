@@ -183,9 +183,9 @@ export function Footer({ locale, contenido = {} }: FooterProps) {
             <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
               <Link href={`/${locale}/holding`} className="hover:text-brand-green transition-colors">Holding</Link>
               <Link href={`/${locale}/holding#marcas-unidades`} className="hover:text-brand-green transition-colors">Marcas y Unidades</Link>
-              <Link href={`/${locale}/holding/vizcaino-fruits`} className="hover:text-brand-green transition-colors">Vizcaíno Fruits</Link>
-              <Link href={`/${locale}/holding/vizcaino-premium`} className="hover:text-brand-green transition-colors">Vizcaíno Premium</Link>
-              <Link href={`/${locale}/holding/vizcaino-services`} className="hover:text-brand-green transition-colors">Vizcaíno Services</Link>
+              <Link href={`/${locale}/holding`} className="hover:text-brand-green transition-colors">Vizcaíno Fruits</Link>
+              <Link href={`/${locale}/holding`} className="hover:text-brand-green transition-colors">Vizcaíno Premium</Link>
+              <Link href={`/${locale}/holding`} className="hover:text-brand-green transition-colors">Vizcaíno Services</Link>
               <Link href={`/${locale}/holding#estructura-corporativa`} className="hover:text-brand-green transition-colors">Estructura</Link>
             </div>
           </div>

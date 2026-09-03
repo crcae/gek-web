@@ -60,9 +60,9 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
       links: [
         { label: locale === 'en' ? 'Holding' : locale === 'de' ? 'Holding' : 'Holding', href: `/${locale}/holding` },
         { label: locale === 'en' ? 'Brands & Units' : locale === 'de' ? 'Marken & Einheiten' : 'Marcas y Unidades', href: `/${locale}/holding#marcas-unidades` },
-        { label: 'Vizcaíno Fruits', href: `/${locale}/holding/vizcaino-fruits` },
-        { label: 'Vizcaíno Premium', href: `/${locale}/holding/vizcaino-premium` },
-        { label: 'Vizcaíno Services', href: `/${locale}/holding/vizcaino-services` },
+        { label: 'Vizcaíno Fruits', href: `/${locale}/holding` },
+        { label: 'Vizcaíno Premium', href: `/${locale}/holding` },
+        { label: 'Vizcaíno Services', href: `/${locale}/holding` },
         { label: locale === 'en' ? 'Corporate Structure' : locale === 'de' ? 'Unternehmensstruktur' : 'Estructura Corporativa', href: `/${locale}/holding#estructura-corporativa` },
       ],
       desc: locale === 'en'

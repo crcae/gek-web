@@ -33,7 +33,7 @@ export async function BrandsSection({ locale }: { locale: string }) {
       ...brand,
       exists,
       url,
-      link: `/${locale}/holding/${brand.slug}`,
+      link: `/${locale}/holding`,
     };
   });
 
