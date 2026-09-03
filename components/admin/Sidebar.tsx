@@ -17,7 +17,8 @@ import {
   BookOpen,
   Building2,
   Mail,
-  Edit3
+  Edit3,
+  KeyRound
 } from 'lucide-react';
 
 const mainNavItems = [
@@ -141,7 +142,18 @@ export function Sidebar({ userName, unreadCount, onClose }: SidebarProps) {
           <Globe className="w-3.5 h-3.5" />
           <span>Ver Sitio Web en Vivo</span>
         </Link>
-        <p className="text-white/50 text-xs mb-2 truncate font-mono">{userName}</p>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-white/50 text-xs truncate font-mono">{userName}</p>
+          <Link
+            href="/admin/perfil"
+            onClick={onClose}
+            className="text-[11px] font-bold text-brand-green hover:underline flex items-center gap-1 shrink-0"
+            title="Cambiar contraseña de administrador"
+          >
+            <KeyRound className="w-3 h-3" />
+            <span>Seguridad</span>
+          </Link>
+        </div>
         <button
           onClick={() => signOut({ callbackUrl: '/admin/login' })}
           className="flex items-center gap-2 text-white/60 hover:text-red-400 transition-colors text-xs font-medium w-full py-1.5"
