@@ -316,7 +316,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
       />
 
       {/* ── 1. Intro — texto + card CEO ── */}
-      <section id="grupo-exportador" className="w-full bg-brand-white py-16 md:py-20 px-4 sm:px-6 relative overflow-hidden">
+      <section id="grupo-exportador" className="w-full bg-brand-white py-10 md:py-14 px-4 sm:px-6 relative overflow-hidden">
         {/* Background Watermark/Isotipo */}
         <div className="absolute left-[-160px] bottom-[-140px] w-[580px] h-[580px] opacity-[0.35] pointer-events-none select-none z-0">
           <Image
@@ -328,38 +328,27 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
           />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-12 items-start">
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-10 items-start">
           {/* Columna izquierda — texto */}
           <div className="w-full md:w-[65%]">
             <VisualEditable id="quienes.intro.titulo" label="Título de Introducción">
-              <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
+              <h2 className="font-display text-3xl md:text-5xl font-bold text-brand-navy mb-4">
                 {introTitulo}
               </h2>
             </VisualEditable>
             <div className="w-[60px] h-[3px] bg-brand-green mb-6" />
             <VisualEditable id="quienes.intro" label="Párrafo de Introducción">
               <p
-                className="rich-text font-body text-brand-navy/80 text-lg leading-relaxed"
+                className="rich-text font-body text-brand-navy/85 text-lg md:text-xl leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: intro || t('intro_titulo') }}
               />
             </VisualEditable>
-            <div className="mt-8 pt-4 flex flex-col items-start gap-3">
-              <VisualEditable id="quienes.intro.slogan" label="Slogan GEC">
-                <p className="font-display text-3xl md:text-5xl text-brand-navy font-black tracking-wide leading-none">
-                  {introSlogan}
-                </p>
-              </VisualEditable>
-              <div className="w-[80px] h-[3px] bg-brand-green mt-1" />
-              <div className="w-10 h-10 rounded-full border-2 border-brand-green/20 flex items-center justify-center mt-3">
-                <div className="w-2.5 h-2.5 rounded-full bg-brand-green" />
-              </div>
-            </div>
           </div>
 
           {/* Columna derecha — card CEO */}
-          <div className="w-full md:w-[35%] relative md:-mb-20 md:mt-6">
-            <div className="rounded-2xl overflow-hidden shadow-2xl">
-              <div className="relative h-72 md:h-96">
+          <div className="w-full md:w-[35%] relative md:mt-2">
+            <div className="rounded-2xl overflow-hidden shadow-xl">
+              <div className="relative h-64 md:h-80">
                 {ceoSrc ? (
                   <div className="relative w-full h-full">
                     <Image
@@ -391,20 +380,15 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-navy" />
               </div>
               <div className="bg-brand-navy px-6 py-5">
-                <VisualEditable id="quienes.ceo.eyebrow" label="Eyebrow del CEO">
-                  <p className="text-brand-green text-xs font-medium uppercase tracking-widest mb-2">
+                <VisualEditable id="quienes.ceo.eyebrow" label="Director General">
+                  <p className="text-brand-green text-xs font-bold uppercase tracking-wider mb-2">
                     {ceoEyebrow}
                   </p>
                 </VisualEditable>
                 <VisualEditable id="quienes.ceo.frase" label="Frase del CEO">
-                  <h3 className="font-display text-white text-2xl font-bold leading-tight mb-3">
+                  <h3 className="font-display text-white text-xl md:text-2xl font-bold leading-tight">
                     &ldquo;{ceoFrase}&rdquo;
                   </h3>
-                </VisualEditable>
-                <VisualEditable id="quienes.ceo.desc" label="Descripción del CEO">
-                  <p className="text-white/70 text-sm font-body leading-relaxed">
-                    {ceoDesc}
-                  </p>
                 </VisualEditable>
               </div>
             </div>
