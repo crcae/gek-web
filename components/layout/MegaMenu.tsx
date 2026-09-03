@@ -99,12 +99,9 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
       onMouseLeave={onClose}
     >
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-8 text-white">
-        {/* Left Column: Isotipo + Title */}
+        {/* Left Column: Title */}
         <div className="md:col-span-3 flex flex-col justify-start">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="w-6 h-6 rounded-full bg-brand-green flex items-center justify-center shrink-0">
-              <span className="text-[10px] font-bold text-white">GEC</span>
-            </div>
+          <div className="flex items-center mb-3">
             <h4 className="font-display font-bold text-lg text-brand-green uppercase tracking-wider">{current.title}</h4>
           </div>
           <div className="h-[1px] bg-white/10 my-4" />

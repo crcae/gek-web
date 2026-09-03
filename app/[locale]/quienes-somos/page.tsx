@@ -380,15 +380,15 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-navy" />
               </div>
               <div className="bg-brand-navy px-6 py-5">
-                <VisualEditable id="quienes.ceo.eyebrow" label="Director General">
-                  <p className="text-brand-green text-xs font-bold uppercase tracking-wider mb-2">
-                    {ceoEyebrow}
-                  </p>
-                </VisualEditable>
                 <VisualEditable id="quienes.ceo.frase" label="Frase del CEO">
-                  <h3 className="font-display text-white text-xl md:text-2xl font-bold leading-tight">
+                  <h3 className="font-display text-white text-xl md:text-2xl font-bold leading-tight mb-2">
                     &ldquo;{ceoFrase}&rdquo;
                   </h3>
+                </VisualEditable>
+                <VisualEditable id="quienes.ceo.eyebrow" label="Director General">
+                  <p className="text-brand-green text-xs font-bold uppercase tracking-wider">
+                    {ceoEyebrow}
+                  </p>
                 </VisualEditable>
               </div>
             </div>

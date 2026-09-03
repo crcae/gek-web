@@ -42,13 +42,13 @@ export function Footer({ locale, contenido = {} }: FooterProps) {
       
       {/* Decorative Watermark bottom-right (removed truck placeholder) */}
 
-      {/* Decorative GEC Logo Watermark bottom-right */}
-      <div className="absolute right-[-60px] bottom-[-60px] w-[350px] h-[350px] opacity-50 pointer-events-none select-none z-0">
+      {/* Decorative GEC Logo Watermark bottom-right (scaled 100% larger) */}
+      <div className="absolute right-[-100px] bottom-[-100px] w-[650px] h-[650px] md:w-[700px] md:h-[700px] opacity-50 pointer-events-none select-none z-0">
         <Image
           src="/images/iconos/icono.png"
           alt="GEC Isotipo Watermark"
-          width={350}
-          height={350}
+          width={700}
+          height={700}
           className="object-contain object-bottom object-right"
         />
       </div>

@@ -32,29 +32,26 @@ export default async function Contacto({ params: { locale } }: { params: { local
       {/* Full-width multi-step contact pipeline */}
       <LeadPipeline showContactInfo={true} />
 
-      {/* ── Espacio para la imagen en alta del Tráiler (Editable) ── */}
-      <section className="w-full bg-white pb-16 pt-4 px-4 sm:px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto flex justify-center">
-          <VisualEditable id="contacto.trailer.imagen" label="Imagen Ilustrativa Tráiler (Contacto)" type="image" className="w-full">
-            <div className="relative w-full aspect-[21/9] max-h-[450px] overflow-hidden flex items-center justify-center">
-              {contenido['contacto.trailer.imagen'] ? (
-                <Image
-                  src={contenido['contacto.trailer.imagen']}
-                  alt="Ilustración Tráiler GEC"
-                  fill
-                  className="object-contain"
-                  unoptimized
-                />
-              ) : (
-                <div className="text-center p-8 flex flex-col items-center gap-3">
-                  <span className="text-5xl">🚛</span>
-                  <p className="font-display text-lg font-semibold text-brand-navy">Espacio para Imagen: El Tráiler</p>
-                  <p className="font-body text-xs text-brand-navy/60">Haz clic en el lápiz de edición flotante para subir la imagen en alta del tráiler</p>
-                </div>
-              )}
-            </div>
-          </VisualEditable>
-        </div>
+      {/* ── Pie de página: Tráiler GEC (Editable) ── */}
+      <section className="w-full bg-brand-white pb-12 pt-0 px-4 sm:px-6 relative overflow-hidden flex flex-col items-center justify-center">
+        <VisualEditable id="contacto.trailer.imagen" label="Imagen Ilustrativa Tráiler (Pie de Página)" type="image">
+          <div className="relative w-72 md:w-96 h-20 md:h-24 flex items-center justify-center cursor-pointer">
+            {contenido['contacto.trailer.imagen'] ? (
+              <Image
+                src={contenido['contacto.trailer.imagen']}
+                alt="Ilustración Tráiler GEC"
+                fill
+                className="object-contain"
+                unoptimized
+              />
+            ) : (
+              <div className="text-center p-3 flex items-center gap-2 text-brand-navy/60 text-xs border border-dashed border-gray-300 rounded-lg">
+                <span className="text-2xl">🚛</span>
+                <span>Subir imagen del Tráiler GEC</span>
+              </div>
+            )}
+          </div>
+        </VisualEditable>
       </section>
     </div>
   );
