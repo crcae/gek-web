@@ -20,7 +20,7 @@ export default function AdminLoginPage() {
       redirect: false,
     });
     if (res?.ok) {
-      router.push('/admin/dashboard');
+      window.location.href = '/admin/dashboard';
     } else {
       setError('Credenciales incorrectas. Verifica tu email y contraseña.');
     }
