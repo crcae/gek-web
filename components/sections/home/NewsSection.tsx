@@ -33,12 +33,6 @@ export function NewsSection({
 
   return (
     <section id="noticias" className="relative w-full bg-[#2C3E4B] py-20 px-6 overflow-hidden">
-      {/* Isotipo Watermark in Navy background */}
-      <div 
-        className="absolute left-[-120px] top-[-120px] w-[380px] h-[380px] bg-no-repeat bg-contain pointer-events-none opacity-[0.06]"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10 text-white">
         <div className="flex flex-col items-center mb-12">
           <AnimatedSection animation="fade-up">
@@ -79,6 +73,9 @@ export function NewsSection({
         ) : (
           <AnimatedSection animation="fade-in" delay={2}>
             <div className="flex flex-col items-center justify-center p-12 bg-white/5 rounded-xl border border-white/10 max-w-3xl mx-auto text-center">
+              <div className="w-16 h-16 bg-[#0A66C2]/20 text-white rounded-full flex items-center justify-center mb-6 border border-[#0A66C2]/40">
+                <LinkedinIcon className="w-8 h-8" />
+              </div>
               <h3 className="font-display text-2xl font-bold text-white mb-3">
                 {t('noticias_titulo')}
               </h3>
