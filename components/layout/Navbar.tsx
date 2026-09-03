@@ -40,6 +40,7 @@ export function Navbar() {
     { key: 'quienesSomos', label: t('quienes'), href: `/${locale}/quienes-somos` },
     { key: 'historia', label: t('historia'), href: `/${locale}/historia` },
     { key: 'holding', label: t('holding'), href: `/${locale}/holding` },
+    { key: 'blog', label: t('blog'), href: `/${locale}/blog` },
     { key: 'contacto', label: t('contacto'), href: `/${locale}/contacto` },
   ];
 

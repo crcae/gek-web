@@ -138,9 +138,9 @@ export function Footer({ locale, contenido = {} }: FooterProps) {
             </div>
             <div className="flex flex-col gap-2.5 text-white/70 text-xs font-body">
               <Link href={`/${locale}`} className="hover:text-brand-green transition-colors">Inicio</Link>
+              <Link href={`/${locale}/blog`} className="hover:text-brand-green transition-colors font-medium">Blog & Noticias</Link>
               <Link href={`/${locale}#marcas`} className="hover:text-brand-green transition-colors">Marcas</Link>
               <Link href={`/${locale}#clientes`} className="hover:text-brand-green transition-colors">Clientes</Link>
-              <Link href={`/${locale}#noticias`} className="hover:text-brand-green transition-colors">Noticias</Link>
               <Link href={`/${locale}#eventos`} className="hover:text-brand-green transition-colors">Eventos</Link>
             </div>
           </div>

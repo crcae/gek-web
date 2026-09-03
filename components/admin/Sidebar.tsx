@@ -22,10 +22,11 @@ import {
 
 const mainNavItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/blog', label: 'Blog & Artículos', icon: BookOpen },
   { href: '/admin/leads', label: 'Leads y Mensajes', icon: Users },
   { href: '/admin/eventos', label: 'Eventos', icon: Calendar },
   { href: '/admin/clientes', label: 'Logos Clientes', icon: Sparkles },
-  { href: '/admin/noticias', label: 'Noticias', icon: Newspaper },
+  { href: '/admin/noticias', label: 'Noticias LinkedIn', icon: Newspaper },
 ];
 
 const sitePages = [
@@ -33,6 +34,7 @@ const sitePages = [
   { href: '/es/quienes-somos', label: 'Quiénes Somos', icon: UserCheck },
   { href: '/es/historia', label: 'Historia', icon: BookOpen },
   { href: '/es/holding', label: 'Holding', icon: Building2 },
+  { href: '/es/blog', label: 'Blog', icon: BookOpen },
   { href: '/es/contacto', label: 'Contacto', icon: Mail },
 ];
 

@@ -72,6 +72,21 @@ export function MegaMenu({ activeKey, onClose }: MegaMenuProps) {
         : 'Estructura corporativa especializada que impulsa sinergias y eficiencia en cada unidad de negocio.',
       image: '/images/features/holding.jpg',
     },
+    blog: {
+      title: locale === 'en' ? 'Blog & News' : locale === 'de' ? 'Blog & Neuigkeiten' : 'Blog & Noticias',
+      links: [
+        { label: locale === 'en' ? 'All Articles' : locale === 'de' ? 'Alle Artikel' : 'Todos los Artículos', href: `/${locale}/blog` },
+        { label: locale === 'en' ? 'Agri-food Innovation' : locale === 'de' ? 'Agrarinnovation' : 'Innovación Agrícola', href: `/${locale}/blog` },
+        { label: locale === 'en' ? 'Sustainability' : locale === 'de' ? 'Nachhaltigkeit' : 'Sostenibilidad', href: `/${locale}/blog` },
+        { label: locale === 'en' ? 'Events & Fairs' : locale === 'de' ? 'Events & Messen' : 'Eventos y Ferias', href: `/${locale}/blog` },
+      ],
+      desc: locale === 'en'
+        ? 'Latest perspectives, agricultural innovations, and sustainability updates from Mexico to the world.'
+        : locale === 'de'
+        ? 'Neueste Perspektiven, landwirtschaftliche Innovationen und Nachhaltigkeitsupdates aus Mexiko in die Welt.'
+        : 'Perspectivas, innovación en cultivo, exportación y sostenibilidad desde el corazón de nuestro campo.',
+      image: '/images/features/quienes.jpg',
+    },
     contacto: {
       title: locale === 'en' ? 'Contact' : locale === 'de' ? 'Kontakt' : 'Contacto',
       links: [

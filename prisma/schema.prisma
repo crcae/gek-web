@@ -118,3 +118,29 @@ model ClienteLogo {
   orden     Int      @default(0)
   createdAt DateTime @default(now())
 }
+
+model BlogPost {
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  titulo_es        String
+  titulo_en        String?
+  titulo_de        String?
+  resumen_es       String?
+  resumen_en       String?
+  resumen_de       String?
+  contenido_es     String    @db.Text
+  contenido_en     String?   @db.Text
+  contenido_de     String?   @db.Text
+  portadaUrl       String?
+  categoria        String    @default("Agroindustria")
+  autor            String?   @default("Grupo Exportador del Campo")
+  autorCargo       String?
+  autorAvatar      String?
+  destacado        Boolean   @default(false)
+  publicado        Boolean   @default(true)
+  vistas           Int       @default(0)
+  fechaPublicacion DateTime  @default(now())
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
