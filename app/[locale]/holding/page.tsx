@@ -1,17 +1,13 @@
 import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
-import { OrganigramaChart } from '@/components/sections/holding/OrganigramaChart';
 import { HoldingBrandPanels } from '@/components/sections/holding/HoldingBrandPanels';
 import { getContenidoCached } from '@/lib/queries/cache';
 import Image from 'next/image';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { AnimatedLine } from '@/components/ui/AnimatedLine';
 import { VisualEditable } from '@/components/admin/VisualEditable';
-import { Settings } from 'lucide-react';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
-import fs from 'fs';
-import path from 'path';
 
 export default async function Holding({ params: { locale } }: { params: { locale: string } }) {
   const session = await getServerSession(authOptions);
@@ -130,10 +126,8 @@ export default async function Holding({ params: { locale } }: { params: { locale
     }
   ];
 
-  // Resolve corporate structure image path
-  const ecPath = '/images/holding/estructura-corporativa.png';
-  const imgEstructura = contenido['holding.estructura.imagen'] || ecPath;
-  const hasEcImage = imgEstructura && (imgEstructura.startsWith('http') || fs.existsSync(path.join(process.cwd(), 'public', imgEstructura)));
+  // Corporate structure image
+  const imgEstructura = contenido['holding.estructura.imagen'];
 
   return (
     <div className="flex flex-col min-h-screen bg-brand-white">
@@ -146,8 +140,6 @@ export default async function Holding({ params: { locale } }: { params: { locale
         subtitleId="holding.hero.sub"
         heroImageId="holding.hero.imagen"
       />
-
-
 
       {/* Ecosistema de Marcas y Unidades de Negocio */}
       <section id="marcas-unidades" className="w-full bg-[#F8FAF9] py-20 px-6">
@@ -167,11 +159,10 @@ export default async function Holding({ params: { locale } }: { params: { locale
         </div>
       </section>
 
-      {/* Organigrama / Estructura Corporativa */}
+      {/* Organigrama / Estructura Corporativa (Imagen / Diagrama de Flujos) */}
       <section id="estructura-corporativa" className="w-full bg-gray-50/50 py-20 px-6 border-t border-brand-gray/10 relative overflow-hidden">
-
-        <div className="max-w-[1200px] mx-auto relative z-10">
-          <AnimatedSection animation="fade-up" className="mb-16 text-center">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <AnimatedSection animation="fade-up" className="mb-12 text-center">
             <VisualEditable id="holding.estructura.subtitulo" label="Eyebrow Estructura Corporativa">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-green mb-3 block">
                 {estructuraSubtitulo}
@@ -185,55 +176,43 @@ export default async function Holding({ params: { locale } }: { params: { locale
             <AnimatedLine className="h-[3px] bg-brand-green mx-auto" />
           </AnimatedSection>
 
-          {hasEcImage ? (
-            <div className="relative w-full aspect-[16/9] max-w-4xl mx-auto rounded-lg overflow-hidden border border-brand-gray/15 shadow-xl bg-white mb-12">
-              <Image
-                src={imgEstructura}
-                alt="Estructura Corporativa GEC"
-                fill
-                className="object-contain p-4"
-                unoptimized
-              />
-              {session && (
-                <div className="absolute top-3 right-3 z-35">
-                  <VisualEditable id="holding.estructura.imagen" label="Imagen de Estructura Corporativa" type="image">
-                    <button
-                      type="button"
-                      className="bg-brand-navy/90 hover:bg-brand-green text-white text-[10px] font-bold px-3 py-1.5 rounded-full shadow-lg border border-brand-green/30 flex items-center gap-1.5 transition-colors cursor-pointer"
-                    >
-                      <Settings className="w-3.5 h-3.5" />
-                      Cambiar Imagen
-                    </button>
-                  </VisualEditable>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className="bg-white border border-brand-gray/15 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-              {/* Background Watermark/Isotipo inside the card */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-50 z-0">
-                <div className="relative w-[500px] h-[500px]">
-                  <Image
-                    src="/images/iconos/icono.png"
-                    alt="GEC Isotipo Watermark"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+          {/* Diagrama de Flujos — Imagen Editable */}
+          <div className="max-w-5xl mx-auto">
+            <VisualEditable id="holding.estructura.imagen" label="Diagrama de Estructura Corporativa (Flujos)" type="image" className="w-full">
+              <div className="bg-white border border-brand-gray/20 rounded-2xl shadow-xl overflow-hidden p-4 md:p-8 flex items-center justify-center min-h-[350px] md:min-h-[480px] relative">
+                {imgEstructura ? (
+                  <div className="relative w-full aspect-[16/9] max-h-[700px]">
+                    <Image
+                      src={imgEstructura}
+                      alt="Diagrama de Estructura Corporativa GEC"
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <div className="text-center py-12 px-6 flex flex-col items-center gap-4 max-w-lg mx-auto">
+                    <div className="w-16 h-16 rounded-2xl bg-brand-green/10 flex items-center justify-center text-brand-green border border-brand-green/20">
+                      <span className="text-3xl">📊</span>
+                    </div>
+                    <div>
+                      <h3 className="font-display text-lg md:text-xl font-bold text-brand-navy mb-2">
+                        Diagrama de Flujo — Estructura Corporativa
+                      </h3>
+                      <p className="font-body text-xs md:text-sm text-brand-navy/65 leading-relaxed">
+                        Espacio asignado para la imagen del diagrama de flujos y estructura corporativa de GEC Holding.
+                      </p>
+                    </div>
+                    {session && (
+                      <p className="font-body text-xs font-semibold text-brand-green bg-brand-green/10 px-4 py-2 rounded-full border border-brand-green/30">
+                        Haz clic en el lápiz flotante para subir la imagen del diagrama
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
-
-              <div className="relative z-10">
-                <OrganigramaChart />
-              </div>
-
-              {/* Decorative corners items */}
-              <div className="absolute bottom-4 right-4 flex items-center gap-2 text-[10px] text-brand-navy/30 uppercase tracking-widest font-body">
-                <span>GEC Holding</span>
-                <span>•</span>
-                <span>Organigrama</span>
-              </div>
-            </div>
-          )}
+            </VisualEditable>
+          </div>
         </div>
       </section>
     </div>
