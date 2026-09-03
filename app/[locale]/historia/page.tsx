@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/shared/PageHero';
 import { Timeline } from '@/components/sections/history/Timeline';
-import { LegadoSlideshow } from '@/components/sections/history/LegadoSlideshow';
+import { NuestroLegadoSection } from '@/components/sections/history/NuestroLegadoSection';
 import { FundadoresSection } from '@/components/sections/history/FundadoresSection';
 import { getContenidoCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
@@ -33,21 +33,11 @@ export default async function Historia({ params: { locale } }: { params: { local
     'historia.fundadores.imagen',
     'historia.fundadores2.imagen',
     
-    'historia.slideshow.titulo',
-    'historia.slide1.subtitulo',
-    'historia.slide1.pie',
-    'historia.slide1.texto',
+    'historia.legado.eyebrow',
+    'historia.legado.titulo',
+    'historia.legado.texto',
+    'historia.legado.mapa',
     'historia.slide1.imagen',
-    
-    'historia.slide2.subtitulo',
-    'historia.slide2.pie',
-    'historia.slide2.texto',
-    'historia.slide2.imagen',
-    
-    'historia.slide3.subtitulo',
-    'historia.slide3.pie',
-    'historia.slide3.texto',
-    'historia.slide3.imagen',
     
     'timeline.titulo',
     ...hitoIds
@@ -62,7 +52,13 @@ export default async function Historia({ params: { locale } }: { params: { local
   const fundadoresTexto = contenido['historia.fundadores.texto'];
   const fundadoresCaption = contenido['historia.fundadores.caption'] || 'Sr. Ramiro Vizcaíno y Sra. Zeferina Torres';
   
-  const slideshowTitulo = contenido['historia.slideshow.titulo'] || 'Nuestro Legado';
+  const legadoEyebrow = contenido['historia.legado.eyebrow'] || 'NUESTROS ORÍGENES';
+  const legadoTitulo = contenido['historia.legado.titulo'] || (locale === 'es' ? 'Nacidos en Zacatecas' : locale === 'de' ? 'Geboren in Zacatecas' : 'Born in Zacatecas');
+  const legadoTexto = contenido['historia.legado.texto'] || (locale === 'es' 
+    ? 'Hace más de 50 años, en las áridas pero fértiles tierras de Loreto, Zacatecas, nuestro fundador Don Ramiro Vizcaíno tomó las riendas de un proyecto que marcaría el camino de tres generaciones comprometidas a trabajar el campo.\n\nY la historia comenzó desde el municipio de Loreto.'
+    : 'Over 50 years ago, in the fertile lands of Loreto, Zacatecas, our founder Don Ramiro Vizcaíno took the helm of a project that would mark the path of three generations committed to working the field.\n\nAnd the story began from the municipality of Loreto.');
+  const legadoMapa = contenido['historia.legado.mapa'] || contenido['historia.slide1.imagen'] || '/images/zacatecas/_DSC3592.jpg';
+
   const timelineTitulo = contenido['timeline.titulo'] || 'Línea de Tiempo GEC';
 
   const hitos = [];
@@ -84,27 +80,6 @@ export default async function Historia({ params: { locale } }: { params: { local
       });
     }
   }
-
-  const slides = [
-    {
-      subtitulo: contenido['historia.slide1.subtitulo'] || 'Primera Generación',
-      pie: contenido['historia.slide1.pie'] || 'Nacidos en Zacatecas',
-      texto: contenido['historia.slide1.texto'] || 'Hace más de 50 años, en las fértiles tierras de Zacatecas, nuestro fundador Don Ramiro Vizcaíno tomó las riendas de un proyecto que marcaría el camino de tres generaciones comprometidas a trabajar el campo.\n\nY la historia comenzó desde el municipio de Loreto.',
-      imagen: contenido['historia.slide1.imagen'] || '/images/zacatecas/_DSC3592.jpg'
-    },
-    {
-      subtitulo: contenido['historia.slide2.subtitulo'] || 'Segunda Generación',
-      pie: contenido['historia.slide2.pie'] || 'Crecidos en México',
-      texto: contenido['historia.slide2.texto'] || 'La segunda generación llevó la operación fuera de Zacatecas, a expandir nuestras operaciones y puntos de venta por el país. Entrando a cadenas de retail y realizando nuestras primeras exportaciones.',
-      imagen: contenido['historia.slide2.imagen'] || '/images/sedis/sedis1.jpg'
-    },
-    {
-      subtitulo: contenido['historia.slide3.subtitulo'] || 'Tercera Generación',
-      pie: contenido['historia.slide3.pie'] || 'Listos para el Mundo',
-      texto: contenido['historia.slide3.texto'] || 'En la actualidad, la tercera generación ha incursionado en un proceso de institucionalización; instaurando procesos, estructuración sólida, nuevas unidades de negocio y mayor responsabilidad social.\n\nPara seguir llevando una probadita de México al mundo entero.',
-      imagen: contenido['historia.slide3.imagen'] || '/images/features/quienes.jpg'
-    }
-  ];
 
   // Fotos de Fundadores
   let fotosFundadores: string[] = [];
@@ -136,8 +111,13 @@ export default async function Historia({ params: { locale } }: { params: { local
         heroImageId="historia.hero.imagen"
       />
 
-      {/* Legado Slideshow — 3 partes cambiantes */}
-      <LegadoSlideshow titulo={slideshowTitulo} slides={slides} />
+      {/* Nuestro Legado — Sección compacta con Mapa de Zacatecas Editable */}
+      <NuestroLegadoSection
+        eyebrow={legadoEyebrow}
+        titulo={legadoTitulo}
+        texto={legadoTexto}
+        mapaImagen={legadoMapa}
+      />
 
       {/* Timeline */}
       <Timeline hitos={hitos} titulo={timelineTitulo} />
