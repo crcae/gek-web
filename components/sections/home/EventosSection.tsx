@@ -174,11 +174,11 @@ export function EventosSection({
   const activeEvents = eventList.filter((e) => e.activo);
 
   return (
-    <section id="eventos" className="w-full bg-white py-20 px-6 border-t border-brand-gray/10 relative overflow-hidden">
+    <section id="eventos" className="w-full bg-white py-12 md:py-14 px-6 border-t border-brand-gray/10 relative overflow-hidden">
       <div className="max-w-5xl mx-auto relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col items-center mb-16 text-center">
+        <div className="flex flex-col items-center mb-8 md:mb-10 text-center">
           <AnimatedSection animation="fade-up">
             <VisualEditable id={tituloId} label="Título de la sección Eventos">
               <h2 className="font-display text-3xl font-bold text-brand-navy mb-4">
@@ -203,9 +203,9 @@ export function EventosSection({
         </div>
 
         {activeEvents.length === 0 ? (
-          <p className="text-brand-navy/60 text-sm font-body text-center py-6">{t('eventos_vacio')}</p>
+          <p className="text-brand-navy/60 text-sm font-body text-center py-4 mb-4">{t('eventos_vacio')}</p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 justify-center mb-8">
             {activeEvents.map((evt) => (
               <div 
                 key={evt.id} 
@@ -262,7 +262,7 @@ export function EventosSection({
         )}
 
         {/* Footer / Closure: IFPA Proud Member Badge */}
-        <div className="flex flex-col items-center justify-center text-center p-6 border-t border-brand-gray/10 max-w-md mx-auto">
+        <div className="flex flex-col items-center justify-center text-center pt-6 pb-2 border-t border-brand-gray/10 max-w-md mx-auto">
           <IFPABadge imageExists={ifpaBadgeExists} />
           <p className="font-lora italic text-sm text-brand-navy/80 mt-3 leading-relaxed">
             {t('eventos_ifpa')}
