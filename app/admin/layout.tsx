@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { AdminShell } from '@/components/admin/AdminShell';
+import { AdminSessionWrapper } from '@/components/admin/AdminSessionWrapper';
 import { prisma } from '@/lib/db';
 import { Inter } from 'next/font/google';
 
@@ -14,7 +15,11 @@ export default async function AdminLayout({
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return <div className={inter.className}>{children}</div>;
+    return (
+      <AdminSessionWrapper>
+        <div className={inter.className}>{children}</div>
+      </AdminSessionWrapper>
+    );
   }
 
   const unreadCount = await prisma.lead.count({
@@ -22,13 +27,15 @@ export default async function AdminLayout({
   });
 
   return (
-    <div className={inter.className}>
-      <AdminShell
-        userName={session.user?.email ?? 'Admin'}
-        unreadCount={unreadCount}
-      >
-        {children}
-      </AdminShell>
-    </div>
+    <AdminSessionWrapper>
+      <div className={inter.className}>
+        <AdminShell
+          userName={session.user?.email ?? 'Admin'}
+          unreadCount={unreadCount}
+        >
+          {children}
+        </AdminShell>
+      </div>
+    </AdminSessionWrapper>
   );
 }

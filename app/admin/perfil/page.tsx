@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import { Lock, Check, ShieldCheck, KeyRound, AlertCircle } from 'lucide-react';
 
 export default function PerfilSeguridadPage() {
-  const { data: session } = useSession();
+  const sessionResult = useSession();
+  const session = sessionResult?.data;
   const [passwordActual, setPasswordActual] = useState('');
   const [nuevaPassword, setNuevaPassword] = useState('');
   const [confirmarPassword, setConfirmarPassword] = useState('');
