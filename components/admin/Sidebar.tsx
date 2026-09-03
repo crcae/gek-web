@@ -28,6 +28,7 @@ const mainNavItems = [
   { href: '/admin/eventos', label: 'Eventos', icon: Calendar },
   { href: '/admin/clientes', label: 'Logos Clientes', icon: Sparkles },
   { href: '/admin/noticias', label: 'Noticias LinkedIn', icon: Newspaper },
+  { href: '/admin/perfil', label: 'Cambiar Contraseña', icon: KeyRound },
 ];
 
 const sitePages = [
