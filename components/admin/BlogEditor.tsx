@@ -354,6 +354,7 @@ export function BlogEditor({ initialData, isNew = false }: BlogEditorProps) {
               valorActual={portadaUrl}
               onChange={(url) => setPortadaUrl(url)}
               type="image"
+              aspectRatio="16:9"
             />
           </div>
 
@@ -523,6 +524,7 @@ export function BlogEditor({ initialData, isNew = false }: BlogEditorProps) {
                     valorActual={block.url}
                     onChange={(url) => updateBlock(index, { ...block, url })}
                     type="image"
+                    aspectRatio="16:9"
                   />
                   <div>
                     <label className="block text-[11px] font-bold text-gray-500 uppercase mb-1">

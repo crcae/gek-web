@@ -148,6 +148,15 @@ export function VisualEditable({ id, label, type = 'text', children, className =
                         valorActual={form.valor_es}
                         onChange={(v) => setForm({ valor_es: v, valor_en: v, valor_de: v })}
                         type={type === 'pdf' ? 'pdf' : type === 'video' ? 'video' : 'image'}
+                        aspectRatio={
+                          id.toLowerCase().includes('ceo') || id.toLowerCase().includes('avatar')
+                            ? '3:4'
+                            : id.toLowerCase().includes('fundadores') || id.toLowerCase().includes('capital') || id.toLowerCase().includes('mosaico') || id.toLowerCase().includes('cedis') || id.toLowerCase().includes('campo')
+                            ? '4:3'
+                            : id.toLowerCase().includes('logo') || id.toLowerCase().includes('marca')
+                            ? '1:1'
+                            : '16:9'
+                        }
                       />
                     ) : (
                       <textarea

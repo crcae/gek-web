@@ -13,16 +13,64 @@ import { ClientesSection } from '@/components/sections/home/ClientesSection';
 import { NewsSection } from '@/components/sections/home/NewsSection';
 import { EventosSection } from '@/components/sections/home/EventosSection';
 import { LeadPipeline } from '@/components/sections/home/LeadPipeline';
+import { RecentBlogDrawer } from '@/components/sections/home/RecentBlogDrawer';
 
 export default async function Home({ params: { locale } }: { params: { locale: string } }) {
-  const [noticias, contenido, tPagina, tHome, logos, eventos] = await Promise.all([
+  const threeMonthsAgo = new Date();
+  threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+  const [noticias, contenido, tPagina, tHome, logos, eventos, rawRecentBlogs] = await Promise.all([
     getNoticiasCached(3),
     getContenidoCached(['home.hero.eyebrow', 'home.hero.tagline', 'home.hero.sub', 'home.hero.video', 'home.noticias_titulo', 'home.clientes_eyebrow', 'home.clientes_titulo', 'home.eventos_eyebrow', 'home.eventos_titulo'], locale),
     getTranslations('pagina'),
     getTranslations('home'),
     prisma.clienteLogo.findMany({ orderBy: { orden: 'asc' } }),
     prisma.evento.findMany({ where: { activo: true }, orderBy: { createdAt: 'desc' } }),
+    prisma.blogPost.findMany({
+      where: {
+        publicado: true,
+        fechaPublicacion: { gte: threeMonthsAgo },
+      },
+      select: {
+        id: true,
+        slug: true,
+        titulo_es: true,
+        titulo_en: true,
+        titulo_de: true,
+        resumen_es: true,
+        resumen_en: true,
+        resumen_de: true,
+        categoria: true,
+        portadaUrl: true,
+        fechaPublicacion: true,
+      },
+      orderBy: { fechaPublicacion: 'desc' },
+      take: 4,
+    }),
   ]);
+
+  // Si no hay posts en los últimos 3 meses, tomar los 3 más recientes publicados
+  let recentBlogs = rawRecentBlogs;
+  if (recentBlogs.length === 0) {
+    recentBlogs = await prisma.blogPost.findMany({
+      where: { publicado: true },
+      select: {
+        id: true,
+        slug: true,
+        titulo_es: true,
+        titulo_en: true,
+        titulo_de: true,
+        resumen_es: true,
+        resumen_en: true,
+        resumen_de: true,
+        categoria: true,
+        portadaUrl: true,
+        fechaPublicacion: true,
+      },
+      orderBy: { fechaPublicacion: 'desc' },
+      take: 3,
+    });
+  }
 
   const ifpaBadgeExists = fs.existsSync(path.join(process.cwd(), 'public/images/eventos/ifpa-proud-member.png'));
 
@@ -86,6 +134,9 @@ export default async function Home({ params: { locale } }: { params: { locale: s
 
       {/* Lead Pipeline — multi-step contact form */}
       <LeadPipeline />
+
+      {/* Discrete collapsible panel for recent blogs */}
+      <RecentBlogDrawer posts={recentBlogs} locale={locale} />
     </div>
   );
 }

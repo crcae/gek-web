@@ -419,6 +419,15 @@ function ContentField({ item }: { item: Contenido }) {
               label="Español"
               valorActual={form.valor_es}
               onChange={(v) => setForm({ ...form, valor_es: v })}
+              aspectRatio={
+                item.id.toLowerCase().includes('ceo') || item.id.toLowerCase().includes('avatar')
+                  ? '3:4'
+                  : item.id.toLowerCase().includes('fundadores') || item.id.toLowerCase().includes('capital') || item.id.toLowerCase().includes('mosaico') || item.id.toLowerCase().includes('cedis') || item.id.toLowerCase().includes('campo')
+                  ? '4:3'
+                  : item.id.toLowerCase().includes('logo') || item.id.toLowerCase().includes('marca')
+                  ? '1:1'
+                  : '16:9'
+              }
             />
           ) : (
             <textarea

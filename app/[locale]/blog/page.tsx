@@ -43,7 +43,6 @@ export default async function BlogPage({ params: { locale } }: { params: { local
         title={heroTitulo}
         subtitle={heroSubtitulo}
         heroImage="/images/features/quienes.jpg"
-        compact={true}
         titleId="blog.hero.titulo"
         subtitleId="blog.hero.sub"
       />

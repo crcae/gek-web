@@ -111,6 +111,15 @@ export function AdminImageButton({
                   valorActual={valorEs}
                   onChange={(v) => setValorEs(v)}
                   type="image"
+                  aspectRatio={
+                    id.toLowerCase().includes('ceo') || id.toLowerCase().includes('avatar')
+                      ? '3:4'
+                      : id.toLowerCase().includes('fundadores') || id.toLowerCase().includes('capital') || id.toLowerCase().includes('mosaico') || id.toLowerCase().includes('cedis') || id.toLowerCase().includes('campo')
+                      ? '4:3'
+                      : id.toLowerCase().includes('logo') || id.toLowerCase().includes('marca')
+                      ? '1:1'
+                      : '16:9'
+                  }
                 />
               )}
             </div>

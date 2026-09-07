@@ -28,6 +28,8 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   return NextResponse.json(item);
 }
 
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
+
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -43,6 +45,11 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   const seccion = parts[0] || 'general';
   const campo = parts.slice(1).join('.') || 'campo';
 
+  // Sanitizar si contiene URLs de imágenes o localhost
+  const cleanEs = cleanImageUrl(valor_es);
+  const cleanEn = valor_en ? cleanImageUrl(valor_en) : null;
+  const cleanDe = valor_de ? cleanImageUrl(valor_de) : null;
+
   // Use upsert so that newly registered keys that don't exist in DB yet are created on save
   const updated = await prisma.contenidoSitio.upsert({
     where: { id: params.id },
@@ -50,14 +57,14 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
       id: params.id,
       seccion,
       campo,
-      valor_es,
-      valor_en: valor_en || null,
-      valor_de: valor_de || null,
+      valor_es: cleanEs,
+      valor_en: cleanEn,
+      valor_de: cleanDe,
     },
     update: {
-      valor_es,
-      valor_en: valor_en || null,
-      valor_de: valor_de || null,
+      valor_es: cleanEs,
+      valor_en: cleanEn,
+      valor_de: cleanDe,
     },
   });
 

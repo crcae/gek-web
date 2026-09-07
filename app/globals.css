@@ -2,13 +2,149 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Web Fonts (Antonia & Elza) ────────────────────────────────── */
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-Heavy.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Antonia';
+  src: url('/fonts/antonia/AntoniaH1-Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Elza';
+  src: url('/fonts/elza/ElzaTextTrial-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+002C, U+002D, U+002E, U+0030-0039, U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Elza';
+  src: url('/fonts/elza/ElzaTextTrial-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+002C, U+002D, U+002E, U+0030-0039, U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Elza';
+  src: url('/fonts/elza/ElzaTextTrial-Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+002C, U+002D, U+002E, U+0030-0039, U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Elza';
+  src: url('/fonts/elza/ElzaTextTrial-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+002C, U+002D, U+002E, U+0030-0039, U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Elza';
+  src: url('/fonts/elza/ElzaTextTrial-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+002C, U+002D, U+002E, U+0030-0039, U+0041-005A, U+0061-007A;
+}
+@font-face {
+  font-family: 'Elza';
+  src: url('/fonts/elza/ElzaTrial-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0020, U+002C, U+002D, U+002E, U+0030-0039, U+0041-005A, U+0061-007A;
+}
+
 @layer base {
-  body {
+  html, body {
+    font-family: 'Elza', var(--font-elza), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: theme('colors.brand.white');
     color: theme('colors.brand.navy');
   }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: theme('fontFamily.display');
+
+  /* Antonia: títulos, encabezados y textos display */
+  h1, h2, h3, h4, h5, h6,
+  .font-display,
+  [class*="font-display"] {
+    font-family: 'Antonia', var(--font-antonia), Georgia, serif;
+  }
+
+  /* Elza: textos generales, botones, navegación, formularios y cuerpo */
+  p, span, a, li,
+  button, input, textarea, select, label,
+  .font-body,
+  .font-lora,
+  nav, .nav-link,
+  form,
+  [class*="font-body"] {
+    font-family: 'Elza', var(--font-elza), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Asegurar que elementos dentro de font-display mantengan Antonia */
+  .font-display,
+  .font-display * {
+    font-family: 'Antonia', var(--font-antonia), Georgia, serif;
   }
 }
 

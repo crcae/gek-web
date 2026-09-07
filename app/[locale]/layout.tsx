@@ -1,4 +1,4 @@
-import { Playfair_Display, Lora } from 'next/font/google';
+import { antonia, elza } from '@/app/fonts';
 import '@/app/globals.css';
 import { NextIntlClientProvider } from 'next-intl';
 import { getTranslations, getMessages } from 'next-intl/server';
@@ -10,18 +10,6 @@ import { CustomCursor } from '@/components/ui/CustomCursor';
 import { FloatingButtons } from '@/components/ui/FloatingButtons';
 import { ClientSessionProvider } from '@/components/admin/ClientSessionProvider';
 import { getContenidoCached } from '@/lib/queries/cache';
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair-display',
-  display: 'swap',
-});
-
-const lora = Lora({
-  subsets: ['latin'],
-  variable: '--font-lora',
-  display: 'swap',
-});
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations({ locale, namespace: 'metadata' });
@@ -57,7 +45,7 @@ export default async function LocaleLayout({
   ], locale);
 
   return (
-    <html lang={locale} className={`${playfairDisplay.variable} ${lora.variable}`}>
+    <html lang={locale} className={`${antonia.variable} ${elza.variable}`}>
       <body className="public-site font-body bg-brand-white text-brand-navy antialiased min-h-screen flex flex-col">
         <CustomCursor />
         <NextIntlClientProvider locale={locale} messages={messages}>

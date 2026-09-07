@@ -1,6 +1,8 @@
 import { unstable_cache } from 'next/cache';
 import { prisma } from '@/lib/db';
 
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
+
 export const getContenidoCached = unstable_cache(
   async (ids: string[], locale: string) => {
     const contenido = await prisma.contenidoSitio.findMany({
@@ -19,13 +21,15 @@ export const getContenidoCached = unstable_cache(
         const deVal = item.valor_de || '';
 
         if (isMedia) {
+          let mediaVal = '';
           if (locale === 'en') {
-            result[id] = (enVal && enVal.startsWith('http')) ? enVal : (esVal || enVal || '');
+            mediaVal = (enVal && enVal.startsWith('http')) ? enVal : (esVal || enVal || '');
           } else if (locale === 'de') {
-            result[id] = (deVal && deVal.startsWith('http')) ? deVal : (esVal || deVal || '');
+            mediaVal = (deVal && deVal.startsWith('http')) ? deVal : (esVal || deVal || '');
           } else {
-            result[id] = esVal || enVal || '';
+            mediaVal = esVal || enVal || '';
           }
+          result[id] = cleanImageUrl(mediaVal);
         } else {
           if (locale === 'en') result[id] = enVal || esVal || '';
           else if (locale === 'de') result[id] = deVal || esVal || '';

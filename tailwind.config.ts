@@ -17,8 +17,11 @@ const config: Config = {
         }
       },
       fontFamily: {
-        display: ['"Antonia"', 'var(--font-playfair-display)', 'serif'],
-        body: ['"Elsa"', '"Elza"', 'var(--font-lora)', 'serif'],
+        display: ['"Antonia"', 'var(--font-antonia)', 'Georgia', 'serif'],
+        body: ['"Elza"', 'var(--font-elza)', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Elza"', 'var(--font-elza)', 'system-ui', '-apple-system', 'sans-serif'],
+        serif: ['"Antonia"', 'var(--font-antonia)', 'Georgia', 'serif'],
+        lora: ['"Elza"', 'var(--font-elza)', 'sans-serif'],
       },
     },
   },

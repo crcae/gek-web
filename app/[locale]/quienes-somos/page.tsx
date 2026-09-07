@@ -312,11 +312,10 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         titleId="quienes.hero.titulo"
         subtitleId="quienes.hero.sub"
         heroImageId="quienes.hero.imagen"
-        compact={true}
       />
 
       {/* ── 1. Intro — texto + card CEO ── */}
-      <section id="grupo-exportador" className="w-full bg-brand-white py-10 md:py-14 px-4 sm:px-6 relative overflow-hidden">
+      <section id="grupo-exportador" className="w-full bg-brand-white py-14 md:py-20 px-4 sm:px-6 relative overflow-hidden">
         {/* Background Watermark/Isotipo */}
         <div className="absolute left-[-160px] bottom-[-140px] w-[580px] h-[580px] opacity-[0.35] pointer-events-none select-none z-0">
           <Image
@@ -328,18 +327,18 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
           />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-10 items-start">
+        <div className="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row gap-12 items-start">
           {/* Columna izquierda — texto */}
-          <div className="w-full md:w-[65%]">
+          <div className="w-full md:w-[62%] lg:w-[64%]">
             <VisualEditable id="quienes.intro.titulo" label="Título de Introducción">
-              <h2 className="font-display text-3xl md:text-5xl font-bold text-brand-navy mb-4">
+              <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-brand-navy mb-5">
                 {introTitulo}
               </h2>
             </VisualEditable>
-            <div className="w-[60px] h-[3px] bg-brand-green mb-6" />
+            <div className="w-[70px] h-[4px] bg-brand-green mb-8" />
             <VisualEditable id="quienes.intro" label="Párrafo de Introducción">
               <p
-                className="rich-text font-body text-brand-navy/85 text-lg md:text-xl leading-relaxed"
+                className="rich-text font-body text-brand-navy/90 text-xl md:text-2xl lg:text-[23px] leading-[1.9] md:leading-[2.1] tracking-normal"
                 dangerouslySetInnerHTML={{ __html: intro || t('intro_titulo') }}
               />
             </VisualEditable>
@@ -510,13 +509,12 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         }}
       />
 
-      {/* ── 7. Ecosistema GEC — Paneles expansibles y Camión al pie ── */}
+      {/* ── 7. Ecosistema GEC — Paneles expansibles ── */}
       <EcosistemaGEC
         eyebrow={ecoGecEyebrow}
         titulo={ecoGecTitulo}
         slogan={ecoGecSlogan}
         pilares={ecoGecPilares}
-        camionUrl={contenido['quienes.procesos.camion']}
       />
     </div>
   );
