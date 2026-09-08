@@ -91,12 +91,6 @@ export async function MetricsSection({ locale }: { locale: string }) {
 
   return (
     <section className="relative w-full bg-brand-navy py-20 px-6 overflow-hidden">
-      {/* Watermark Decoration */}
-      <div 
-        className="absolute right-0 bottom-0 w-[350px] h-[350px] bg-no-repeat bg-contain bg-right-bottom pointer-events-none opacity-[0.03] z-0"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-claro.png)' }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-0 lg:divide-x lg:divide-brand-green/30 text-center">
           {metrics.map((metric, idx) => (

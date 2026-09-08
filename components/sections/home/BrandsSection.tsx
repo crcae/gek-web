@@ -39,12 +39,6 @@ export async function BrandsSection({ locale }: { locale: string }) {
 
   return (
     <section id="marcas" className="w-full bg-brand-white py-20 px-6 relative overflow-hidden">
-      {/* Watermark Isotipo on White Background */}
-      <div 
-        className="absolute right-[-100px] top-[-100px] w-[350px] h-[350px] bg-no-repeat bg-contain pointer-events-none opacity-[0.04]"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col items-center mb-16 text-center">
           <AnimatedSection animation="fade-up">

@@ -226,11 +226,6 @@ function LeadPipelineContent({ showContactInfo = false }: { showContactInfo?: bo
 
   return (
     <section id="cotizacion" className="w-full bg-brand-white py-20 px-4 sm:px-6 relative overflow-hidden">
-      <div
-        className="absolute left-[-150px] bottom-[-150px] w-[400px] h-[400px] bg-no-repeat bg-contain pointer-events-none opacity-[0.04] z-0"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
-      />
-
       <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100 relative z-10 flex flex-col md:flex-row">
 
         {/* Left Side: Progress tracker */}
