@@ -23,12 +23,6 @@ export function NuestroLegadoSection({
 
   return (
     <section id="origen" className="w-full bg-brand-white py-12 md:py-16 px-4 sm:px-6 relative overflow-hidden border-b border-brand-gray/10">
-      {/* Background Watermark */}
-      <div 
-        className="absolute left-[-120px] top-[-120px] w-[320px] h-[320px] bg-no-repeat bg-contain pointer-events-none opacity-[0.03]"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
           

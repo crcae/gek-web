@@ -101,12 +101,6 @@ export function FundadoresSection({
       ref={sectionRef} 
       className="w-full bg-white py-10 md:py-14 px-4 sm:px-6 relative overflow-hidden border-t border-brand-gray/10"
     >
-      {/* Background soft Isotipo Watermark */}
-      <div
-        className="absolute left-[-60px] bottom-[-60px] w-[320px] h-[320px] bg-no-repeat bg-contain pointer-events-none opacity-[0.02] select-none"
-        style={{ backgroundImage: 'url(/images/isotipo/isotipo-oscuro.png)' }}
-      />
-
       <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center">
         
         {/* Left Column: Heading, Quote and Stats (col-span-6) */}
