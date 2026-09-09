@@ -32,7 +32,8 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  const footerContenido = await getContenidoCached([
+  const globalContenido = await getContenidoCached([
+    'header.logo',
     'footer.quote',
     'footer.direccion.stiva',
     'footer.direccion.loreto',
@@ -51,14 +52,14 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientSessionProvider>
             <Topbar
-              correo={footerContenido['footer.correo']}
-              telefono={footerContenido['footer.telefono']}
+              correo={globalContenido['footer.correo']}
+              telefono={globalContenido['footer.telefono']}
             />
-            <Navbar />
+            <Navbar logoUrl={globalContenido['header.logo']} />
             <main className="flex-grow">
               {children}
             </main>
-            <Footer locale={locale} contenido={footerContenido} />
+            <Footer locale={locale} contenido={globalContenido} />
             <FloatingButtons />
           </ClientSessionProvider>
         </NextIntlClientProvider>

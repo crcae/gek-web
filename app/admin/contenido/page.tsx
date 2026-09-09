@@ -222,6 +222,7 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'holding.marca3.imagen':      '→ Holding · Marca 3 · Imagen de Fondo de Tarjeta',
   'holding.marca3.logo':        '→ Holding · Marca 3 · Logotipo',
   'contacto.hero.imagen':       '→ Contacto · Imagen del banner superior (Hero)',
+  'header.logo':                '→ Global · Header · Logotipo principal del sitio (Navbar)',
   'footer.quote':               '→ Global · Footer · Cita inspiracional / Slogan',
   'footer.direccion.stiva':     '→ Global · Footer · Dirección Parque Industrial',
   'footer.direccion.loreto':    '→ Global · Footer · Dirección Loreto',
@@ -236,6 +237,7 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
 // Detectar si un campo es de tipo imagen
 const esImagen = (id: string, valor: string) =>
   id.toLowerCase().includes('imagen') ||
+  id.toLowerCase().includes('logo') ||
   /\.(jpg|jpeg|png|webp|svg)$/i.test(valor?.trim() ?? '');
 
 export default function ContenidoPage() {
@@ -420,7 +422,9 @@ function ContentField({ item }: { item: Contenido }) {
               valorActual={form.valor_es}
               onChange={(v) => setForm({ ...form, valor_es: v })}
               aspectRatio={
-                item.id.toLowerCase().includes('ceo') || item.id.toLowerCase().includes('avatar')
+                item.id === 'header.logo'
+                  ? 'libre'
+                  : item.id.toLowerCase().includes('ceo') || item.id.toLowerCase().includes('avatar')
                   ? '3:4'
                   : item.id.toLowerCase().includes('fundadores') || item.id.toLowerCase().includes('capital') || item.id.toLowerCase().includes('mosaico') || item.id.toLowerCase().includes('cedis') || item.id.toLowerCase().includes('campo')
                   ? '4:3'

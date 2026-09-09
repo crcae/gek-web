@@ -104,6 +104,9 @@ async function main() {
 
   // Contenido del sitio
   const contenidos = [
+    // HEADER & GLOBAL
+    { id: 'header.logo', seccion: 'header', campo: 'Logotipo principal del sitio (Navbar)', valor_es: '/images/logos/GrupoExportador_Logo1.png', valor_en: '/images/logos/GrupoExportador_Logo1.png', valor_de: '/images/logos/GrupoExportador_Logo1.png' },
+
     // HOME
     { id: 'home.hero.tagline', seccion: 'home', campo: 'Tagline del Hero', valor_es: 'Porque aunque los tiempos cambien, somos y seremos GEC', valor_en: 'Because even if times change, we are and will be GEC', valor_de: 'Denn auch wenn sich die Zeiten ändern, wir sind und bleiben GEC' },
     { id: 'home.hero.sub', seccion: 'home', campo: 'Subtítulo del Hero', valor_es: 'Grupo Exportador del Campo: Tradición, Calidad y Excelencia Agrícola', valor_en: 'Grupo Exportador del Campo: Tradition, Quality and Agricultural Excellence', valor_de: 'Grupo Exportador del Campo: Tradition, Qualität und landwirtschaftliche Exzellenz' },
