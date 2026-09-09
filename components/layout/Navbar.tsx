@@ -9,14 +9,8 @@ import Image from 'next/image';
 import { MegaMenu } from './MegaMenu';
 import { MobileDrawer } from './MobileDrawer';
 import { DesktopDrawer } from './DesktopDrawer';
-import { VisualEditable } from '@/components/admin/VisualEditable';
-import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
-interface NavbarProps {
-  logoUrl?: string;
-}
-
-export function Navbar({ logoUrl }: NavbarProps) {
+export function Navbar() {
   const t = useTranslations('nav');
   const locale = useLocale();
   const router = useRouter();
@@ -85,22 +79,18 @@ export function Navbar({ logoUrl }: NavbarProps) {
         
         {/* Logo */}
         <div className="flex-shrink-0 flex items-center">
-          <VisualEditable id="header.logo" label="Logotipo del Header (Navbar)" type="image">
-            <Link href={`/${locale}`} prefetch={true} className="block">
-              <Image
-                src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
-                alt={t('logo_alt')}
-                width={180}
-                height={55}
-                priority
-                className={`h-auto object-contain transition-all duration-300 max-h-[50px] ${
-                  !logoUrl || logoUrl === '/images/logos/GrupoExportador_Logo1.png' || logoUrl.endsWith('GrupoExportador_Logo1.png')
-                    ? 'brightness-0 invert'
-                    : ''
-                } ${scrolled ? 'w-[100px] max-h-[40px]' : 'w-[120px]'}`}
-              />
-            </Link>
-          </VisualEditable>
+          <Link href={`/${locale}`} prefetch={true} className="block">
+            <Image
+              src="/images/logos/GrupoExportador_Logo1.png"
+              alt={t('logo_alt')}
+              width={180}
+              height={55}
+              priority
+              className={`h-auto object-contain brightness-0 invert transition-all duration-300 ${
+                scrolled ? 'w-[100px]' : 'w-[120px]'
+              }`}
+            />
+          </Link>
         </div>
 
         {/* Desktop Navigation Links — lg+ */}
