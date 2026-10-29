@@ -9,12 +9,15 @@ datasource db {
 }
 
 model AdminUser {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  nombre    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(cuid())
+  email       String    @unique
+  password    String?
+  nombre      String?
+  otpCode     String?
+  otpExpires  DateTime?
+  otpAttempts Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Noticia {
@@ -143,4 +146,42 @@ model BlogPost {
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 }
+
+model Certificacion {
+  id          String   @id @default(cuid())
+  nombre      String
+  eyebrow     String?
+  titulo_es   String
+  titulo_en   String?
+  titulo_de   String?
+  desc_es     String   @db.Text
+  desc_en     String?  @db.Text
+  desc_de     String?  @db.Text
+  logoUrl     String
+  enlaceUrl   String?
+  orden       Int      @default(0)
+  activa      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PuntoContacto {
+  id        String   @id @default(cuid())
+  texto     String
+  enlace    String?
+  icono     String   @default("MapPin")
+  orden     Int      @default(0)
+  activo    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BlogCategoria {
+  id        String   @id @default(cuid())
+  nombre    String   @unique
+  orden     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 

@@ -3,16 +3,18 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { X, Mail, Phone, MapPin } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useLocale } from 'next-intl';
+import { PuntosContactoList, PuntoContactoItem } from './PuntosContactoList';
 
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   navLinks: { key: string; label: string; href: string }[];
+  puntosContacto?: PuntoContactoItem[];
 }
 
-export function MobileDrawer({ isOpen, onClose, navLinks }: MobileDrawerProps) {
+export function MobileDrawer({ isOpen, onClose, navLinks, puntosContacto = [] }: MobileDrawerProps) {
   const locale = useLocale();
 
   // Prevent scroll when open
@@ -97,41 +99,9 @@ export function MobileDrawer({ isOpen, onClose, navLinks }: MobileDrawerProps) {
           </nav>
 
           {/* Locations and Contact info */}
-          <div className="space-y-5">
-            <h4 className="font-display font-bold text-xs uppercase tracking-wider text-brand-green">Ubicaciones</h4>
-            <div className="space-y-3.5">
-              <div className="flex items-start gap-2.5 text-white/80 text-xs font-body">
-                <MapPin className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
-                <span>Loreto, Zacatecas</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-white/80 text-xs font-body">
-                <MapPin className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
-                <span>San Nicolás de los Garza, Nuevo León</span>
-              </div>
-              <div className="flex items-start gap-2.5 text-white/80 text-xs font-body">
-                <MapPin className="w-4 h-4 text-brand-green shrink-0 mt-0.5" />
-                <span>Tijuana, Baja California</span>
-              </div>
-            </div>
-            
-            <div className="h-[1px] bg-white/10 my-4" />
-
-            <div className="space-y-3">
-              <a
-                href="mailto:info@gecvt.com"
-                className="flex items-center gap-2.5 text-white/85 hover:text-brand-green transition-colors text-xs font-body"
-              >
-                <Mail className="w-4 h-4 text-brand-green shrink-0" />
-                <span>info@gecvt.com</span>
-              </a>
-              <a
-                href="tel:+528122070314"
-                className="flex items-center gap-2.5 text-white/85 hover:text-brand-green transition-colors text-xs font-body"
-              >
-                <Phone className="w-4 h-4 text-brand-green shrink-0" />
-                <span>+52 81 2207 0314</span>
-              </a>
-            </div>
+          <div className="space-y-4">
+            <h4 className="font-display font-bold text-xs uppercase tracking-wider text-brand-green">Ubicaciones y Contacto</h4>
+            <PuntosContactoList initialItems={puntosContacto} iconSize="sm" textSize="xs" />
           </div>
 
           {/* CTA Button */}

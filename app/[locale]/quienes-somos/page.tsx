@@ -7,11 +7,12 @@ import { EcosistemaGEC } from '@/components/sections/about/EcosistemaGEC';
 import { EcosisteGEC } from '@/components/sections/about/EcosisteGEC';
 import { CedisProcesos } from '@/components/sections/about/CedisProcesos';
 import { CapitalHumano } from '@/components/sections/about/CapitalHumano';
+import { CertificacionesSection } from '@/components/sections/about/CertificacionesSection';
 import { User } from 'lucide-react';
 import Image from 'next/image';
 import { VisualEditable } from '@/components/admin/VisualEditable';
 import { AdminImageButton } from '@/components/admin/AdminImageButton';
-import { getContenidoCached } from '@/lib/queries/cache';
+import { getContenidoCached, getCertificacionesCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
 import { join } from 'path';
 import fs from 'fs';
@@ -68,7 +69,10 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
     'quienes.cedis.paso3.titulo', 'quienes.cedis.paso3.desc',
     'quienes.cedis.paso4.titulo', 'quienes.cedis.paso4.desc',
 
-    // Primus
+    // Certificaciones
+    'quienes.certificaciones.eyebrow',
+    'quienes.certificaciones.titulo',
+    'quienes.certificaciones.subtitulo',
     'quienes.primus.eyebrow',
     'quienes.primus.titulo',
     'quienes.primus.desc',
@@ -200,7 +204,10 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
   const franjaLocalPath = join(process.cwd(), 'public/images/quienes/franja-inicio.jpg');
   const franjaImage = imgHero || imgFranja || (existsSync(franjaLocalPath) ? '/images/quienes/franja-inicio.jpg' : null);
 
-  // Primus GFS
+  // Certificaciones
+  const certificaciones = await getCertificacionesCached();
+
+  // Primus GFS fallback
   const primusLogoPath = [
     '/images/logos/PrimusGFS_Logo_web.png',
     '/images/logos/primus-cert.png',
@@ -421,45 +428,11 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
         stepData={campoStepData}
       />
 
-      {/* ── 4. Primus GFS badge (en medio de ambos procesos) ── */}
-      {imgPrimus && (
-        <section className="w-full bg-white py-12 px-4 sm:px-6 border-y border-brand-gray/25 relative">
-          <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center gap-6 justify-center text-center sm:text-left">
-            <div className="bg-white p-3 rounded-xl shadow-md shrink-0 border border-brand-gray/10 relative">
-              <Image
-                src={imgPrimus}
-                alt="Primus GFS Certification"
-                width={140}
-                height={55}
-                style={{ objectFit: 'contain' }}
-              />
-              {isAdmin && (
-                <div className="absolute top-1 right-1">
-                  <AdminImageButton
-                    id="quienes.primus.imagen"
-                    label="Logo Primus GFS"
-                    buttonText=""
-                    className="p-1 rounded-full"
-                  />
-                </div>
-              )}
-            </div>
-            <div>
-              <VisualEditable id="quienes.primus.eyebrow" label="Primus - Eyebrow">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-brand-green block mb-1">
-                  {primusEyebrow}
-                </span>
-              </VisualEditable>
-              <VisualEditable id="quienes.primus.titulo" label="Primus - Título">
-                <p className="font-display text-xl font-bold text-brand-navy mb-1.5">{primusTitulo}</p>
-              </VisualEditable>
-              <VisualEditable id="quienes.primus.desc" label="Primus - Descripción">
-                <p className="font-body text-sm text-brand-navy/65 leading-relaxed max-w-xl">{primusDesc}</p>
-              </VisualEditable>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* ── 4. Certificaciones Internacionales (en medio de ambos procesos) ── */}
+      <CertificacionesSection
+        certificaciones={certificaciones}
+        locale={locale}
+      />
 
       {/* ── 5. Procesos CEDIS (arriba de Capital Humano) ── */}
       <CedisProcesos

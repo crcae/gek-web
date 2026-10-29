@@ -11,6 +11,7 @@ import {
   Home 
 } from 'lucide-react';
 import { VisualEditable } from '@/components/admin/VisualEditable';
+import { PuntosContactoList, PuntoContactoItem } from '@/components/layout/PuntosContactoList';
 
 // Inline SVG — avoids lucide-react barrel optimizer failing on 'Linkedin'
 const LinkedinIcon = ({ className }: { className?: string }) => (
@@ -24,9 +25,10 @@ const LinkedinIcon = ({ className }: { className?: string }) => (
 interface FooterProps {
   locale: string;
   contenido?: Record<string, string>;
+  puntosContacto?: PuntoContactoItem[];
 }
 
-export function Footer({ locale, contenido = {} }: FooterProps) {
+export function Footer({ locale, contenido = {}, puntosContacto = [] }: FooterProps) {
   const quoteText = contenido['footer.quote'] || '"Porque aunque los tiempos cambien, somos y seremos GEC"';
   const dirStiva = contenido['footer.direccion.stiva'] || 'Stiva No. 484 Parque Industrial Barragán, San Nicolás de los Garza N.L.';
   const dirLoreto = contenido['footer.direccion.loreto'] || 'Loreto, Zacatecas';
@@ -73,38 +75,7 @@ export function Footer({ locale, contenido = {} }: FooterProps) {
           </VisualEditable>
           <div className="h-[2px] w-12 bg-brand-green" />
           
-          <div className="space-y-3.5 text-white/80 text-sm font-body">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-              <VisualEditable id="footer.direccion.stiva" label="Dirección Parque Industrial">
-                <span>{dirStiva}</span>
-              </VisualEditable>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-              <VisualEditable id="footer.direccion.loreto" label="Dirección Loreto">
-                <span>{dirLoreto}</span>
-              </VisualEditable>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-brand-green shrink-0 mt-0.5" />
-              <VisualEditable id="footer.direccion.tijuana" label="Dirección Tijuana">
-                <span>{dirTijuana}</span>
-              </VisualEditable>
-            </div>
-            <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-brand-green shrink-0" />
-              <VisualEditable id="footer.telefono" label="Teléfono de Contacto">
-                <a href={`tel:${telVal.replace(/\s+/g, '')}`} className="hover:text-brand-green transition-colors">{telVal}</a>
-              </VisualEditable>
-            </div>
-            <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-brand-green shrink-0" />
-              <VisualEditable id="footer.correo" label="Correo Electrónico">
-                <a href={`mailto:${mailVal}`} className="hover:text-brand-green transition-colors">{mailVal}</a>
-              </VisualEditable>
-            </div>
-          </div>
+          <PuntosContactoList initialItems={puntosContacto} iconSize="md" textSize="sm" />
 
           {/* LinkedIn and Mail buttons */}
           <div className="flex items-center gap-3 pt-2">

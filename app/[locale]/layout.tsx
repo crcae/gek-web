@@ -9,7 +9,7 @@ import { Topbar } from '@/components/layout/Topbar';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import { FloatingButtons } from '@/components/ui/FloatingButtons';
 import { ClientSessionProvider } from '@/components/admin/ClientSessionProvider';
-import { getContenidoCached } from '@/lib/queries/cache';
+import { getContenidoCached, getPuntosContactoCached } from '@/lib/queries/cache';
 
 export async function generateMetadata({ params: { locale } }: { params: { locale: string } }) {
   const t = await getTranslations({ locale, namespace: 'metadata' });
@@ -32,17 +32,21 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  const footerContenido = await getContenidoCached([
-    'footer.quote',
-    'footer.direccion.stiva',
-    'footer.direccion.loreto',
-    'footer.direccion.tijuana',
-    'footer.telefono',
-    'footer.correo',
-    'footer.copyright',
-    'footer.privacidad',
-    'footer.terminos'
-  ], locale);
+  const [globalContenido, puntosContacto] = await Promise.all([
+    getContenidoCached([
+      'header.logo',
+      'footer.quote',
+      'footer.direccion.stiva',
+      'footer.direccion.loreto',
+      'footer.direccion.tijuana',
+      'footer.telefono',
+      'footer.correo',
+      'footer.copyright',
+      'footer.privacidad',
+      'footer.terminos'
+    ], locale),
+    getPuntosContactoCached(),
+  ]);
 
   return (
     <html lang={locale} className={`${antonia.variable} ${elza.variable}`}>
@@ -51,14 +55,14 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ClientSessionProvider>
             <Topbar
-              correo={footerContenido['footer.correo']}
-              telefono={footerContenido['footer.telefono']}
+              correo={globalContenido['footer.correo']}
+              telefono={globalContenido['footer.telefono']}
             />
-            <Navbar />
+            <Navbar puntosContacto={puntosContacto} logoUrl={globalContenido['header.logo']} />
             <main className="flex-grow">
               {children}
             </main>
-            <Footer locale={locale} contenido={footerContenido} />
+            <Footer locale={locale} contenido={globalContenido} puntosContacto={puntosContacto} />
             <FloatingButtons />
           </ClientSessionProvider>
         </NextIntlClientProvider>

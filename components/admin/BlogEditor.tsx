@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -87,6 +87,51 @@ export function BlogEditor({ initialData, isNew = false }: BlogEditorProps) {
   const [autorCargo, setAutorCargo] = useState(initialData?.autorCargo || 'Comunicación Corporativa');
   const [destacado, setDestacado] = useState(initialData?.destacado || false);
   const [publicado, setPublicado] = useState(initialData?.publicado !== undefined ? initialData.publicado : true);
+
+  // Dynamic Categories State
+  const [categoriasList, setCategoriasList] = useState<string[]>(CATEGORIAS);
+  const [showNewCatInput, setShowNewCatInput] = useState(false);
+  const [newCatName, setNewCatName] = useState('');
+  const [creatingCat, setCreatingCat] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/admin/blog/categorias')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.categorias && Array.isArray(data.categorias)) {
+          const names = data.categorias.map((c: any) => c.nombre);
+          if (names.length > 0) {
+            setCategoriasList((prev) => Array.from(new Set([...names, ...prev])));
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleAddCategoria = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!newCatName.trim()) return;
+    setCreatingCat(true);
+    try {
+      const res = await fetch('/api/admin/blog/categorias', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre: newCatName.trim() }),
+      });
+      const data = await res.json();
+      if (data.categoria) {
+        const added = data.categoria.nombre;
+        setCategoriasList((prev) => (prev.includes(added) ? prev : [...prev, added]));
+        setCategoria(added);
+        setNewCatName('');
+        setShowNewCatInput(false);
+      }
+    } catch {
+      alert('Error al agregar categoría');
+    } finally {
+      setCreatingCat(false);
+    }
+  };
 
   // Content Blocks
   let initialBlocks: BlockType[] = [];
@@ -310,18 +355,58 @@ export function BlogEditor({ initialData, isNew = false }: BlogEditorProps) {
 
           {/* Categoría */}
           <div className="md:col-span-4">
-            <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
-              Categoría
-            </label>
-            <select
-              value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-200 rounded-xl text-brand-navy font-medium focus:ring-2 focus:ring-brand-green focus:outline-none bg-white"
-            >
-              {CATEGORIAS.map((cat) => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                Categoría
+              </label>
+              <button
+                type="button"
+                onClick={() => setShowNewCatInput(!showNewCatInput)}
+                className="text-xs font-bold text-brand-green hover:underline flex items-center gap-1 cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>{showNewCatInput ? 'Cancelar' : '+ Nueva Categoría'}</span>
+              </button>
+            </div>
+
+            {showNewCatInput ? (
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Nombre de nueva categoría..."
+                  value={newCatName}
+                  onChange={(e) => setNewCatName(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddCategoria();
+                    }
+                  }}
+                  className="flex-1 px-3.5 py-2.5 border border-brand-green rounded-xl text-sm font-medium focus:ring-2 focus:ring-brand-green focus:outline-none"
+                  autoFocus
+                />
+                <button
+                  type="button"
+                  onClick={() => handleAddCategoria()}
+                  disabled={creatingCat || !newCatName.trim()}
+                  className="px-4 py-2.5 bg-brand-green text-white text-xs font-bold rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition-colors cursor-pointer shrink-0"
+                >
+                  {creatingCat ? '...' : 'Agregar'}
+                </button>
+              </div>
+            ) : (
+              <select
+                value={categoria}
+                onChange={(e) => setCategoria(e.target.value)}
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-brand-navy font-medium focus:ring-2 focus:ring-brand-green focus:outline-none bg-white cursor-pointer"
+              >
+                {categoriasList.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {/* Slug URL */}

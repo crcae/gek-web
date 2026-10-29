@@ -68,3 +68,121 @@ export const getUnidadesNegocioCached = unstable_cache(
   ['unidades-negocio'],
   { revalidate: 3600, tags: ['unidades'] }
 );
+
+export const getCertificacionesCached = unstable_cache(
+  async () => {
+    return prisma.certificacion.findMany({
+      where: { activa: true },
+      orderBy: { orden: 'asc' },
+    });
+  },
+  ['certificaciones-activas'],
+  { revalidate: 3600, tags: ['certificaciones'] }
+);
+
+export const getTimelineHitosCached = unstable_cache(
+  async (locale: string) => {
+    const rows = await prisma.contenidoSitio.findMany({
+      where: { seccion: 'timeline' },
+      orderBy: { id: 'asc' },
+    });
+
+    const hitoMap = new Map<string, { id: string; anio: string; titulo: string; desc: string; imagen: string; generacion: string }>();
+
+    for (const r of rows) {
+      const match = r.id.match(/^timeline\.(hito\d+)\.(anio|titulo|desc|imagen|generacion)$/);
+      if (!match) continue;
+      const [, hitoKey, field] = match;
+      if (!hitoMap.has(hitoKey)) {
+        hitoMap.set(hitoKey, { id: hitoKey, anio: '', titulo: '', desc: '', imagen: '', generacion: '1' });
+      }
+      const item = hitoMap.get(hitoKey)!;
+      let val = r.valor_es || '';
+      if (locale === 'en' && r.valor_en) val = r.valor_en;
+      else if (locale === 'de' && r.valor_de) val = r.valor_de;
+
+      if (field === 'anio') item.anio = val;
+      else if (field === 'titulo') item.titulo = val;
+      else if (field === 'desc') item.desc = val;
+      else if (field === 'imagen') item.imagen = r.valor_es ? cleanImageUrl(r.valor_es) : '';
+      else if (field === 'generacion') item.generacion = r.valor_es || '1';
+    }
+
+    const hitos = Array.from(hitoMap.values()).filter((h) => h.anio || h.titulo);
+
+    // Sort hitos by numeric index from ID
+    hitos.sort((a, b) => {
+      const numA = parseInt(a.id.replace('hito', ''), 10) || 0;
+      const numB = parseInt(b.id.replace('hito', ''), 10) || 0;
+      return numA - numB;
+    });
+
+    return hitos;
+  },
+  ['timeline-hitos-dynamic'],
+  { revalidate: 3600, tags: ['contenido', 'timeline'] }
+);
+
+export const getPuntosContactoCached = unstable_cache(
+  async () => {
+    let puntos = await prisma.puntoContacto.findMany({
+      where: { activo: true },
+      orderBy: { orden: 'asc' },
+    });
+
+    if (puntos.length === 0) {
+      const defaults = [
+        {
+          texto: 'Stiva No. 484 Parque Industrial Barragán, San Nicolás de los Garza N.L.',
+          icono: 'MapPin',
+          enlace: null,
+          orden: 1,
+          activo: true,
+        },
+        {
+          texto: 'Loreto, Zacatecas',
+          icono: 'MapPin',
+          enlace: null,
+          orden: 2,
+          activo: true,
+        },
+        {
+          texto: 'Tijuana, Baja California',
+          icono: 'MapPin',
+          enlace: null,
+          orden: 3,
+          activo: true,
+        },
+        {
+          texto: '+52 81 2207 0314',
+          icono: 'Phone',
+          enlace: 'tel:+528122070314',
+          orden: 4,
+          activo: true,
+        },
+        {
+          texto: 'info@gecvt.com',
+          icono: 'Mail',
+          enlace: 'mailto:info@gecvt.com',
+          orden: 5,
+          activo: true,
+        },
+      ];
+
+      for (const d of defaults) {
+        await prisma.puntoContacto.create({ data: d });
+      }
+
+      puntos = await prisma.puntoContacto.findMany({
+        where: { activo: true },
+        orderBy: { orden: 'asc' },
+      });
+    }
+
+    return puntos;
+  },
+  ['puntos-contacto-list'],
+  { revalidate: 3600, tags: ['puntos-contacto'] }
+);
+
+

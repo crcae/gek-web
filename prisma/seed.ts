@@ -414,6 +414,27 @@ async function main() {
   })
   console.log('✅ Evento inicial sembrado')
 
+  // Sembrar Certificación Primus GFS
+  const certCount = await prisma.certificacion.count()
+  if (certCount === 0) {
+    await prisma.certificacion.create({
+      data: {
+        nombre: 'Primus GFS',
+        eyebrow: 'Certificación de Calidad',
+        titulo_es: 'Certificación PRIMUS GFS',
+        titulo_en: 'PRIMUS GFS Certification',
+        titulo_de: 'PRIMUS GFS Zertifizierung',
+        desc_es: 'Inocuidad alimentaria certificada internacionalmente en todas nuestras unidades productivas.',
+        desc_en: 'Internationally certified food safety across all our production units.',
+        desc_de: 'International zertifizierte Lebensmittelsicherheit in allen unseren Produktionseinheiten.',
+        logoUrl: '/images/logos/PrimusGFS_Logo_web.png',
+        orden: 0,
+        activa: true,
+      }
+    })
+    console.log('✅ Certificación Primus GFS sembrada')
+  }
+
   console.log('\n✅ Seed completado — GEK CMS listo')
 }
 

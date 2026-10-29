@@ -34,14 +34,29 @@ export async function POST(req: Request) {
     }
 
     // Validaciones
-    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+    const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|mov|m4v)$/i.test(file.name);
+    const MAX_SIZE = isVideo ? 100 * 1024 * 1024 : 10 * 1024 * 1024; // 100MB para videos, 10MB para imágenes/PDF
     if (file.size > MAX_SIZE) {
-      return NextResponse.json({ error: 'Archivo muy grande (máx 5MB)' }, { status: 400 });
+      return NextResponse.json({
+        error: isVideo ? 'Video muy grande (máx 100MB)' : 'Archivo muy grande (máx 10MB)'
+      }, { status: 400 });
     }
 
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: 'Formato no permitido (JPG, PNG, WebP, PDF)' }, { status: 400 });
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'image/gif',
+      'image/svg+xml',
+      'application/pdf',
+      'video/mp4',
+      'video/webm',
+      'video/quicktime',
+    ];
+    if (!allowedTypes.includes(file.type) && !isVideo) {
+      return NextResponse.json({
+        error: 'Formato no permitido (JPG, PNG, WebP, SVG, PDF, MP4, WebM, MOV)'
+      }, { status: 400 });
     }
 
     // Generar nombre único

@@ -18,7 +18,10 @@ import {
   Building2,
   Mail,
   Edit3,
-  KeyRound
+  KeyRound,
+  Award,
+  MapPin,
+  ShieldCheck,
 } from 'lucide-react';
 
 const mainNavItems = [
@@ -27,8 +30,10 @@ const mainNavItems = [
   { href: '/admin/leads', label: 'Leads y Mensajes', icon: Users },
   { href: '/admin/eventos', label: 'Eventos', icon: Calendar },
   { href: '/admin/clientes', label: 'Logos Clientes', icon: Sparkles },
+  { href: '/admin/certificaciones', label: 'Certificaciones', icon: Award },
+  { href: '/admin/contacto-puntos', label: 'Puntos Footer / Menú', icon: MapPin },
   { href: '/admin/noticias', label: 'Noticias LinkedIn', icon: Newspaper },
-  { href: '/admin/perfil', label: 'Cambiar Contraseña', icon: KeyRound },
+  { href: '/admin/perfil', label: 'Seguridad y Accesos', icon: ShieldCheck },
 ];
 
 const sitePages = [

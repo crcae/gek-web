@@ -2,12 +2,26 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Settings } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { createPortal } from 'react-dom';
+import {
+  Settings,
+  Plus,
+  Pencil,
+  Trash2,
+  X,
+  Loader2,
+  Calendar,
+  Sparkles,
+  Layers,
+} from 'lucide-react';
 import { AnimatedSection } from '@/components/ui/AnimatedSection';
 import { VisualEditable } from '@/components/admin/VisualEditable';
+import { ImageSelectorField } from '@/components/admin/ImageSelectorField';
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
-interface Hito {
+export interface Hito {
   id: string;
   anio: string;
   titulo: string;
@@ -23,12 +37,46 @@ interface TimelineProps {
 
 export function Timeline({ hitos, titulo }: TimelineProps) {
   const { data: session } = useSession();
+  const isAdmin = !!session;
+  const router = useRouter();
+
+  const [items, setItems] = useState<Hito[]>(hitos);
   const [activeGen, setActiveGen] = useState<string>('1');
+  const [mounted, setMounted] = useState(false);
+
+  // Modal State for adding/editing a block
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingHito, setEditingHito] = useState<Hito | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [activeLangTab, setActiveLangTab] = useState<'es' | 'en' | 'de'>('es');
+  const [deleteConfirmHito, setDeleteConfirmHito] = useState<Hito | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Form State
+  const [form, setForm] = useState({
+    generacion: '1',
+    anio: '',
+    titulo_es: '',
+    titulo_en: '',
+    titulo_de: '',
+    desc_es: '',
+    desc_en: '',
+    desc_de: '',
+    imagen: '',
+  });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    setItems(hitos);
+  }, [hitos]);
 
   // Filter hitos by generation
-  const hitosGen1 = hitos.filter((h) => h.generacion === '1');
-  const hitosGen2 = hitos.filter((h) => h.generacion === '2');
-  const hitosGen3 = hitos.filter((h) => h.generacion === '3' || h.generacion === 'futuro');
+  const hitosGen1 = items.filter((h) => h.generacion === '1');
+  const hitosGen2 = items.filter((h) => h.generacion === '2');
+  const hitosGen3 = items.filter((h) => h.generacion === '3' || h.generacion === 'futuro');
 
   // Handle scroll tracking to highlight active generation and vertical text
   useEffect(() => {
@@ -54,7 +102,6 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Initial run
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -75,23 +122,163 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
     }
   };
 
+  const openAddModal = (defaultGen: string = '1') => {
+    setEditingHito(null);
+    setForm({
+      generacion: defaultGen,
+      anio: '',
+      titulo_es: '',
+      titulo_en: '',
+      titulo_de: '',
+      desc_es: '',
+      desc_en: '',
+      desc_de: '',
+      imagen: '',
+    });
+    setActiveLangTab('es');
+    setModalOpen(true);
+  };
+
+  const openEditModal = (hito: Hito) => {
+    setEditingHito(hito);
+    setForm({
+      generacion: hito.generacion || '1',
+      anio: hito.anio || '',
+      titulo_es: hito.titulo || '',
+      titulo_en: '',
+      titulo_de: '',
+      desc_es: hito.desc || '',
+      desc_en: '',
+      desc_de: '',
+      imagen: hito.imagen || '',
+    });
+    setActiveLangTab('es');
+    setModalOpen(true);
+  };
+
+  const handleSaveHito = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.anio.trim() || !form.titulo_es.trim()) {
+      alert('Por favor completa al menos el Año y el Título en Español.');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const url = editingHito
+        ? `/api/admin/timeline/${editingHito.id}`
+        : '/api/admin/timeline';
+      const method = editingHito ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          imagen: cleanImageUrl(form.imagen),
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Error al guardar el hito');
+      }
+
+      if (editingHito) {
+        setItems((prev) =>
+          prev.map((h) =>
+            h.id === editingHito.id
+              ? {
+                  ...h,
+                  generacion: form.generacion,
+                  anio: form.anio,
+                  titulo: form.titulo_es,
+                  desc: form.desc_es,
+                  imagen: cleanImageUrl(form.imagen),
+                }
+              : h
+          )
+        );
+      } else {
+        const data = await res.json();
+        if (data.hito) {
+          setItems((prev) => [...prev, data.hito]);
+        }
+      }
+
+      setModalOpen(false);
+      setEditingHito(null);
+      router.refresh();
+    } catch (err: any) {
+      alert(err.message || 'Error al guardar el hito');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteHito = async () => {
+    if (!deleteConfirmHito) return;
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/timeline/${deleteConfirmHito.id}`, {
+        method: 'DELETE',
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Error al eliminar');
+      }
+
+      setItems((prev) => prev.filter((item) => item.id !== deleteConfirmHito.id));
+      setDeleteConfirmHito(null);
+      router.refresh();
+    } catch (err: any) {
+      alert(err.message || 'Error al eliminar');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   const renderHitoCard = (hito: Hito, index: number) => {
     const animation = 'slide-left';
     const isFuture = hito.generacion === 'futuro';
 
     return (
-      <div key={hito.id} className="relative flex flex-col md:flex-row items-center mb-16 md:mb-24 last:mb-0">
+      <div key={hito.id} className="relative flex flex-col md:flex-row items-center mb-16 md:mb-24 last:mb-0 group/card">
         {/* Left Side (Content) */}
         <div className="w-full md:w-[90%] md:pr-12 order-2 md:order-1 text-left">
           <AnimatedSection animation={animation}>
-            <div className="bg-white/95 backdrop-blur p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-brand-green/30 transition-all duration-300 group hover:-translate-y-1 text-left flex flex-col items-start">
+            <div className="relative bg-white/95 backdrop-blur p-6 md:p-8 rounded-2xl shadow-xl border border-gray-100 hover:border-brand-green/30 transition-all duration-300 group hover:-translate-y-1 text-left flex flex-col items-start">
+              
+              {/* Admin Actions (Edit & Delete) */}
+              {isAdmin && (
+                <div className="absolute top-4 right-4 z-20 flex items-center gap-1 opacity-80 group-hover/card:opacity-100 transition-opacity">
+                  <button
+                    type="button"
+                    onClick={() => openEditModal(hito)}
+                    className="p-1.5 rounded-lg text-gray-400 hover:text-brand-navy hover:bg-gray-100 border border-transparent hover:border-gray-200 transition-all cursor-pointer"
+                    title="Editar hito completo"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDeleteConfirmHito(hito)}
+                    className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all cursor-pointer"
+                    title="Eliminar este hito de la línea del tiempo"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
               <VisualEditable id={`timeline.${hito.id}.anio`} label={`Hito ${hito.id.replace('hito', '')} - Año`}>
                 <span className="inline-block bg-brand-green/10 text-brand-green font-bold text-xs px-2.5 py-1 rounded-full mb-3 uppercase tracking-wider">
                   {hito.anio}
                 </span>
               </VisualEditable>
               <VisualEditable id={`timeline.${hito.id}.titulo`} label={`Hito ${hito.id.replace('hito', '')} - Título`}>
-                <h4 className="font-display text-lg md:text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-green transition-colors">
+                <h4 className="font-display text-lg md:text-xl font-bold text-brand-navy mb-3 group-hover:text-brand-green transition-colors pr-8">
                   {hito.titulo}
                 </h4>
               </VisualEditable>
@@ -102,7 +289,7 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
                   </p>
                 </VisualEditable>
               )}
-              {hito.imagen && (
+              {hito.imagen ? (
                 <div className="relative w-full aspect-[16/10] max-w-sm rounded-lg overflow-hidden border border-gray-100 mt-2 shadow-sm">
                   <Image
                     src={hito.imagen}
@@ -111,7 +298,7 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, 300px"
                   />
-                  {session && (
+                  {isAdmin && (
                     <div className="absolute top-2 right-2 z-35">
                       <VisualEditable id={`timeline.${hito.id}.imagen`} label={`Hito ${hito.id.replace('hito', '')} - Imagen`} type="image">
                         <button
@@ -124,6 +311,19 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
                     </div>
                   )}
                 </div>
+              ) : (
+                isAdmin && (
+                  <div className="mt-2">
+                    <VisualEditable id={`timeline.${hito.id}.imagen`} label={`Hito ${hito.id.replace('hito', '')} - Imagen`} type="image">
+                      <button
+                        type="button"
+                        className="inline-flex items-center gap-1.5 text-xs text-brand-navy/70 hover:text-brand-green font-medium px-3 py-1.5 rounded-lg border border-dashed border-gray-300 hover:border-brand-green bg-gray-50/50 hover:bg-brand-green/5 transition-all"
+                      >
+                        <Plus className="w-3.5 h-3.5" /> Agregar foto a este hito
+                      </button>
+                    </VisualEditable>
+                  </div>
+                )
               )}
             </div>
           </AnimatedSection>
@@ -192,11 +392,24 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
           
           <div className="text-center lg:text-left mb-16">
             <AnimatedSection animation="fade-up">
-              <VisualEditable id="timeline.titulo" label="Título de Línea de Tiempo">
-                <h2 className="font-display text-3xl md:text-5xl font-bold text-[#2C3E4B] mb-4">
-                  {titulo}
-                </h2>
-              </VisualEditable>
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <VisualEditable id="timeline.titulo" label="Título de Línea de Tiempo">
+                  <h2 className="font-display text-3xl md:text-5xl font-bold text-[#2C3E4B] mb-4">
+                    {titulo}
+                  </h2>
+                </VisualEditable>
+
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => openAddModal('1')}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-brand-green hover:bg-emerald-600 text-white rounded-xl text-xs font-semibold shadow-lg hover:shadow-xl transition-all cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Agregar hito</span>
+                  </button>
+                )}
+              </div>
             </AnimatedSection>
             <div className="w-[60px] h-[3px] bg-brand-green mx-auto lg:mx-0" />
           </div>
@@ -207,10 +420,21 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
             {/* BLOCK 1: Primera Generación */}
             <div id="gen-block-1" data-gen="1" className="mb-20 scroll-mt-24">
-              <div className="flex items-center gap-4 mb-10 justify-start md:justify-center">
+              <div className="flex items-center gap-3 mb-10 justify-start md:justify-center">
                 <span className="px-4 py-1.5 rounded-full bg-brand-navy text-white text-xs font-bold uppercase tracking-widest shadow-md">
                   Primera Generación
                 </span>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => openAddModal('1')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 hover:bg-brand-green text-brand-navy hover:text-white rounded-full text-xs font-semibold shadow border border-gray-200 hover:border-brand-green transition-all"
+                    title="Agregar hito a la 1ª Generación"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Agregar hito</span>
+                  </button>
+                )}
               </div>
               <div className="space-y-4">
                 {hitosGen1.map((hito, idx) => renderHitoCard(hito, idx))}
@@ -219,10 +443,21 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
             {/* BLOCK 2: Segunda Generación */}
             <div id="gen-block-2" data-gen="2" className="mb-20 scroll-mt-24">
-              <div className="flex items-center gap-4 mb-10 justify-start md:justify-center">
+              <div className="flex items-center gap-3 mb-10 justify-start md:justify-center">
                 <span className="px-4 py-1.5 rounded-full bg-brand-navy text-white text-xs font-bold uppercase tracking-widest shadow-md">
                   Segunda Generación
                 </span>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => openAddModal('2')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 hover:bg-brand-green text-brand-navy hover:text-white rounded-full text-xs font-semibold shadow border border-gray-200 hover:border-brand-green transition-all"
+                    title="Agregar hito a la 2ª Generación"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Agregar hito</span>
+                  </button>
+                )}
               </div>
               <div className="space-y-4">
                 {hitosGen2.map((hito, idx) => renderHitoCard(hito, idx))}
@@ -231,10 +466,21 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
             {/* BLOCK 3: Tercera Generación */}
             <div id="gen-block-3" data-gen="3" className="scroll-mt-24">
-              <div className="flex items-center gap-4 mb-10 justify-start md:justify-center">
+              <div className="flex items-center gap-3 mb-10 justify-start md:justify-center">
                 <span className="px-4 py-1.5 rounded-full bg-brand-navy text-white text-xs font-bold uppercase tracking-widest shadow-md">
                   Tercera Generación
                 </span>
+                {isAdmin && (
+                  <button
+                    type="button"
+                    onClick={() => openAddModal('3')}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/90 hover:bg-brand-green text-brand-navy hover:text-white rounded-full text-xs font-semibold shadow border border-gray-200 hover:border-brand-green transition-all"
+                    title="Agregar hito a la 3ª Generación"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Agregar hito</span>
+                  </button>
+                )}
               </div>
               <div className="space-y-4">
                 {hitosGen3.map((hito, idx) => renderHitoCard(hito, idx))}
@@ -278,6 +524,19 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
             >
               <span>3ª Generación</span>
             </button>
+
+            {isAdmin && (
+              <div className="pt-3 border-t border-gray-100 hidden lg:block">
+                <button
+                  type="button"
+                  onClick={() => openAddModal('1')}
+                  className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-brand-navy text-white hover:bg-brand-green rounded-lg text-xs font-semibold transition-all shadow-sm"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Nuevo Hito</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -291,6 +550,289 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
           className="object-contain"
         />
       </div>
+
+      {/* MODAL: Agregar Hito a la Línea de Tiempo */}
+      {mounted && modalOpen && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/60">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 bg-brand-green/10 text-brand-green rounded-lg">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-gray-900">
+                    {editingHito ? 'Editar hito de la línea del tiempo' : 'Agregar hito a la línea del tiempo'}
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    {editingHito ? 'Modifica el año, contenidos o fotografía de este logro histórico' : 'Crea un nuevo bloque histórico en la generación correspondiente'}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                className="text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Form */}
+            <form onSubmit={handleSaveHito} className="flex-1 overflow-y-auto p-6 space-y-5">
+              {/* Generación */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                  Generación
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {[
+                    { id: '1', label: '1ª Generación' },
+                    { id: '2', label: '2ª Generación' },
+                    { id: '3', label: '3ª Generación' },
+                    { id: 'futuro', label: 'Futuro' },
+                  ].map((g) => (
+                    <button
+                      key={g.id}
+                      type="button"
+                      onClick={() => setForm({ ...form, generacion: g.id })}
+                      className={`px-3 py-2 rounded-xl text-xs font-bold transition-all border ${
+                        form.generacion === g.id
+                          ? 'bg-brand-navy text-white border-brand-navy shadow-sm'
+                          : 'bg-white text-gray-600 border-gray-200 hover:border-brand-navy/30'
+                      }`}
+                    >
+                      {g.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Año */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1.5">
+                  Año o Periodo <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ej. 1972, 1980 - 1985, 2024"
+                  value={form.anio}
+                  onChange={(e) => setForm({ ...form, anio: e.target.value })}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                />
+              </div>
+
+              {/* Idiomas Tabs */}
+              <div>
+                <div className="flex items-center justify-between border-b border-gray-200 pb-1 mb-3">
+                  <label className="text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                    Contenido por Idioma
+                  </label>
+                  <div className="flex gap-1">
+                    {(['es', 'en', 'de'] as const).map((lang) => (
+                      <button
+                        key={lang}
+                        type="button"
+                        onClick={() => setActiveLangTab(lang)}
+                        className={`px-2.5 py-1 rounded-md text-xs font-bold uppercase transition-all ${
+                          activeLangTab === lang
+                            ? 'bg-brand-green text-white'
+                            : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
+                        }`}
+                      >
+                        {lang}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {activeLangTab === 'es' && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Título (Español) <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Ej. Fundación de las primeras hectáreas"
+                        value={form.titulo_es}
+                        onChange={(e) => setForm({ ...form, titulo_es: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Descripción (Español)
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Descripción histórica de este logro..."
+                        value={form.desc_es}
+                        onChange={(e) => setForm({ ...form, desc_es: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {activeLangTab === 'en' && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Title (English)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. Foundation of the first acres"
+                        value={form.titulo_en}
+                        onChange={(e) => setForm({ ...form, titulo_en: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Description (English)
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Historical milestone description..."
+                        value={form.desc_en}
+                        onChange={(e) => setForm({ ...form, desc_en: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {activeLangTab === 'de' && (
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Titel (Deutsch)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="Ej. Gründung der ersten Hektar"
+                        value={form.titulo_de}
+                        onChange={(e) => setForm({ ...form, titulo_de: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-gray-700 mb-1">
+                        Beschreibung (Deutsch)
+                      </label>
+                      <textarea
+                        rows={3}
+                        placeholder="Historischer Meilenstein Beschreibung..."
+                        value={form.desc_de}
+                        onChange={(e) => setForm({ ...form, desc_de: e.target.value })}
+                        className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green/30 focus:border-brand-green"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Imagen Selector */}
+              <div>
+                <ImageSelectorField
+                  label="Fotografía del Hito (Opcional)"
+                  valorActual={form.imagen}
+                  onChange={(url) => setForm({ ...form, imagen: url })}
+                />
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  className="px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="inline-flex items-center gap-2 px-5 py-2 bg-brand-green hover:bg-emerald-600 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer"
+                >
+                  {saving ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Guardando...</span>
+                    </>
+                  ) : (
+                    <>
+                      {editingHito ? (
+                        <span>Guardar Cambios</span>
+                      ) : (
+                        <>
+                          <Plus className="w-4 h-4" />
+                          <span>Agregar Hito</span>
+                        </>
+                      )}
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* CONFIRM DELETE MODAL */}
+      {mounted && deleteConfirmHito && createPortal(
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-200">
+            <div className="flex items-center gap-3 text-red-600 mb-3">
+              <div className="p-2 bg-red-100 rounded-xl">
+                <Trash2 className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-gray-900">
+                Eliminar Hito
+              </h3>
+            </div>
+            <p className="text-sm text-gray-600 mb-6">
+              ¿Estás seguro de que deseas eliminar el hito{' '}
+              <strong className="text-gray-900 font-semibold">
+                "{deleteConfirmHito.anio} - {deleteConfirmHito.titulo}"
+              </strong>
+              ? Esta acción no se puede deshacer.
+            </p>
+            <div className="flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmHito(null)}
+                className="px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-100 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteHito}
+                disabled={isDeleting}
+                className="inline-flex items-center gap-2 px-5 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer"
+              >
+                {isDeleting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Eliminando...</span>
+                  </>
+                ) : (
+                  <span>Eliminar</span>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
     </section>
   );
 }

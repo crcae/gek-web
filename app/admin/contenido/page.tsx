@@ -135,6 +135,9 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'quienes.valor.profesionalismo': '→ Quiénes Somos · Valores · Descripción Profesionalismo',
   'quienes.valor.lealtad':      '→ Quiénes Somos · Valores · Descripción Lealtad',
   'quienes.valor.transparencia': '→ Quiénes Somos · Valores · Descripción Transparencia',
+  'quienes.certificaciones.eyebrow':   '→ Quiénes Somos · Certificaciones · Eyebrow sección',
+  'quienes.certificaciones.titulo':    '→ Quiénes Somos · Certificaciones · Título sección',
+  'quienes.certificaciones.subtitulo': '→ Quiénes Somos · Certificaciones · Subtítulo sección',
   'quienes.primus.eyebrow':      '→ Quiénes Somos · Primus GFS · Eyebrow',
   'quienes.primus.titulo':       '→ Quiénes Somos · Primus GFS · Título',
   'quienes.primus.desc':         '→ Quiénes Somos · Primus GFS · Descripción',
@@ -222,6 +225,7 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'holding.marca3.imagen':      '→ Holding · Marca 3 · Imagen de Fondo de Tarjeta',
   'holding.marca3.logo':        '→ Holding · Marca 3 · Logotipo',
   'contacto.hero.imagen':       '→ Contacto · Imagen del banner superior (Hero)',
+  'header.logo':                '→ Global · Header · Logotipo principal del sitio (Navbar)',
   'footer.quote':               '→ Global · Footer · Cita inspiracional / Slogan',
   'footer.direccion.stiva':     '→ Global · Footer · Dirección Parque Industrial',
   'footer.direccion.loreto':    '→ Global · Footer · Dirección Loreto',
@@ -233,10 +237,21 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'footer.terminos':            '→ Global · Footer · Texto del Enlace de Términos',
 };
 
-// Detectar si un campo es de tipo imagen
+// Detectar tipo de campo multimedia
+const esVideo = (id: string, valor: string) =>
+  id.toLowerCase().includes('video') ||
+  /\.(mp4|webm|mov|m4v)$/i.test(valor?.trim() ?? '');
+
+const esPdf = (id: string, valor: string) =>
+  id.toLowerCase().includes('pdf') ||
+  /\.pdf$/i.test(valor?.trim() ?? '');
+
 const esImagen = (id: string, valor: string) =>
   id.toLowerCase().includes('imagen') ||
-  /\.(jpg|jpeg|png|webp|svg)$/i.test(valor?.trim() ?? '');
+  id.toLowerCase().includes('logo') ||
+  id.toLowerCase().includes('foto') ||
+  id.toLowerCase().includes('mapa') ||
+  /\.(jpg|jpeg|png|webp|svg|gif)$/i.test(valor?.trim() ?? '');
 
 export default function ContenidoPage() {
   const [groupedData, setGroupedData] = useState<GroupedContenido>({});
@@ -360,7 +375,10 @@ function ContentField({ item }: { item: Contenido }) {
     }
   };
 
+  const isVideoField = esVideo(item.id, form.valor_es);
+  const isPdfField = esPdf(item.id, form.valor_es);
   const isImageField = esImagen(item.id, form.valor_es);
+  const isMediaField = isVideoField || isPdfField || isImageField;
   let descripcion = CAMPO_DESCRIPCION[item.id];
   if (!descripcion && item.id.startsWith('timeline.')) {
     if (item.id === 'timeline.titulo') {
@@ -414,13 +432,16 @@ function ContentField({ item }: { item: Contenido }) {
           <label className="block text-xs font-bold text-gray-400 uppercase mb-2">
             Español (Requerido)
           </label>
-          {isImageField ? (
+          {isMediaField ? (
             <ImageSelectorField
-              label="Español"
+              label={isVideoField ? 'Video' : isPdfField ? 'Documento PDF' : 'Imagen'}
               valorActual={form.valor_es}
-              onChange={(v) => setForm({ ...form, valor_es: v })}
+              onChange={(v) => setForm({ ...form, valor_es: v, valor_en: v, valor_de: v })}
+              type={isVideoField ? 'video' : isPdfField ? 'pdf' : 'image'}
               aspectRatio={
-                item.id.toLowerCase().includes('ceo') || item.id.toLowerCase().includes('avatar')
+                item.id === 'header.logo'
+                  ? 'libre'
+                  : item.id.toLowerCase().includes('ceo') || item.id.toLowerCase().includes('avatar')
                   ? '3:4'
                   : item.id.toLowerCase().includes('fundadores') || item.id.toLowerCase().includes('capital') || item.id.toLowerCase().includes('mosaico') || item.id.toLowerCase().includes('cedis') || item.id.toLowerCase().includes('campo')
                   ? '4:3'
@@ -438,8 +459,8 @@ function ContentField({ item }: { item: Contenido }) {
           )}
         </div>
 
-        {/* Campos EN / DE — solo para campos de texto (las imágenes comparten ruta) */}
-        {!isImageField && (
+        {/* Campos EN / DE — solo para campos de texto (los medios comparten ruta) */}
+        {!isMediaField && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Inglés</label>

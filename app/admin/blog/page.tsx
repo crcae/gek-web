@@ -14,6 +14,7 @@ import {
   BookOpen
 } from 'lucide-react';
 import { DeleteBlogPostButton } from '@/components/admin/DeleteBlogPostButton';
+import { BlogCategoriasModal } from '@/components/admin/BlogCategoriasModal';
 
 export default async function AdminBlogListPage() {
   const session = await getServerSession();
@@ -40,6 +41,7 @@ export default async function AdminBlogListPage() {
         </div>
 
         <div className="flex items-center gap-3">
+          <BlogCategoriasModal />
           <Link
             href="/es/blog"
             target="_blank"

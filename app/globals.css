@@ -281,12 +281,49 @@
 
 /* ─── Custom Cursor ─────────────────────────────────────────────────── */
 
-/* Ocultar cursor nativo en desktop — solo en sitio público, nunca en admin */
+/* Ocultar cursor nativo en desktop — solo en elementos generales del sitio público */
 @media (pointer: fine) {
-  .public-site * { cursor: none !important; }
+  .public-site * { cursor: none; }
+
+  /* Restaurar cursor nativo esencial en modales, popups, inputs y formularios */
+  .public-site input,
+  .public-site textarea,
+  .public-site select {
+    cursor: text !important;
+  }
+  .public-site button,
+  .public-site a,
+  .public-site [role="button"],
+  .public-site label {
+    cursor: pointer !important;
+  }
+  .public-site [role="dialog"],
+  .public-site [role="dialog"] *,
+  .public-site [class*="z-[99"],
+  .public-site [class*="z-[99"] *,
+  .public-site .fixed[class*="z-"],
+  .public-site .fixed[class*="z-"] * {
+    cursor: auto !important;
+  }
+  .public-site [role="dialog"] button,
+  .public-site [role="dialog"] a,
+  .public-site [class*="z-[99"] button,
+  .public-site [class*="z-[99"] a,
+  .public-site .fixed[class*="z-"] button,
+  .public-site .fixed[class*="z-"] a {
+    cursor: pointer !important;
+  }
+  .public-site [role="dialog"] input,
+  .public-site [role="dialog"] textarea,
+  .public-site [class*="z-[99"] input,
+  .public-site [class*="z-[99"] textarea,
+  .public-site .fixed[class*="z-"] input,
+  .public-site .fixed[class*="z-"] textarea {
+    cursor: text !important;
+  }
 }
 
-/* Cursor personalizado */
+/* Cursor personalizado con z-index máximo */
 .cursor-dot {
   position: fixed;
   width: 12px;
@@ -294,7 +331,7 @@
   background: #4DB26B;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 2147483647;
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease, width 0.2s ease,
               height 0.2s ease, opacity 0.2s ease;
@@ -308,7 +345,7 @@
   border: 1.5px solid #4DB26B;
   border-radius: 50%;
   pointer-events: none;
-  z-index: 99998;
+  z-index: 2147483646;
   transform: translate(-50%, -50%);
   transition: transform 0.12s ease, width 0.2s ease,
               height 0.2s ease, opacity 0.2s ease;

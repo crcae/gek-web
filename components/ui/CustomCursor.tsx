@@ -33,7 +33,7 @@ export function CustomCursor() {
     }
     animateRing()
 
-    // Hover en elementos interactivos
+    // Hover en elementos interactivos con delegación dinámica
     const addHover = () => {
       dot.classList.add('hovering')
       ring.classList.add('hovering')
@@ -43,15 +43,34 @@ export function CustomCursor() {
       ring.classList.remove('hovering')
     }
 
-    const interactivos = 'a, button, [role="button"], input, textarea, select, label'
-    document.querySelectorAll(interactivos).forEach(el => {
-      el.addEventListener('mouseenter', addHover)
-      el.addEventListener('mouseleave', removeHover)
-    })
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null
+      if (!target) return
 
+      // Si el cursor está sobre un modal, popup o portal, ocultar dot/ring para permitir usar el cursor nativo sin interferencias
+      const isInsideModal = target.closest('[role="dialog"], [class*="z-[99"], [class*="z-50"], form, .admin-modal')
+      if (isInsideModal) {
+        dot.style.opacity = '0'
+        ring.style.opacity = '0'
+        return
+      } else {
+        dot.style.opacity = '1'
+        ring.style.opacity = '0.6'
+      }
+
+      const isInteractive = target.closest('a, button, [role="button"], input, textarea, select, label')
+      if (isInteractive) {
+        addHover()
+      } else {
+        removeHover()
+      }
+    }
+
+    document.addEventListener('mouseover', handleMouseOver)
     window.addEventListener('mousemove', moveCursor)
 
     return () => {
+      document.removeEventListener('mouseover', handleMouseOver)
       window.removeEventListener('mousemove', moveCursor)
     }
   }, [])

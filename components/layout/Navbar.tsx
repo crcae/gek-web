@@ -4,13 +4,24 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
 import { usePathname, useRouter } from 'next/navigation';
-import { Menu } from 'lucide-react';
+import { Menu, Pencil, X, Loader2 } from 'lucide-react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { createPortal } from 'react-dom';
 import { MegaMenu } from './MegaMenu';
 import { MobileDrawer } from './MobileDrawer';
 import { DesktopDrawer } from './DesktopDrawer';
+import { PuntoContactoItem } from './PuntosContactoList';
+import { ImageSelectorField } from '@/components/admin/ImageSelectorField';
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
-export function Navbar() {
+interface NavbarProps {
+  puntosContacto?: PuntoContactoItem[];
+  logoUrl?: string;
+}
+
+export function Navbar({ puntosContacto = [], logoUrl }: NavbarProps) {
+  const { data: session } = useSession();
   const t = useTranslations('nav');
   const locale = useLocale();
   const router = useRouter();
@@ -20,6 +31,56 @@ export function Navbar() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeHoverKey, setActiveHoverKey] = useState<string | null>(null);
+
+  // Logo editing state
+  const [currentLogo, setCurrentLogo] = useState(logoUrl || '/images/logos/GrupoExportador_Logo1.png');
+  const [logoModalOpen, setLogoModalOpen] = useState(false);
+  const [savingLogo, setSavingLogo] = useState(false);
+  const [tempLogo, setTempLogo] = useState(currentLogo);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (logoUrl) {
+      setCurrentLogo(logoUrl);
+      setTempLogo(logoUrl);
+    }
+  }, [logoUrl]);
+
+  const isDefaultLogo =
+    !currentLogo ||
+    currentLogo === '/images/logos/GrupoExportador_Logo1.png' ||
+    currentLogo.includes('GrupoExportador_Logo1');
+
+  const handleSaveLogo = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingLogo(true);
+    try {
+      const cleaned = cleanImageUrl(tempLogo);
+      const res = await fetch('/api/admin/contenido/header.logo', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          valor_es: cleaned,
+          valor_en: cleaned,
+          valor_de: cleaned,
+        }),
+      });
+
+      if (!res.ok) throw new Error('Error al guardar el logo');
+
+      setCurrentLogo(cleaned);
+      setLogoModalOpen(false);
+      router.refresh();
+    } catch (err: any) {
+      alert(err.message || 'Error al guardar el logotipo');
+    } finally {
+      setSavingLogo(false);
+    }
+  };
   
   const navbarRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -78,19 +139,34 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         
         {/* Logo */}
-        <div className="flex-shrink-0 flex items-center">
+        <div className="flex-shrink-0 flex items-center relative group/logo">
           <Link href={`/${locale}`} prefetch={true} className="block">
             <Image
-              src="/images/logos/GrupoExportador_Logo1.png"
+              src={cleanImageUrl(currentLogo) || '/images/logos/GrupoExportador_Logo1.png'}
               alt={t('logo_alt')}
               width={180}
               height={55}
               priority
-              className={`h-auto object-contain brightness-0 invert transition-all duration-300 ${
+              className={`h-auto object-contain transition-all duration-300 ${
                 scrolled ? 'w-[100px]' : 'w-[120px]'
-              }`}
+              } ${isDefaultLogo ? 'brightness-0 invert' : ''}`}
             />
           </Link>
+
+          {/* Admin Edit Button */}
+          {session && (
+            <button
+              type="button"
+              onClick={() => {
+                setTempLogo(currentLogo);
+                setLogoModalOpen(true);
+              }}
+              className="opacity-0 group-hover/logo:opacity-100 absolute -top-1 -right-3 p-1.5 rounded-full bg-brand-navy hover:bg-brand-green text-white shadow-md border border-brand-green/40 transition-all cursor-pointer z-30"
+              title="Cambiar logotipo del header"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
         {/* Desktop Navigation Links — lg+ */}
@@ -169,6 +245,7 @@ export function Navbar() {
         isOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
         navLinks={navLinks}
+        puntosContacto={puntosContacto}
       />
 
       {/* Desktop Drawer */}
@@ -176,7 +253,89 @@ export function Navbar() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
         locale={locale}
+        puntosContacto={puntosContacto}
       />
+
+      {/* MODAL: Cambiar Logotipo del Header */}
+      {mounted && logoModalOpen && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/80">
+              <div>
+                <h3 className="text-base font-bold text-gray-900">
+                  Cambiar Logotipo del Header
+                </h3>
+                <p className="text-xs text-gray-500">
+                  Logotipo principal en la barra de navegación superior
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setLogoModalOpen(false)}
+                className="text-gray-400 hover:text-gray-700 p-1.5 rounded-lg hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Form */}
+            <form onSubmit={handleSaveLogo} className="p-6 space-y-5">
+              {/* Image Selector Field */}
+              <ImageSelectorField
+                label="Logotipo del Header"
+                valorActual={tempLogo}
+                onChange={(url) => setTempLogo(url)}
+                aspectRatio="libre"
+              />
+
+              {/* Vista previa en fondo de Header */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-2">
+                  Vista Previa sobre el fondo del Header
+                </label>
+                <div className="bg-brand-navy p-6 rounded-xl flex items-center justify-center border border-brand-green/20">
+                  <Image
+                    src={cleanImageUrl(tempLogo) || '/images/logos/GrupoExportador_Logo1.png'}
+                    alt="Vista previa"
+                    width={180}
+                    height={55}
+                    className={`h-auto object-contain max-h-[55px] ${
+                      !tempLogo || tempLogo.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''
+                    }`}
+                  />
+                </div>
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-gray-100">
+                <button
+                  type="button"
+                  onClick={() => setLogoModalOpen(false)}
+                  className="px-4 py-2 text-xs font-semibold text-gray-600 hover:text-gray-800 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={savingLogo}
+                  className="inline-flex items-center gap-2 px-5 py-2 bg-brand-green hover:bg-emerald-600 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-md transition-all cursor-pointer"
+                >
+                  {savingLogo ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Guardando...</span>
+                    </>
+                  ) : (
+                    <span>Guardar Logotipo</span>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
     </div>
   );
 }

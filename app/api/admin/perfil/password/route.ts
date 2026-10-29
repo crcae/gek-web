@@ -30,6 +30,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Usuario no encontrado' }, { status: 404 });
     }
 
+    if (!user.password) {
+      return NextResponse.json({ error: 'La cuenta no tiene contraseña configurada.' }, { status: 400 });
+    }
+
     const validCurrent = await bcrypt.compare(passwordActual, user.password);
     if (!validCurrent) {
       return NextResponse.json({ error: 'La contraseña actual es incorrecta' }, { status: 400 });
