@@ -26,7 +26,6 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [cooldown, setCooldown] = useState(0);
-  const [isDevMode, setIsDevMode] = useState(false);
 
   // Input refs for 6 digits
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -76,9 +75,6 @@ export default function AdminLoginPage() {
       setStep('OTP');
       setCooldown(60);
       setSuccessMsg('¡Código enviado exitosamente a tu bandeja de entrada!');
-      if (data.devMode) {
-        setIsDevMode(true);
-      }
       setOtp(['', '', '', '', '', '']);
     } catch (err: any) {
       setError(err?.message || 'No se pudo enviar el código. Verifica el correo ingresado.');
@@ -359,13 +355,6 @@ export default function AdminLoginPage() {
                   </button>
                 )}
               </div>
-
-              {/* Free / Dev notice */}
-              {isDevMode && (
-                <div className="mt-4 p-3 bg-amber-50/80 border border-amber-200/80 rounded-lg text-amber-800 text-xs text-center">
-                  💡 <strong>Modo desarrollo / sin SMTP:</strong> El código OTP también está visible en la terminal/consola del servidor.
-                </div>
-              )}
             </div>
           )}
 
