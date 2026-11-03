@@ -226,6 +226,7 @@ const CAMPO_DESCRIPCION: Record<string, string> = {
   'holding.marca3.logo':        '→ Holding · Marca 3 · Logotipo',
   'contacto.hero.imagen':       '→ Contacto · Imagen del banner superior (Hero)',
   'header.logo':                '→ Global · Header · Logotipo principal del sitio (Navbar)',
+  'footer.logo':                '→ Global · Footer · Logotipo del pie de página (Footer)',
   'footer.quote':               '→ Global · Footer · Cita inspiracional / Slogan',
   'footer.direccion.stiva':     '→ Global · Footer · Dirección Parque Industrial',
   'footer.direccion.loreto':    '→ Global · Footer · Dirección Loreto',
@@ -439,7 +440,7 @@ function ContentField({ item }: { item: Contenido }) {
               onChange={(v) => setForm({ ...form, valor_es: v, valor_en: v, valor_de: v })}
               type={isVideoField ? 'video' : isPdfField ? 'pdf' : 'image'}
               aspectRatio={
-                item.id === 'header.logo'
+                item.id === 'header.logo' || item.id === 'footer.logo'
                   ? 'libre'
                   : item.id.toLowerCase().includes('ceo') || item.id.toLowerCase().includes('avatar')
                   ? '3:4'

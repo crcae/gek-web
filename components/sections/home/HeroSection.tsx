@@ -185,20 +185,6 @@ export function HeroSection({
             </p>
           </VisualEditable>
         </AnimatedSection>
-
-        {/* Action Button: Ver Video Institucional */}
-        <AnimatedSection animation="fade-up" delay={4} className="mt-8">
-          <button
-            onClick={openVideoModal}
-            className="inline-flex items-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/25 hover:border-brand-green/80 px-6 py-3.5 rounded-full text-sm sm:text-base font-semibold tracking-wide transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-brand-green/20 group cursor-pointer"
-          >
-            <span className="w-9 h-9 rounded-full bg-brand-green flex items-center justify-center text-brand-navy shadow-md group-hover:scale-110 transition-transform">
-              <Play className="w-4 h-4 fill-current ml-0.5 text-brand-navy" />
-            </span>
-            <span>Ver Video Institucional</span>
-            <Maximize2 className="w-4 h-4 text-white/60 group-hover:text-brand-green transition-colors" />
-          </button>
-        </AnimatedSection>
       </div>
 
       {/* Sound, Watch Full Video & Admin Controls (Bottom Right) */}
@@ -244,6 +230,8 @@ export function HeroSection({
       {mounted && videoModalOpen && createPortal(
         <div
           ref={modalContainerRef}
+          role="dialog"
+          aria-modal="true"
           className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-6 md:p-8 animate-in fade-in duration-300"
         >
           {/* Top Bar */}

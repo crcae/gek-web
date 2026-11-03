@@ -47,8 +47,8 @@ export function CustomCursor() {
       const target = e.target as HTMLElement | null
       if (!target) return
 
-      // Si el cursor está sobre un modal, popup o portal, ocultar dot/ring para permitir usar el cursor nativo sin interferencias
-      const isInsideModal = target.closest('[role="dialog"], [class*="z-[99"], [class*="z-50"], form, .admin-modal')
+      // Si el cursor está sobre un diálogo modal o admin modal, ocultar dot/ring para permitir cursor nativo sin interferencias
+      const isInsideModal = target.closest('[role="dialog"], .admin-modal, [data-modal="true"]')
       if (isInsideModal) {
         dot.style.opacity = '0'
         ring.style.opacity = '0'
@@ -66,11 +66,25 @@ export function CustomCursor() {
       }
     }
 
+    const handleMouseLeave = () => {
+      dot.style.opacity = '0'
+      ring.style.opacity = '0'
+    }
+
+    const handleMouseEnter = () => {
+      dot.style.opacity = '1'
+      ring.style.opacity = '0.6'
+    }
+
     document.addEventListener('mouseover', handleMouseOver)
+    document.addEventListener('mouseleave', handleMouseLeave)
+    document.addEventListener('mouseenter', handleMouseEnter)
     window.addEventListener('mousemove', moveCursor)
 
     return () => {
       document.removeEventListener('mouseover', handleMouseOver)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+      document.removeEventListener('mouseenter', handleMouseEnter)
       window.removeEventListener('mousemove', moveCursor)
     }
   }, [])

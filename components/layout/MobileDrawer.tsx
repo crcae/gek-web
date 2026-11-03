@@ -6,15 +6,17 @@ import Image from 'next/image';
 import { X } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { PuntosContactoList, PuntoContactoItem } from './PuntosContactoList';
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
 interface MobileDrawerProps {
   isOpen: boolean;
   onClose: () => void;
   navLinks: { key: string; label: string; href: string }[];
   puntosContacto?: PuntoContactoItem[];
+  logoUrl?: string;
 }
 
-export function MobileDrawer({ isOpen, onClose, navLinks, puntosContacto = [] }: MobileDrawerProps) {
+export function MobileDrawer({ isOpen, onClose, navLinks, puntosContacto = [], logoUrl }: MobileDrawerProps) {
   const locale = useLocale();
 
   // Prevent scroll when open
@@ -59,11 +61,11 @@ export function MobileDrawer({ isOpen, onClose, navLinks, puntosContacto = [] }:
         <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <Link href={`/${locale}`} onClick={onClose} className="block">
             <Image
-              src="/images/logos/GrupoExportador_Logo1.png"
+              src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
               alt="Logo GEK"
               width={120}
               height={36}
-              className="h-auto object-contain brightness-0 invert"
+              className={`h-auto object-contain ${!logoUrl || logoUrl.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''}`}
             />
           </Link>
           <button

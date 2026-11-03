@@ -297,7 +297,7 @@ export function PuntosContactoList({
 
       {/* MODAL: Agregar / Editar Punto */}
       {mounted && modalOpen && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
           <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/80">
@@ -417,7 +417,7 @@ export function PuntosContactoList({
 
       {/* CONFIRM DELETE MODAL */}
       {mounted && deleteConfirmItem && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center gap-3 text-red-600 mb-3">
               <div className="p-2 bg-red-100 rounded-xl">

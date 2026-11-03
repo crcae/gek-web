@@ -281,44 +281,34 @@
 
 /* ─── Custom Cursor ─────────────────────────────────────────────────── */
 
-/* Ocultar cursor nativo en desktop — solo en elementos generales del sitio público */
+/* Ocultar cursor nativo en desktop para el sitio público */
 @media (pointer: fine) {
-  .public-site * { cursor: none; }
+  .public-site,
+  .public-site * {
+    cursor: none;
+  }
 
-  /* Restaurar cursor nativo esencial en modales, popups, inputs y formularios */
-  .public-site input,
-  .public-site textarea,
-  .public-site select {
-    cursor: text !important;
-  }
-  .public-site button,
-  .public-site a,
-  .public-site [role="button"],
-  .public-site label {
-    cursor: pointer !important;
-  }
+  /* Restaurar cursor nativo esencial ÚNICAMENTE dentro de modales y diálogos */
   .public-site [role="dialog"],
   .public-site [role="dialog"] *,
-  .public-site [class*="z-[99"],
-  .public-site [class*="z-[99"] *,
-  .public-site .fixed[class*="z-"],
-  .public-site .fixed[class*="z-"] * {
+  .public-site .admin-modal,
+  .public-site .admin-modal *,
+  .public-site [data-modal="true"],
+  .public-site [data-modal="true"] * {
     cursor: auto !important;
   }
   .public-site [role="dialog"] button,
   .public-site [role="dialog"] a,
-  .public-site [class*="z-[99"] button,
-  .public-site [class*="z-[99"] a,
-  .public-site .fixed[class*="z-"] button,
-  .public-site .fixed[class*="z-"] a {
+  .public-site [role="dialog"] [role="button"],
+  .public-site .admin-modal button,
+  .public-site .admin-modal a {
     cursor: pointer !important;
   }
   .public-site [role="dialog"] input,
   .public-site [role="dialog"] textarea,
-  .public-site [class*="z-[99"] input,
-  .public-site [class*="z-[99"] textarea,
-  .public-site .fixed[class*="z-"] input,
-  .public-site .fixed[class*="z-"] textarea {
+  .public-site [role="dialog"] select,
+  .public-site .admin-modal input,
+  .public-site .admin-modal textarea {
     cursor: text !important;
   }
 }

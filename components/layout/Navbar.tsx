@@ -246,6 +246,7 @@ export function Navbar({ puntosContacto = [], logoUrl }: NavbarProps) {
         onClose={() => setMobileOpen(false)}
         navLinks={navLinks}
         puntosContacto={puntosContacto}
+        logoUrl={currentLogo}
       />
 
       {/* Desktop Drawer */}
@@ -254,11 +255,12 @@ export function Navbar({ puntosContacto = [], logoUrl }: NavbarProps) {
         onClose={() => setDrawerOpen(false)}
         locale={locale}
         puntosContacto={puntosContacto}
+        logoUrl={currentLogo}
       />
 
       {/* MODAL: Cambiar Logotipo del Header */}
       {mounted && logoModalOpen && createPortal(
-        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4 overflow-y-auto">
           <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/80">

@@ -5,15 +5,17 @@ import { X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PuntosContactoList, PuntoContactoItem } from './PuntosContactoList';
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
 interface Props {
   open: boolean;
   onClose: () => void;
   locale: string;
   puntosContacto?: PuntoContactoItem[];
+  logoUrl?: string;
 }
 
-export function DesktopDrawer({ open, onClose, locale, puntosContacto = [] }: Props) {
+export function DesktopDrawer({ open, onClose, locale, puntosContacto = [], logoUrl }: Props) {
   // Close with Escape key and block body scroll when open
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -62,11 +64,11 @@ export function DesktopDrawer({ open, onClose, locale, puntosContacto = [] }: Pr
         {/* Header del panel */}
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <Image
-            src="/images/logos/GrupoExportador_Logo1.png"
+            src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
             alt="Grupo Exportador del Campo"
             width={120}
             height={48}
-            className="object-contain brightness-0 invert"
+            className={`object-contain ${!logoUrl || logoUrl.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''}`}
           />
           <button
             onClick={onClose}

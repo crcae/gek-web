@@ -553,7 +553,7 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
       {/* MODAL: Agregar Hito a la Línea de Tiempo */}
       {mounted && modalOpen && createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 overflow-y-auto">
           <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Modal Header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/60">
@@ -787,7 +787,7 @@ export function Timeline({ hitos, titulo }: TimelineProps) {
 
       {/* CONFIRM DELETE MODAL */}
       {mounted && deleteConfirmHito && createPortal(
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center gap-3 text-red-600 mb-3">
               <div className="p-2 bg-red-100 rounded-xl">

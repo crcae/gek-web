@@ -109,7 +109,7 @@ export function VisualEditable({ id, label, type = 'text', children, className =
       </button>
 
       {mounted && modalOpen && createPortal(
-        <div className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-4 backdrop-blur-sm text-gray-800">
+        <div role="dialog" aria-modal="true" className="fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-4 backdrop-blur-sm text-gray-800">
           <div className="bg-white text-gray-800 rounded-xl shadow-2xl border border-gray-100 w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
             
             {/* Header */}

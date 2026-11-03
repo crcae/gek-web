@@ -35,6 +35,7 @@ export default async function LocaleLayout({
   const [globalContenido, puntosContacto] = await Promise.all([
     getContenidoCached([
       'header.logo',
+      'footer.logo',
       'footer.quote',
       'footer.direccion.stiva',
       'footer.direccion.loreto',

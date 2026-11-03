@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { VisualEditable } from '@/components/admin/VisualEditable';
 import { PuntosContactoList, PuntoContactoItem } from '@/components/layout/PuntosContactoList';
+import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
 // Inline SVG — avoids lucide-react barrel optimizer failing on 'Linkedin'
 const LinkedinIcon = ({ className }: { className?: string }) => (
@@ -29,6 +30,8 @@ interface FooterProps {
 }
 
 export function Footer({ locale, contenido = {}, puntosContacto = [] }: FooterProps) {
+  const footerLogo = contenido['footer.logo'] || contenido['header.logo'] || '/images/logos/GrupoExportador_Logo1.png';
+  const isDefaultFooterLogo = !footerLogo || footerLogo.includes('GrupoExportador_Logo1');
   const quoteText = contenido['footer.quote'] || '"Porque aunque los tiempos cambien, somos y seremos GEC"';
   const dirStiva = contenido['footer.direccion.stiva'] || 'Stiva No. 484 Parque Industrial Barragán, San Nicolás de los Garza N.L.';
   const dirLoreto = contenido['footer.direccion.loreto'] || 'Loreto, Zacatecas';
@@ -59,15 +62,19 @@ export function Footer({ locale, contenido = {}, puntosContacto = [] }: FooterPr
         
         {/* Left Column: Contact info style Logmex (5 cols) */}
         <div className="md:col-span-5 space-y-6">
-          <Link href={`/${locale}`} className="inline-block">
-            <Image 
-              src="/images/logos/GrupoExportador_Logo1.png" 
-              alt="Grupo Exportador del Campo" 
-              width={240}
-              height={75}
-              className="w-[240px] h-auto object-contain brightness-0 invert" 
-            />
-          </Link>
+          <div className="inline-block relative">
+            <VisualEditable id="footer.logo" label="Logotipo del Footer" type="image">
+              <Link href={`/${locale}`} className="inline-block">
+                <Image 
+                  src={cleanImageUrl(footerLogo) || '/images/logos/GrupoExportador_Logo1.png'} 
+                  alt="Grupo Exportador del Campo" 
+                  width={240}
+                  height={75}
+                  className={`w-[240px] h-auto object-contain ${isDefaultFooterLogo ? 'brightness-0 invert' : ''}`} 
+                />
+              </Link>
+            </VisualEditable>
+          </div>
           <VisualEditable id="footer.quote" label="Cita del Footer">
             <p className="font-lora italic text-xs text-white/70 max-w-sm">
               {quoteText}
