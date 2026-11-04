@@ -42,6 +42,10 @@ export async function POST(req: Request) {
       }
     }
 
+    // Determine current origin for email redirection
+    const origin = req.headers.get('origin') || process.env.NEXTAUTH_URL || 'https://gek-web.vercel.app';
+    const redirectUrl = `${origin}/admin/login`;
+
     // 1. Try Supabase Auth Free Tier if configured
     let sentViaSupabase = false;
     if (supabase) {
@@ -49,13 +53,14 @@ export async function POST(req: Request) {
         const { error: supaError } = await supabase.auth.signInWithOtp({
           email: user.email,
           options: {
-            shouldCreateUser: true,
+            shouldCreateUser: false,
+            emailRedirectTo: redirectUrl,
           },
         });
 
         if (!supaError) {
           sentViaSupabase = true;
-          console.log(`✅ [Supabase Auth] Código OTP despachado por correo vía Supabase Free Tier a ${user.email}`);
+          console.log(`✅ [Supabase Auth] Código OTP despachado por correo vía Supabase Free Tier a ${user.email} con redirect a ${redirectUrl}`);
         } else {
           console.warn('⚠️ [Supabase Auth] Advertencia al enviar OTP:', supaError.message);
         }

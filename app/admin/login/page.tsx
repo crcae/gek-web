@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, useRef, useEffect, KeyboardEvent, ClipboardEvent } from 'react';
 import Image from 'next/image';
+import { supabase } from '@/lib/supabase';
 import {
   Mail,
   KeyRound,
@@ -46,6 +47,54 @@ export default function AdminLoginPage() {
       }, 100);
     }
   }, [step]);
+
+  // Detect Magic Link access_token in URL hash (when clicking email link)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const params = new URLSearchParams(hash.replace(/^#/, ''));
+    const accessToken = params.get('access_token');
+    const errorDescription = params.get('error_description');
+
+    if (errorDescription) {
+      setError(decodeURIComponent(errorDescription.replace(/\+/g, ' ')));
+      return;
+    }
+
+    if (accessToken && supabase) {
+      setIsLoading(true);
+      setError('');
+      supabase.auth.getUser(accessToken).then(async ({ data, error: userError }) => {
+        if (userError || !data?.user?.email) {
+          setError('El enlace de acceso es inválido o ha expirado. Por favor solicita uno nuevo.');
+          setIsLoading(false);
+          return;
+        }
+
+        const userEmail = data.user.email.toLowerCase();
+        setEmail(userEmail);
+
+        const res = await signIn('credentials', {
+          email: userEmail,
+          supabaseToken: accessToken,
+          redirect: false,
+        });
+
+        if (res?.ok) {
+          window.location.href = '/admin/dashboard';
+        } else {
+          setError(res?.error || 'No tienes permisos de administrador con esta cuenta.');
+          setIsLoading(false);
+        }
+      }).catch((err: any) => {
+        setError(err?.message || 'Error al autenticar mediante el enlace.');
+        setIsLoading(false);
+      });
+    }
+  }, []);
 
   // 1. Send OTP Request
   const handleSendOtp = async (targetEmail?: string) => {

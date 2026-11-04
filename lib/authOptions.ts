@@ -13,6 +13,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: 'Email', type: 'email' },
         code: { label: 'Código OTP', type: 'text' },
         password: { label: 'Password', type: 'password' },
+        supabaseToken: { label: 'Supabase Token', type: 'text' },
       },
       async authorize(credentials) {
         if (!credentials?.email) {
@@ -24,6 +25,22 @@ export const authOptions: NextAuthOptions = {
 
         if (!user) {
           throw new Error('No existe una cuenta de administrador con este correo.');
+        }
+
+        // Method 0: Supabase Magic Link Token Verification
+        if (credentials.supabaseToken && supabase) {
+          try {
+            const { data: supaUser, error: supaErr } = await supabase.auth.getUser(credentials.supabaseToken);
+            if (!supaErr && supaUser?.user?.email && supaUser.user.email.toLowerCase() === email) {
+              await prisma.adminUser.update({
+                where: { id: user.id },
+                data: { otpCode: null, otpExpires: null, otpAttempts: 0 },
+              });
+              return { id: user.id, email: user.email, name: user.nombre ?? 'Admin' };
+            }
+          } catch (e) {
+            console.warn('Error validando supabaseToken:', e);
+          }
         }
 
         // Method 1: 2FA OTP Code Verification (Primary)
