@@ -52,7 +52,7 @@ export async function sendOtpEmail({ email, code }: SendOtpOptions): Promise<{ s
                     Tu código de acceso seguro
                   </h2>
                   <p style="margin: 0 0 24px; font-size: 15px; line-height: 1.6; color: #475569;">
-                    Hemos recibido una solicitud para iniciar sesión en el panel administrativo de Grupo Exportador del Campo. Ingresa el siguiente código de 6 dígitos:
+                    Hemos recibido una solicitud para iniciar sesión en el panel administrativo de Grupo Exportador del Campo. Ingresa el siguiente código de verificación:
                   </p>
 
                   <!-- OTP Box -->

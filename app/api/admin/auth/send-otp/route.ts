@@ -69,8 +69,8 @@ export async function POST(req: Request) {
       }
     }
 
-    // 2. Generate local OTP as resilient guarantee / dev console
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    // 2. Generate local OTP as resilient guarantee / dev console (8 digits)
+    const code = Math.floor(10000000 + Math.random() * 90000000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
     // Save OTP to DB

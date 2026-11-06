@@ -20,15 +20,16 @@ export default function AdminLoginPage() {
   const router = useRouter();
 
   // State
+  const OTP_LENGTH = 8;
   const [step, setStep] = useState<'EMAIL' | 'OTP'>('EMAIL');
   const [email, setEmail] = useState('');
-  const [otp, setOtp] = useState<string[]>(['', '', '', '', '', '']);
+  const [otp, setOtp] = useState<string[]>(Array(OTP_LENGTH).fill(''));
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [cooldown, setCooldown] = useState(0);
 
-  // Input refs for 6 digits
+  // Input refs for OTP digits
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   // Timer countdown effect for resend cooldown
@@ -124,7 +125,7 @@ export default function AdminLoginPage() {
       setStep('OTP');
       setCooldown(60);
       setSuccessMsg('¡Código enviado exitosamente a tu bandeja de entrada!');
-      setOtp(['', '', '', '', '', '']);
+      setOtp(Array(OTP_LENGTH).fill(''));
     } catch (err: any) {
       setError(err?.message || 'No se pudo enviar el código. Verifica el correo ingresado.');
     } finally {
@@ -150,11 +151,11 @@ export default function AdminLoginPage() {
     setError('');
 
     // Auto-advance focus to next box
-    if (index < 5 && cleanVal) {
+    if (index < OTP_LENGTH - 1 && cleanVal) {
       inputRefs.current[index + 1]?.focus();
     }
 
-    // If all 6 digits filled, trigger verification automatically
+    // If all digits filled, trigger verification automatically
     if (newOtp.every((digit) => digit !== '')) {
       handleVerifyOtp(newOtp.join(''));
     }
@@ -167,32 +168,32 @@ export default function AdminLoginPage() {
     }
   };
 
-  // Handle Paste of complete 6-digit code
+  // Handle Paste of OTP code
   const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, OTP_LENGTH);
     if (!pasted) return;
 
-    const newOtp = [...otp];
+    const newOtp = Array(OTP_LENGTH).fill('');
     pasted.split('').forEach((char, idx) => {
-      if (idx < 6) newOtp[idx] = char;
+      if (idx < OTP_LENGTH) newOtp[idx] = char;
     });
     setOtp(newOtp);
 
     // Focus last filled or next
-    const targetIdx = Math.min(pasted.length, 5);
+    const targetIdx = Math.min(pasted.length, OTP_LENGTH - 1);
     inputRefs.current[targetIdx]?.focus();
 
-    if (pasted.length === 6) {
+    if (pasted.length >= 6) {
       handleVerifyOtp(pasted);
     }
   };
 
   // 3. Verify OTP via NextAuth credentials
   const handleVerifyOtp = async (codeToVerify?: string) => {
-    const code = codeToVerify || otp.join('');
-    if (code.length !== 6) {
-      setError('Por favor introduce el código completo de 6 dígitos.');
+    const code = (codeToVerify || otp.join('')).trim();
+    if (code.length < 6) {
+      setError('Por favor introduce el código completo de verificación.');
       return;
     }
 
@@ -321,7 +322,7 @@ export default function AdminLoginPage() {
             </form>
           )}
 
-          {/* STEP 2: 6-Digit OTP Form */}
+          {/* STEP 2: OTP Form */}
           {step === 'OTP' && (
             <div className="space-y-6">
               <div className="text-center">
@@ -329,7 +330,7 @@ export default function AdminLoginPage() {
                   <KeyRound className="w-6 h-6 text-[#4DB26B]" />
                 </div>
                 <h2 className="text-base font-semibold text-gray-900">
-                  Introduce el código de 6 dígitos
+                  Introduce el código de verificación
                 </h2>
                 <p className="text-xs text-gray-500 mt-1 max-w-xs mx-auto">
                   Enviado a <strong className="text-gray-800">{email}</strong>
@@ -348,9 +349,9 @@ export default function AdminLoginPage() {
                 </button>
               </div>
 
-              {/* 6 OTP Boxes */}
-              <div className="flex justify-center gap-2 sm:gap-3 my-4" onPaste={handlePaste}>
-                {otp.map((digit, idx) => (
+              {/* OTP Boxes (8 digits with 4-4 visual grouping) */}
+              <div className="flex items-center justify-center gap-1.5 sm:gap-2 my-4" onPaste={handlePaste}>
+                {otp.slice(0, 4).map((digit, idx) => (
                   <input
                     key={idx}
                     ref={(el) => {
@@ -363,16 +364,36 @@ export default function AdminLoginPage() {
                     value={digit}
                     onChange={(e) => handleOtpChange(idx, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(idx, e)}
-                    className="w-11 h-14 sm:w-12 sm:h-14 text-center text-2xl font-bold rounded-xl border-2 border-gray-200 bg-gray-50/50 text-gray-900 focus:border-[#4DB26B] focus:bg-white focus:ring-4 focus:ring-[#4DB26B]/15 outline-none transition-all"
+                    className="w-9 h-12 sm:w-11 sm:h-14 text-center text-xl sm:text-2xl font-bold rounded-xl border-2 border-gray-200 bg-gray-50/50 text-gray-900 focus:border-[#4DB26B] focus:bg-white focus:ring-4 focus:ring-[#4DB26B]/15 outline-none transition-all"
                   />
                 ))}
+                <span className="text-gray-300 font-bold text-lg select-none px-0.5">—</span>
+                {otp.slice(4, 8).map((digit, relIdx) => {
+                  const idx = relIdx + 4;
+                  return (
+                    <input
+                      key={idx}
+                      ref={(el) => {
+                        inputRefs.current[idx] = el;
+                      }}
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleOtpChange(idx, e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(idx, e)}
+                      className="w-9 h-12 sm:w-11 sm:h-14 text-center text-xl sm:text-2xl font-bold rounded-xl border-2 border-gray-200 bg-gray-50/50 text-gray-900 focus:border-[#4DB26B] focus:bg-white focus:ring-4 focus:ring-[#4DB26B]/15 outline-none transition-all"
+                    />
+                  );
+                })}
               </div>
 
               {/* Action Button */}
               <button
                 type="button"
                 onClick={() => handleVerifyOtp()}
-                disabled={isLoading || otp.some((d) => !d)}
+                disabled={isLoading || otp.filter(Boolean).length < 6}
                 className="w-full bg-[#1b4332] hover:bg-[#143225] text-white font-medium py-3.5 px-6 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm"
               >
                 {isLoading ? (
