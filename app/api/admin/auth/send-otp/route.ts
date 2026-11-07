@@ -3,6 +3,20 @@ import { prisma } from '@/lib/db';
 import { sendOtpEmail } from '@/lib/email';
 import { supabase } from '@/lib/supabase';
 
+function parseSupabaseError(errorMsg: string): string {
+  const lower = errorMsg.toLowerCase();
+  if (lower.includes('rate_limit') || lower.includes('rate limit') || lower.includes('over_email_send')) {
+    return 'Límite de correos alcanzado en Supabase (máximo 30 correos por hora en el plan gratuito). Por favor espera unos minutos antes de intentar de nuevo.';
+  }
+  if (lower.includes('security purposes') || lower.includes('60 seconds') || lower.includes('wait')) {
+    return 'Por seguridad, debes esperar 60 segundos entre cada solicitud de código.';
+  }
+  if (lower.includes('signups not allowed') || lower.includes('user not found')) {
+    return 'La cuenta no está habilitada en el sistema de autenticación de Supabase.';
+  }
+  return `Error de Supabase al enviar correo: ${errorMsg}`;
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -48,6 +62,8 @@ export async function POST(req: Request) {
 
     // 1. Try Supabase Auth Free Tier if configured
     let sentViaSupabase = false;
+    let supaFailureReason = '';
+
     if (supabase) {
       try {
         const { error: supaError } = await supabase.auth.signInWithOtp({
@@ -60,16 +76,18 @@ export async function POST(req: Request) {
 
         if (!supaError) {
           sentViaSupabase = true;
-          console.log(`✅ [Supabase Auth] Código OTP despachado por correo vía Supabase Free Tier a ${user.email} con redirect a ${redirectUrl}`);
+          console.log(`✅ [Supabase Auth] Código OTP despachado por correo a ${user.email}`);
         } else {
+          supaFailureReason = parseSupabaseError(supaError.message);
           console.warn('⚠️ [Supabase Auth] Advertencia al enviar OTP:', supaError.message);
         }
       } catch (err: any) {
+        supaFailureReason = parseSupabaseError(err?.message || 'Error de conexión');
         console.warn('⚠️ [Supabase Auth] Fallo conexión Auth:', err?.message || err);
       }
     }
 
-    // 2. Generate local OTP as resilient guarantee / dev console (8 digits)
+    // 2. Generate local OTP as resilient guarantee / secondary channel (8 digits)
     const code = Math.floor(10000000 + Math.random() * 90000000).toString();
     const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
 
@@ -83,15 +101,33 @@ export async function POST(req: Request) {
       },
     });
 
-    // Send the email via Nodemailer / SMTP or console log
+    // 3. Attempt sending via SMTP / Resend
     const mailResult = await sendOtpEmail({ email: user.email, code });
+
+    // 4. Verify if any email provider actually sent the message
+    const actuallySent = sentViaSupabase || mailResult.sent;
+
+    if (!actuallySent) {
+      // In local dev, allow proceed only if in non-production
+      if (process.env.NODE_ENV !== 'production' && mailResult.devMode) {
+        return NextResponse.json({
+          success: true,
+          message: 'Código generado en modo desarrollo (revisa la consola del servidor).',
+          devMode: true,
+        });
+      }
+
+      // In production, provide the exact reason why the email was not sent
+      const reason = supaFailureReason || mailResult.error || 'No se pudo enviar el correo de verificación debido a límites del servidor de correo.';
+      return NextResponse.json(
+        { error: reason },
+        { status: 429 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      message: sentViaSupabase
-        ? 'Código de verificación enviado a tu correo mediante Supabase.'
-        : 'Código de verificación generado y enviado.',
-      devMode: mailResult.devMode ?? false,
+      message: 'Código de verificación enviado exitosamente a tu bandeja de entrada.',
       provider: sentViaSupabase ? 'supabase' : 'smtp',
     });
   } catch (error: any) {

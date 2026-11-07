@@ -5,7 +5,14 @@ interface SendOtpOptions {
   code: string;
 }
 
-export async function sendOtpEmail({ email, code }: SendOtpOptions): Promise<{ success: boolean; devMode?: boolean; error?: string }> {
+export interface SendOtpResult {
+  success: boolean;
+  sent: boolean;
+  devMode?: boolean;
+  error?: string;
+}
+
+export async function sendOtpEmail({ email, code }: SendOtpOptions): Promise<SendOtpResult> {
   // Always log to console with high visibility for testing / free local usage
   console.log('\n=============================================================');
   console.log('🔐 [GRUPO EXPORTADOR DEL CAMPO - CÓDIGO DE VERIFICACIÓN 2FA]');
@@ -106,14 +113,39 @@ export async function sendOtpEmail({ email, code }: SendOtpOptions): Promise<{ s
         html: htmlContent,
       });
 
-      return { success: true };
+      return { success: true, sent: true };
     } catch (err: any) {
       console.error('❌ Error enviando correo vía SMTP:', err?.message || err);
-      // Return success with devMode true so user is not blocked and code was logged to console
-      return { success: true, devMode: true, error: err?.message };
+      return { success: false, sent: false, error: err?.message };
     }
   }
 
-  // If no SMTP credentials are set yet, return success in devMode (code is visible in server logs)
-  return { success: true, devMode: true };
+  // Check if Resend API key is available
+  if (process.env.RESEND_API_KEY) {
+    try {
+      const { Resend } = await import('resend');
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const res = await resend.emails.send({
+        from: process.env.RESEND_FROM || 'Seguridad GEC <onboarding@resend.dev>',
+        to: email,
+        subject: `Tu código de verificación GEC: ${code}`,
+        html: htmlContent,
+      });
+
+      if (!res.error) {
+        console.log(`✅ [Resend] Código OTP enviado exitosamente a ${email}`);
+        return { success: true, sent: true };
+      } else {
+        console.warn('⚠️ [Resend] Fallo de Resend:', res.error);
+        return { success: false, sent: false, error: res.error.message };
+      }
+    } catch (err: any) {
+      console.warn('⚠️ [Resend] Error al intentar enviar con Resend:', err?.message || err);
+      return { success: false, sent: false, error: err?.message };
+    }
+  }
+
+  // If no SMTP / Resend credentials are set yet
+  const isDev = process.env.NODE_ENV !== 'production';
+  return { success: isDev, sent: false, devMode: true };
 }
