@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/authOptions';
 import { prisma } from '@/lib/db';
+import { syncUserToSupabaseAuth } from '@/lib/supabase-auth-sync';
 
 // GET: List all admin users
 export async function GET() {
@@ -69,6 +70,9 @@ export async function POST(req: Request) {
         createdAt: true,
       },
     });
+
+    // Automatically synchronize user into Supabase auth.users & identities
+    await syncUserToSupabaseAuth(email);
 
     return NextResponse.json({ ok: true, usuario: nuevoUsuario });
   } catch (error: any) {

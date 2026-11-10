@@ -39,6 +39,16 @@ export async function DELETE(
 
     await prisma.adminUser.delete({ where: { id } });
 
+    // Clean up from Supabase auth.users as well
+    try {
+      await prisma.$executeRawUnsafe(
+        'DELETE FROM auth.users WHERE lower(email) = lower($1)',
+        usuario.email
+      );
+    } catch (e) {
+      console.warn('[UsuarioDelete] Error deleting from auth.users:', e);
+    }
+
     return NextResponse.json({ ok: true, message: 'Administrador eliminado con éxito.' });
   } catch (error: any) {
     return NextResponse.json({ error: 'Error al eliminar el administrador.' }, { status: 500 });

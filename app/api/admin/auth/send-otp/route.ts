@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { sendOtpEmail } from '@/lib/email';
 import { supabase } from '@/lib/supabase';
+import { syncUserToSupabaseAuth } from '@/lib/supabase-auth-sync';
 
 function parseSupabaseError(errorMsg: string): string {
   const lower = errorMsg.toLowerCase();
@@ -59,6 +60,9 @@ export async function POST(req: Request) {
     // Determine current origin for email redirection
     const origin = req.headers.get('origin') || process.env.NEXTAUTH_URL || 'https://gek-web.vercel.app';
     const redirectUrl = `${origin}/admin/login`;
+
+    // Ensure user is synchronized and confirmed in Supabase auth.users & identities
+    await syncUserToSupabaseAuth(user.email);
 
     // 1. Try Supabase Auth Free Tier if configured
     let sentViaSupabase = false;
