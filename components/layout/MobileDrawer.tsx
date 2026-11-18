@@ -7,6 +7,7 @@ import { X } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { PuntosContactoList, PuntoContactoItem } from './PuntosContactoList';
 import { cleanImageUrl } from '@/lib/cleanImageUrl';
+import { VisualEditable } from '@/components/admin/VisualEditable';
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -59,15 +60,17 @@ export function MobileDrawer({ isOpen, onClose, navLinks, puntosContacto = [], l
       >
         {/* Header */}
         <div className="p-6 border-b border-white/10 flex items-center justify-between">
-          <Link href={`/${locale}`} onClick={onClose} className="block">
-            <Image
-              src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
-              alt="Logo GEK"
-              width={120}
-              height={36}
-              className={`h-auto object-contain ${!logoUrl || logoUrl.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''}`}
-            />
-          </Link>
+          <VisualEditable id="header.logo" label="Logotipo del Header y Menú" type="image" className="relative inline-block">
+            <Link href={`/${locale}`} onClick={onClose} className="block">
+              <Image
+                src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
+                alt="Logo GEK"
+                width={120}
+                height={36}
+                className={`h-auto object-contain ${!logoUrl || logoUrl.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''}`}
+              />
+            </Link>
+          </VisualEditable>
           <button
             onClick={onClose}
             className="text-white hover:text-brand-green p-2 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"

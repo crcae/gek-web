@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Menu } from 'lucide-react';
 import { Sidebar } from './Sidebar';
 
@@ -48,9 +49,13 @@ export function AdminShell({ children, userName, unreadCount }: AdminShellProps)
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-[#4DB26B] rounded flex items-center justify-center">
-              <span className="text-white text-[10px] font-bold">GEK</span>
-            </div>
+            <Image
+              src="/images/logos/GrupoExportador_Logo_admin.png"
+              alt="Grupo Exportador del Campo"
+              width={408}
+              height={248}
+              className="h-7 w-auto object-contain"
+            />
             <span className="text-white text-sm font-semibold">Admin</span>
           </div>
         </div>

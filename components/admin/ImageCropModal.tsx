@@ -323,7 +323,7 @@ export function ImageCropModal({
   if (!mounted || !isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 bg-black/85 z-[10000] flex items-center justify-center p-3 sm:p-5 backdrop-blur-md select-none">
+    <div className="fixed inset-0 bg-black/85 z-[100001] flex items-center justify-center p-3 sm:p-5 backdrop-blur-md select-none">
       <div className="bg-[#0f172a] text-white rounded-2xl shadow-2xl border border-slate-700/60 w-full max-w-3xl overflow-hidden flex flex-col max-h-[95vh] animate-in fade-in zoom-in-95 duration-200">
         
         {/* Header */}

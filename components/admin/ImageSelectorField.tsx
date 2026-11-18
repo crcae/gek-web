@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import { ImageIcon, Film, Upload, Loader2, Crop } from 'lucide-react';
+import { upload } from '@vercel/blob/client';
 import { ImageCropModal, AspectRatioOption } from './ImageCropModal';
 import { cleanImageUrl } from '@/lib/cleanImageUrl';
 
@@ -31,33 +32,57 @@ export function ImageSelectorField({
   const [cropImageUrl, setCropImageUrl] = useState('');
   const [pendingFile, setPendingFile] = useState<File | null>(null);
 
-  // Upload raw file without crop
+  // Upload raw file without crop (videos, documents, etc.)
   const uploadRawFile = async (file: File) => {
     setUploading(true);
     setUploadError('');
 
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('seccion', 'media');
-    formData.append('nombre', file.name);
+    const isVideo = file.type.startsWith('video/') || /\.(mp4|webm|mov|m4v)$/i.test(file.name);
+    const seccion = isVideo ? 'videos' : 'media';
+    const timestamp = Date.now();
+    const ext = (file.name.includes('.') ? file.name.split('.').pop() || '' : '').toLowerCase().replace(/[^a-z0-9]/g, '') || (isVideo ? 'mp4' : 'bin');
+    const slug = Math.random().toString(36).slice(2);
+    const filename = `${seccion}/${timestamp}-${slug}.${ext}`;
 
     try {
-      const res = await fetch('/api/admin/imagenes', {
-        method: 'POST',
-        body: formData,
+      // 1. Subida directa del cliente a Vercel Blob (evita límite de 4.5 MB de Serverless body)
+      const newBlob = await upload(filename, file, {
+        access: 'public',
+        handleUploadUrl: '/api/admin/blob/upload',
+        contentType: file.type || undefined,
+        multipart: file.size > 20 * 1024 * 1024,
       });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || 'Error al subir');
-      }
-
-      const data = await res.json();
       setMediaError(false);
-      onChange(data.url);
+      onChange(newBlob.url);
       setCropModalOpen(false);
-    } catch (err: any) {
-      setUploadError(err.message || 'Error al subir el archivo');
+    } catch (directErr: any) {
+      console.warn('Subida directa Blob falló o no disponible, intentando vía API:', directErr);
+      
+      // Fallback a API route tradicional si es archivo pequeño
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('seccion', seccion);
+        formData.append('nombre', file.name);
+
+        const res = await fetch('/api/admin/imagenes', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || directErr?.message || 'Error al subir');
+        }
+
+        const data = await res.json();
+        setMediaError(false);
+        onChange(data.url);
+        setCropModalOpen(false);
+      } catch (fallbackErr: any) {
+        setUploadError(directErr?.message || fallbackErr?.message || 'Error al subir el archivo');
+      }
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = '';
@@ -90,30 +115,47 @@ export function ImageSelectorField({
       : `crop-${Date.now()}.webp`;
 
     const croppedFile = new File([blob], filename, { type: 'image/webp' });
-
-    const formData = new FormData();
-    formData.append('file', croppedFile);
-    formData.append('seccion', 'media');
-    formData.append('nombre', filename);
+    const safeName = filename.normalize('NFD').replace(/[^\w.-]+/g, '-');
+    const fullPath = `media/${Date.now()}-${safeName}`;
 
     try {
-      const res = await fetch('/api/admin/imagenes', {
-        method: 'POST',
-        body: formData,
+      // Subida directa del cliente
+      const newBlob = await upload(fullPath, croppedFile, {
+        access: 'public',
+        handleUploadUrl: '/api/admin/blob/upload',
+        contentType: 'image/webp',
       });
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || 'Error al guardar imagen recortada');
-      }
-
-      const data = await res.json();
       setMediaError(false);
-      onChange(data.url);
+      onChange(newBlob.url);
       setCropModalOpen(false);
       setPendingFile(null);
-    } catch (err: any) {
-      setUploadError(err.message || 'Error al guardar la imagen recortada');
+    } catch (directErr: any) {
+      console.warn('Subida directa Blob crop falló, intentando vía API:', directErr);
+      try {
+        const formData = new FormData();
+        formData.append('file', croppedFile);
+        formData.append('seccion', 'media');
+        formData.append('nombre', filename);
+
+        const res = await fetch('/api/admin/imagenes', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || 'Error al guardar imagen recortada');
+        }
+
+        const data = await res.json();
+        setMediaError(false);
+        onChange(data.url);
+        setCropModalOpen(false);
+        setPendingFile(null);
+      } catch (err: any) {
+        setUploadError(err.message || 'Error al guardar la imagen recortada');
+      }
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = '';

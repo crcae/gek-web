@@ -51,7 +51,7 @@ export function Topbar({ correo, telefono }: TopbarProps) {
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
         {/* Left side: Mail + Phone */}
         <div className="flex items-center gap-4">
-          <VisualEditable id="footer.correo" label="Correo de Contacto (Topbar)">
+          <VisualEditable id="footer.correo" label="Correo de Contacto (Topbar)" compact={true} className="inline-flex items-center pr-7">
             <a
               href={`mailto:${mailVal}`}
               className="flex items-center hover:text-brand-green transition-colors"
@@ -61,7 +61,7 @@ export function Topbar({ correo, telefono }: TopbarProps) {
             </a>
           </VisualEditable>
           <span className="text-white/30">|</span>
-          <VisualEditable id="footer.telefono" label="Teléfono de Contacto (Topbar)">
+          <VisualEditable id="footer.telefono" label="Teléfono de Contacto (Topbar)" compact={true} className="inline-flex items-center pr-7">
             <a
               href={`tel:${telVal.replace(/\s+/g, '')}`}
               className="flex items-center hover:text-brand-green transition-colors"

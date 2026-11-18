@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PuntosContactoList, PuntoContactoItem } from './PuntosContactoList';
 import { cleanImageUrl } from '@/lib/cleanImageUrl';
+import { VisualEditable } from '@/components/admin/VisualEditable';
 
 interface Props {
   open: boolean;
@@ -63,13 +64,15 @@ export function DesktopDrawer({ open, onClose, locale, puntosContacto = [], logo
       >
         {/* Header del panel */}
         <div className="flex items-center justify-between p-6 border-b border-white/10">
-          <Image
-            src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
-            alt="Grupo Exportador del Campo"
-            width={120}
-            height={48}
-            className={`object-contain ${!logoUrl || logoUrl.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''}`}
-          />
+          <VisualEditable id="header.logo" label="Logotipo del Header y Menú" type="image" className="relative inline-block">
+            <Image
+              src={cleanImageUrl(logoUrl) || '/images/logos/GrupoExportador_Logo1.png'}
+              alt="Grupo Exportador del Campo"
+              width={120}
+              height={48}
+              className={`object-contain ${!logoUrl || logoUrl.includes('GrupoExportador_Logo1') ? 'brightness-0 invert' : ''}`}
+            />
+          </VisualEditable>
           <button
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"

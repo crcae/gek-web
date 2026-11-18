@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import {
   Volume2,
   VolumeX,
-  Settings,
   Play,
   Maximize2,
   Minimize2,
@@ -204,15 +203,13 @@ export function HeroSection({
 
         {/* Admin Video Manager */}
         {session && (
-          <VisualEditable id="home.hero.video" label="Video de Fondo (Hero)" type="video">
-            <button
-              className="bg-brand-navy hover:bg-brand-green text-white text-xs font-bold px-3.5 py-2.5 rounded-full shadow-lg transition-all duration-200 border border-brand-green/30 flex items-center gap-1.5 cursor-pointer"
-              title="Cambiar Video de Fondo"
-            >
-              <Settings className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Administrar</span>
-            </button>
-          </VisualEditable>
+          <VisualEditable
+            id="home.hero.video"
+            label="Video de Fondo (Hero)"
+            type="video"
+            asButton={true}
+            buttonTitle="Cambiar Video de Fondo"
+          />
         )}
 
         {/* Sound Toggle */}

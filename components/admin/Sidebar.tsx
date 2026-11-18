@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import {
@@ -55,23 +56,26 @@ export function Sidebar({ userName, unreadCount, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 min-h-screen bg-[#1E293B] flex flex-col justify-between">
-      <div>
+    <aside className="w-64 h-full bg-[#1E293B] flex flex-col justify-between overflow-hidden">
+      {/* Top section: Logo + Scrollable Navigation */}
+      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {/* Logo */}
-        <div className="p-5 border-b border-white/10">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-brand-green rounded-lg flex items-center justify-center shrink-0 shadow">
-              <span className="text-white text-xs font-black tracking-wider">GEK</span>
-            </div>
-            <div>
-              <p className="text-white font-bold text-sm leading-tight">Grupo Exportador</p>
-              <p className="text-brand-green text-xs font-semibold">Panel de Administración</p>
-            </div>
+        <div className="p-5 border-b border-white/10 shrink-0">
+          <div className="flex flex-col gap-2">
+            <Image
+              src="/images/logos/GrupoExportador_Logo_admin.png"
+              alt="Grupo Exportador del Campo"
+              width={408}
+              height={248}
+              priority
+              className="h-12 w-auto object-contain object-left"
+            />
+            <p className="text-brand-green text-xs font-semibold">Panel de Administración</p>
           </div>
         </div>
 
-        {/* Main Navigation */}
-        <div className="px-3 py-4 space-y-6">
+        {/* Main Navigation - scrollable */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-3 py-4 space-y-6">
           <div>
             <span className="px-3 text-[10px] font-bold text-white/40 uppercase tracking-widest block mb-2">
               Gestión Operativa
@@ -138,7 +142,7 @@ export function Sidebar({ userName, unreadCount, onClose }: SidebarProps) {
       </div>
 
       {/* User Footer + Logout */}
-      <div className="p-4 border-t border-white/10 bg-[#16202E]">
+      <div className="p-4 border-t border-white/10 bg-[#16202E] shrink-0">
         <Link
           href="/es"
           target="_blank"

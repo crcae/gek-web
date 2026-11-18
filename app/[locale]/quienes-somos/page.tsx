@@ -11,7 +11,6 @@ import { CertificacionesSection } from '@/components/sections/about/Certificacio
 import { User } from 'lucide-react';
 import Image from 'next/image';
 import { VisualEditable } from '@/components/admin/VisualEditable';
-import { AdminImageButton } from '@/components/admin/AdminImageButton';
 import { getContenidoCached, getCertificacionesCached } from '@/lib/queries/cache';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -120,7 +119,12 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
 
   const heroTitulo = contenido['quienes.hero.titulo'] || t('titulo_pagina');
   const heroSubtitulo = contenido['quienes.hero.sub'] || t('subtitulo_pagina');
-  const intro = contenido['quienes.intro'];
+  const fallbackIntro = locale === 'en'
+    ? '<strong>Grupo Exportador del Campo</strong> was born from the business model developed by Don Ramiro Vizcaíno, for the <strong>production, processing, packaging and commercialization</strong> of all types of field products. With more than <strong>50 years of experience</strong>, we are committed to offering you <strong>the best of the field</strong>, providing <strong>comprehensive support</strong> across each of our business units, from start to finish.'
+    : locale === 'de'
+    ? '<strong>Grupo Exportador del Campo</strong> entstand aus dem Geschäftsmodell von Don Ramiro Vizcaíno für die <strong>Produktion, Verarbeitung, Verpackung und Vermarktung</strong> aller Art von Feldprodukten. Mit mehr als <strong>50 Jahren Erfahrung</strong> verpflichten wir uns, Ihnen <strong>das Beste vom Feld</strong> anzubieten und <strong>umfassenden Support</strong> in jeder unserer Geschäftseinheiten zu bieten.'
+    : '<strong>Grupo Exportador del Campo</strong> nace del modelo de negocio desarrollado por Don Ramiro Vizcaíno, para la <strong>producción, tratamiento, empaque y comercialización</strong> de todo tipo de productos del campo. Con más de <strong>50 años de experiencia</strong>, nos comprometemos contigo para ofrecer <strong>lo mejor del campo</strong>, brindándote un <strong>soporte integral</strong> en cada una de nuestras unidades de negocio, de inicio a fin.';
+  const intro = contenido['quienes.intro'] || fallbackIntro;
   const introTitulo = contenido['quienes.intro.titulo'] || 'Grupo Exportador del Campo';
   const introSlogan = contenido['quienes.intro.slogan'] || t('slogan');
   
@@ -346,7 +350,7 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
             <VisualEditable id="quienes.intro" label="Párrafo de Introducción">
               <p
                 className="rich-text font-body text-brand-navy/90 text-xl md:text-2xl lg:text-[23px] leading-[1.9] md:leading-[2.1] tracking-normal"
-                dangerouslySetInnerHTML={{ __html: intro || t('intro_titulo') }}
+                dangerouslySetInnerHTML={{ __html: intro }}
               />
             </VisualEditable>
           </div>
@@ -355,35 +359,32 @@ export default async function QuienesSomos({ params: { locale } }: { params: { l
           <div className="w-full md:w-[35%] relative md:mt-2">
             <div className="rounded-2xl overflow-hidden shadow-xl">
               <div className="relative h-64 md:h-80">
-                {ceoSrc ? (
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={ceoSrc}
-                      alt="Joaquín Vizcaíno — Director General"
-                      fill
-                      className="object-cover object-top"
-                      style={{
-                        maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
-                      }}
-                    />
-                    {/* Cambiar Foto CEO button — solo admin */}
-                    {isAdmin && (
-                      <div className="absolute top-3 right-3 z-35">
-                        <AdminImageButton
-                          id="quienes.ceo.imagen"
-                          label="Foto de Joaquín Vizcaíno (CEO)"
-                          buttonText="Cambiar Foto"
-                        />
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="w-full h-full bg-brand-navy/40 flex items-center justify-center">
-                    <User className="w-16 h-16 text-brand-green/40" />
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-navy" />
+                <VisualEditable
+                  id="quienes.ceo.imagen"
+                  label="Foto del Director General Joaquín Vizcaíno"
+                  type="image"
+                  className="relative w-full h-full"
+                >
+                  {ceoSrc ? (
+                    <div className="relative w-full h-full">
+                      <Image
+                        src={ceoSrc}
+                        alt="Joaquín Vizcaíno — Director General"
+                        fill
+                        className="object-cover object-top"
+                        style={{
+                          maskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                          WebkitMaskImage: 'linear-gradient(to bottom, black 55%, transparent 100%)',
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full h-full bg-brand-navy/40 flex items-center justify-center">
+                      <User className="w-16 h-16 text-brand-green/40" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-brand-navy pointer-events-none" />
+                </VisualEditable>
               </div>
               <div className="bg-brand-navy px-6 py-5">
                 <VisualEditable id="quienes.ceo.frase" label="Frase del CEO">
